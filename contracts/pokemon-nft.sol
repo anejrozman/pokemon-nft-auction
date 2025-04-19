@@ -56,18 +56,18 @@ contract PokemonNFT is ERC721URIStorage, ReentrancyGuard, Pausable, AccessContro
     // Secret salt used for randomness (can be updated by admin)
     bytes32 private _secretSalt;
     
-    // Timelock for revealing commitments (in blocks)
+    // Timelock for revealing commitments in blocks (can be updated by admin)
     uint256 public commitRevealTimelock = 3;
     
     // Events
     event CardSetCreated(uint256 indexed cardSetId, string name, uint256 price);
-    event CardAdded(uint256 indexed cardId, uint256 indexed cardSetId, string ipfsURI);
     event CardMinted(address indexed to, uint256 indexed tokenId, uint256 indexed cardId, uint256 cardSetId);
     event CommitmentMade(address indexed committer, bytes32 commitHash);
     event CommitmentRevealed(address indexed committer, bytes32 commitHash, uint256 tokenId);
     event SecretSaltUpdated();
     event CardSetActivated(uint256 indexed cardSetId);
     event CardSetDeactivated(uint256 indexed cardSetId);
+    event Withdrawal(address indexed to, uint256 amount);
     
     /**
      * @dev Constructor to initialize the contract with base parameters
@@ -83,9 +83,9 @@ contract PokemonNFT is ERC721URIStorage, ReentrancyGuard, Pausable, AccessContro
         require(adminWallet != address(0), "Admin wallet cannot be zero address");
         
         // Set up roles
-        AccessControl._setupRole(DEFAULT_ADMIN_ROLE, adminWallet);
-        _setupRole(ADMIN_ROLE, adminWallet);
-        
+        _grantRole(DEFAULT_ADMIN_ROLE, adminWallet);
+        _grantRole(ADMIN_ROLE, adminWallet);
+
         // Initialize salt
         _secretSalt = keccak256(abi.encodePacked(block.timestamp, block.prevrandao, address(this)));
         
@@ -101,13 +101,11 @@ contract PokemonNFT is ERC721URIStorage, ReentrancyGuard, Pausable, AccessContro
      * @param price The price to mint from this set
      * @param maxSupply Maximum number of cards that can be minted from this set
      */
-    function createCardSet(
-        string memory name,
-        uint256 price,
-        uint256 maxSupply
-    ) external onlyRole(ADMIN_ROLE) {
+    function createCardSet(string memory name, uint256 price, uint256 maxSupply) external onlyRole(ADMIN_ROLE) {
         uint256 cardSetId = _currentCardSetId;
         _currentCardSetId++;
+
+        // Still have to implement how cards are added to the set. 
         
         cardSets[cardSetId] = CardSet({
             name: name,
@@ -123,36 +121,7 @@ contract PokemonNFT is ERC721URIStorage, ReentrancyGuard, Pausable, AccessContro
     }
     
     /**
-     * @dev Add a card to a card set
-     * @param cardSetId The ID of the card set
-     * @param ipfsURI The IPFS URI for the card metadata
-     * @param probability The probability weight of this card (0-1000)
-     */
-    function addCardToSet(
-        uint256 cardSetId,
-        string memory ipfsURI,
-        uint256 probability
-    ) external onlyRole(ADMIN_ROLE) {
-        require(cardSetId < _currentCardSetId, "Invalid card set ID");
-        require(probability <= 1000, "Probability must be between 0 and 1000");
-        
-        uint256 cardId = _currentCardId;
-        _currentCardId++;
-        
-        cards[cardId] = Card({
-            ipfsURI: ipfsURI,
-            cardSetId: cardSetId
-        });
-        
-        CardSet storage cardSet = cardSets[cardSetId];
-        cardSet.cardIds.push(cardId);
-        cardSet.cardProbabilities.push(probability);
-        
-        emit CardAdded(cardId, cardSetId, ipfsURI);
-    }
-    
-    /**
-     * @dev Update the active status of a card set
+     * @dev Update the active/non-active status of a card set 
      * @param cardSetId The ID of the card set
      * @param active Whether the card set is active
      */
@@ -314,6 +283,8 @@ contract PokemonNFT is ERC721URIStorage, ReentrancyGuard, Pausable, AccessContro
         
         (bool success, ) = payable(msg.sender).call{value: balance}("");
         require(success, "Withdrawal failed");
+
+        emit Withdrawal(msg.sender, balance);
     }
     
     /**
@@ -328,4 +299,14 @@ contract PokemonNFT is ERC721URIStorage, ReentrancyGuard, Pausable, AccessContro
         
         return (cardSets[cardSetId].cardIds, cardSets[cardSetId].cardProbabilities);
     }
+
+    //----- Override functions-----
+
+    /**
+     * @dev Override supportsInterface to handle multiple inheritance.
+     */
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721URIStorage, AccessControl) returns (bool) {
+        return super.supportsInterface(interfaceId);
+    }
+
 }
