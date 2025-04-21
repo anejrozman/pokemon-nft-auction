@@ -1,0 +1,7 @@
+[default]
+# Only run tests matching the regex
+test_pattern = "pokemon-auction-house/.*t.sol"
+
+# Skip tests in "marketplace" directory
+match_path = ["test/pokemon-auction-house/*.t.sol"]
+no_match_path = ["test/marketplace/**/*.t.sol"] 

@@ -1,0 +1,13 @@
+{
+  "name": "Pikachu",
+  "description": "Electric-type Pokemon",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+  "attributes": [
+    { "trait_type": "Type", "value": "Electric" },
+    { "trait_type": "Level", "value": 25 },
+    { "trait_type": "HP", "value": 35 },
+    { "trait_type": "Attack", "value": 55 },
+    { "trait_type": "Defense", "value": 40 },
+    { "trait_type": "Shiny", "value": "No" }
+  ]
+}

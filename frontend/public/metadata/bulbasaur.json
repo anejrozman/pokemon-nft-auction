@@ -1,0 +1,13 @@
+{
+  "name": "Bulbasaur",
+  "description": "Grass/Poison-type Pokemon",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
+  "attributes": [
+    { "trait_type": "Type", "value": "Grass/Poison" },
+    { "trait_type": "Level", "value": 15 },
+    { "trait_type": "HP", "value": 45 },
+    { "trait_type": "Attack", "value": 49 },
+    { "trait_type": "Defense", "value": 49 },
+    { "trait_type": "Shiny", "value": "No" }
+  ]
+}
