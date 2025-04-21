@@ -1,0 +1,13 @@
+{
+  "name": "Charizard",
+  "description": "Fire/Flying-type Pokemon",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/006.png",
+  "attributes": [
+    { "trait_type": "Type", "value": "Fire/Flying" },
+    { "trait_type": "Level", "value": 36 },
+    { "trait_type": "HP", "value": 78 },
+    { "trait_type": "Attack", "value": 84 },
+    { "trait_type": "Defense", "value": 78 },
+    { "trait_type": "Shiny", "value": "Yes" }
+  ]
+}
