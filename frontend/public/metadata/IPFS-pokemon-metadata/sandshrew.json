@@ -1,0 +1,43 @@
+{
+    "name": "Sandshrew #027",
+    "description": "A yellow, armadillo-like Pokémon with a tough hide and sharp claws. It's a Ground type known as the Mouse Pokémon.",
+    "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/sandshrew.png",
+    "attributes": [
+      {
+        "trait_type": "Type",
+        "value": "Ground"
+      },
+      {
+        "trait_type": "Level",
+        "value": 8
+      },
+      {
+        "trait_type": "HP",
+        "value": 50
+      },
+      {
+        "trait_type": "Attack",
+        "value": 75
+      },
+      {
+        "trait_type": "Defense",
+        "value": 85
+      },
+      {
+        "trait_type": "Special",
+        "value": 30
+      },
+      {
+        "trait_type": "Speed",
+        "value": 40
+      },
+      {
+        "trait_type": "Generation",
+        "value": 1
+      },
+      {
+        "trait_type": "Shiny",
+        "value": false
+      }
+    ]
+  }

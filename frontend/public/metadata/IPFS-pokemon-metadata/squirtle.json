@@ -1,0 +1,43 @@
+{
+    "name": "Squirtle #007",
+    "description": "A small, turtle-like Pokémon with a blue body and a hard shell. It's a Water type known as the Tiny Turtle Pokémon.",
+    "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/squirtle.png",
+    "attributes": [
+      {
+        "trait_type": "Type",
+        "value": "Water"
+      },
+      {
+        "trait_type": "Level",
+        "value": 5
+      },
+      {
+        "trait_type": "HP",
+        "value": 44
+      },
+      {
+        "trait_type": "Attack",
+        "value": 48
+      },
+      {
+        "trait_type": "Defense",
+        "value": 65
+      },
+      {
+        "trait_type": "Special",
+        "value": 50
+      },
+      {
+        "trait_type": "Speed",
+        "value": 43
+      },
+      {
+        "trait_type": "Generation",
+        "value": 1
+      },
+      {
+        "trait_type": "Shiny",
+        "value": false
+      }
+    ]
+  }
