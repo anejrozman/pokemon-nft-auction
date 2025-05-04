@@ -8,38 +8,34 @@ async function main() {
   const contractAddresses = require("../contractAddresses.json");
   const pokemonNFT = PokemonNFT.attach(contractAddresses.nftAddress);
   const [owner] = await ethers.getSigners();
-  
-  // Pokemon data to mint
-  const pokemons = [
+
+  const CID = "bafybeibw5cjn63fm6zco7cnnaff4iwizcynsvee76iwc6rxuaruodfsxxe";
+
+   // Pokemon data to mint
+   const pokemons = [
     {
       name: "Pikachu",
-      type: "Electric",
-      level: 25,
-      hp: 35,
-      attack: 55,
-      defense: 40,
-      isShiny: false,
-      tokenURI: "http://localhost:3000/metadata/pikachu.json"
+      ipfsURI: `ipfs://${CID}/pikachu.json` 
     },
     {
-      name: "Charizard",
-      type: "Fire",
-      level: 36,
-      hp: 78,
-      attack: 84,
-      defense: 78,
-      isShiny: true,
-      tokenURI: "http://localhost:3000/metadata/charizard.json"
+      name: "Charmander",
+      ipfsURI: `ipfs://${CID}/charmander.json`
     },
     {
       name: "Bulbasaur",
-      type: "Grass",
-      level: 15,
-      hp: 45,
-      attack: 49,
-      defense: 49,
-      isShiny: false,
-      tokenURI: "http://localhost:3000/metadata/bulbasaur.json"
+      ipfsURI: `ipfs://${CID}/bulbasaur.json`
+    }, 
+    {
+      name: "Diglett",
+      ipfsURI: `ipfs://${CID}/diglett.json`
+    }, 
+    {
+      name: "Squirtle",
+      ipfsURI: `ipfs://${CID}/squirtle.json`
+    }, 
+    {
+      name: "Jigglypuff",
+      ipfsURI: `ipfs://${CID}/jigglypuff.json`
     }
   ];
 
@@ -52,14 +48,7 @@ async function main() {
     // Use "as any" to bypass TypeScript type checking
     const tx = await (pokemonNFT as any).mintPokemon(
       owner.address,
-      pokemon.tokenURI,
-      pokemon.name,
-      pokemon.type,
-      pokemon.level,
-      pokemon.hp,
-      pokemon.attack,
-      pokemon.defense,
-      pokemon.isShiny
+      pokemon.ipfsURI 
     );
     
     await tx.wait();

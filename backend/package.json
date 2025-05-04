@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "hardhat run --network localhost scripts/deploy.ts",
-    "mint": "hardhat run scripts/mint_pokemons.ts --network localhost"
+    "mint": "hardhat run scripts/mint_pokemons.ts --network localhost", 
+    "create-set": "npx hardhat run scripts/create_card_set.ts --network localhost", 
+    "mint-from-set": "npx hardhat run scripts/mint_from_card_set.ts --network localhost"
   },
   "keywords": [],
   "author": "",

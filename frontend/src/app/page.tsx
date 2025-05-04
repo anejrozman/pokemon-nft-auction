@@ -4,9 +4,6 @@ import { NFT_CONTRACTS } from "@/consts/nft_contracts";
 import { Link } from "@chakra-ui/next-js";
 import {
   Box,
-  Card,
-  CardBody,
-  CardHeader,
   Flex,
   Heading,
   Image,
@@ -17,97 +14,125 @@ import {
 
 export default function Home() {
   return (
-    <Flex>
-      <Box mt="24px" m="auto">
-        <Flex direction="column" gap="4">
-          {/* Delete this <Card /> in your own app */}
-          <Card border="1px" maxW="90vw" mx="auto">
-            <CardHeader>
-              <Heading size="md">Marketplace Template v2</Heading>
-            </CardHeader>
+    <Flex direction="column" mt="24px" mx="auto" maxW="90vw" gap="6">
+      {/* Website Description */}
+      <Heading
+        size="md"
+        bgGradient="linear(to-l, #7928CA, #FF0080)"
+        bgClip="text"
+        textAlign="center"
+      >
+        Welcome to PokéMarket!
+      </Heading>
 
-            <CardBody>
-              <Stack divider={<StackDivider />} spacing="4">
-                {_latestUpdates.map((item) => (
-                  <Box key={item.title}>
-                    <Heading size="xs" textTransform="uppercase">
-                      {item.title}
-                    </Heading>
-                    {item.bullet_points.map((pt) => (
-                      <Text pt="2" fontSize="sm" key={pt}>
-                        {pt}
-                      </Text>
-                    ))}
-                  </Box>
-                ))}
-              </Stack>
-            </CardBody>
-          </Card>
-          <Heading ml="20px" mt="40px">
-            Trending collections
-          </Heading>
-          <Flex
-            direction="row"
-            wrap="wrap"
-            mt="20px"
-            gap="5"
-            justifyContent="space-evenly"
+      <Stack divider={<StackDivider />} spacing="6">
+        <Box>
+          <Heading
+            size="xs"
+            textTransform="uppercase"
+            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            bgClip="text"
           >
-            {NFT_CONTRACTS.map((item) => (
-              <Link
-                _hover={{ textDecoration: "none" }}
-                w={300}
-                h={400}
-                key={item.address}
-                href={`/collection/${item.chain.id.toString()}/${item.address}`}
-              >
-                <Image src={item.thumbnailUrl} />
-                <Text fontSize="large" mt="10px">
-                  {item.title}
-                </Text>
-              </Link>
-            ))}
-          </Flex>
-        </Flex>
-      </Box>
+            What are Pokémon?
+          </Heading>
+          <Text pt="2" fontSize="sm">
+            Pokémon are creatures with unique abilities and traits that have
+            captured the hearts of millions worldwide. Now, you can own your
+            favorite Pokémon as NFTs, bringing them to life in the digital
+            world!
+          </Text>
+        </Box>
+
+        <Box>
+          <Heading
+            size="xs"
+            textTransform="uppercase"
+            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            bgClip="text"
+          >
+            Buy NFTs from Card Sets
+          </Heading>
+          <Text pt="2" fontSize="sm">
+            Explore our exclusive{" "}
+            <Link
+              href="/cardsets"
+              bgGradient="linear(to-l, #7928CA, #FF0080)"
+              bgClip="text"
+              _hover={{
+                textDecoration: "underline",
+                bgGradient: "linear(to-l, #FF0080, #7928CA)", 
+              }}
+            >
+              Card Sets
+            </Link>{" "}
+            to mint limited-edition Pokémon NFTs. Each set contains rare and
+            unique Pokémon waiting to be discovered!
+          </Text>
+        </Box>
+
+        <Box>
+          <Heading
+            size="xs"
+            textTransform="uppercase"
+            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            bgClip="text"
+          >
+            Participate in Auctions
+          </Heading>
+          <Text pt="2" fontSize="sm">
+            Bid on exclusive Pokémon NFTs in our{" "}
+            <Link
+              href="/auctions"
+              bgGradient="linear(to-l, #7928CA, #FF0080)"
+              bgClip="text"
+              _hover={{
+                textDecoration: "underline",
+                bgGradient: "linear(to-l, #FF0080, #7928CA)",
+              }}
+            >
+              Auctions
+            </Link>
+            . Compete with other collectors to own the rarest Pokémon NFTs
+            available!
+          </Text>
+        </Box>
+      </Stack>
+
+      {/* Trending Collections */}
+      <Heading
+        ml="20px"
+        mt="40px"
+        bgGradient="linear(to-l, #7928CA, #FF0080)"
+        bgClip="text"
+      >
+        Trending Collections
+      </Heading>
+      <Flex
+        direction="row"
+        wrap="wrap"
+        mt="20px"
+        gap="5"
+        justifyContent="space-evenly"
+      >
+        {NFT_CONTRACTS.map((item) => (
+          <Link
+            _hover={{
+              textDecoration: "none",
+              bgGradient: "linear(to-l, #FF0080, #7928CA)", // Hover gradient
+              bgClip: "text",
+            }}
+            w={300}
+            h={400}
+            key={item.address}
+            href={`/collection/${item.chain.id.toString()}/${item.address}`}
+          >
+            <Image src={item.thumbnailUrl} />
+            <Text fontSize="large" mt="10px">
+              {item.title}
+            </Text>
+          </Link>
+        ))}
+      </Flex>
     </Flex>
   );
 }
-
-// Delete this in your own app
-const _latestUpdates: Array<{ title: string; bullet_points: string[] }> = [
-  {
-    title: "Latest software",
-    bullet_points: [
-      "Shipped with the latest thirdweb SDK (v5) and Next.js 14 (App router)",
-    ],
-  },
-  {
-    title: "Multi-chain",
-    bullet_points: [
-      "Seamlessly trade and browse items on multiple chains",
-      "You'd have to deploy a thirdweb Marketplace V3 contract on each of the chains you want to support",
-    ],
-  },
-  {
-    title: "Multiple collections supported",
-    bullet_points: [
-      "The new template now supports multiple collections, you can view your owned NFTs and your listings",
-    ],
-  },
-  {
-    title: "Upcoming features",
-    bullet_points: [
-      "Select different currencies (ERC20) when creating listings",
-      "UI for English Auctions",
-    ],
-  },
-  {
-    title: "Contribute",
-    bullet_points: [
-      "We welcome all contributions from the community.",
-      "Found a bug or have some suggestions? Create a GitHub issue!",
-      "Repo: https://github.com/thirdweb-example/marketplace-template",
-    ],
-  },
-];
