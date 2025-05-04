@@ -40,17 +40,46 @@ export function Navbar() {
           <Heading
             as={Link}
             href="/"
-            _hover={{ textDecoration: "none" }}
             bgGradient="linear(to-l, #7928CA, #FF0080)"
             bgClip="text"
             fontWeight="extrabold"
+            _hover={{
+              textDecoration: "underline",
+              bgGradient: "linear(to-l, #FF0080, #7928CA)", // Hover gradient
+            }}
           >
-            {/* Replace this with your own branding */}
-            THIRDMART
+            {/* Title */}
+            POKÉMARKET
           </Heading>
         </Box>
-        <Box display={{ lg: "block", base: "none" }}>
-          <ToggleThemeButton />
+        <Flex direction="row" alignItems="center" gap={6} display={{ lg: "flex", base: "none" }}>
+            {/* Card Sets link */}
+            <Link
+              href="/cardsets"
+              fontWeight="bold"
+              bgGradient="linear(to-l, #7928CA, #FF0080)" // Default gradient
+              bgClip="text"
+              _hover={{
+                textDecoration: "underline",
+                bgGradient: "linear(to-l, #FF0080, #7928CA)", // Hover gradient
+              }}
+            >
+              Card Sets
+            </Link>
+            
+            {/* Auction Page link */}
+            <Link
+              href="/cardsets"
+              fontWeight="bold"
+              bgGradient="linear(to-l, #7928CA, #FF0080)" // Default gradient
+              bgClip="text"
+              _hover={{
+                textDecoration: "underline",
+                bgGradient: "linear(to-l, #FF0080, #7928CA)", // Hover gradient
+              }}
+            >
+              Auction Page
+            </Link>
           {account && wallet ? (
             <ProfileButton address={account.address} wallet={wallet} />
           ) : (
@@ -60,7 +89,7 @@ export function Navbar() {
               connectButton={{ style: { height: "56px" } }}
             />
           )}
-        </Box>
+        </Flex>
         <SideMenu />
       </Flex>
     </Box>
@@ -110,14 +139,5 @@ function ProfileButton({
         </MenuItem>
       </MenuList>
     </Menu>
-  );
-}
-
-function ToggleThemeButton() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <Button height="56px" w="56px" onClick={toggleColorMode} mr="10px">
-      {colorMode === "light" ? <FaRegMoon /> : <IoSunny />}
-    </Button>
   );
 }
