@@ -173,8 +173,6 @@ contract PokemonNFT is ERC721Base, ReentrancyGuard, Permissions {
         return tokenId;
     }
 
-
-
     function getCardSet(uint256 setId) external view returns (CardSet memory) {
         return cardSets[setId];
     }
@@ -182,6 +180,32 @@ contract PokemonNFT is ERC721Base, ReentrancyGuard, Permissions {
     function getCardSetCount() external view returns (uint256) {
         return _CardSetId;
     }
+
+    /**
+     * @dev Get all card sets with supply > 0
+     * @return An array of CardSet structs
+     */
+    function getAvailableCardSets() external view returns (CardSet[] memory) {
+
+        uint256 count = 0;
+        for (uint256 i = 0; i < _CardSetId; i++) {
+            if (cardSets[i].supply > 0) {
+                count++;
+            }
+        }
+
+        CardSet[] memory availableCardSets = new CardSet[](count);
+        uint256 index = 0;
+
+        for (uint256 i = 0; i < _CardSetId; i++) {
+            if (cardSets[i].supply > 0) {
+                availableCardSets[index] = cardSets[i];
+                index++;
+            }
+        }
+        return availableCardSets;
+    }
+
 
     /**
      * @dev Update the secret salt used for randomness

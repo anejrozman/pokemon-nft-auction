@@ -19,7 +19,7 @@ async function main() {
         `ipfs://${CID}/ekans.json`,
       ],
       probabilities: [9999, 1],
-      supply: 2,
+      supply: 1,
       price: ethers.parseEther("0.5")
     },
     {
@@ -29,7 +29,7 @@ async function main() {
         `ipfs://${CID}/vulpix.json`,
       ],
       probabilities: [5000, 5000],
-      supply: 1,
+      supply: 2,
       price: ethers.parseEther("0.02")
     }
   ];
