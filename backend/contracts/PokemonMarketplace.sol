@@ -71,7 +71,7 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
      */
     modifier listingExistsAndActive(uint256 _listingId) {
         Listing storage listing = _listings[_listingId];
-        require(listing.listingId == _listingId && listing.listingId != 0, "Marketplace: Listing does not exist");
+        require(listing.listingId == _listingId, "Marketplace: Listing does not exist");
         require(listing.status == Status.CREATED, "Marketplace: Listing not active");
         _;
     }
@@ -126,6 +126,20 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
         nonReentrant
         returns (uint256 listingId)
     {
+        // Check if there's an existing active listing for this token
+        for (uint256 i = 0; i < _listingCounter; i++) {
+            Listing storage existingListing = _listings[i];
+            if (existingListing.assetContract == _params.assetContract && 
+                existingListing.tokenId == _params.tokenId &&
+                existingListing.status == Status.CREATED &&
+                existingListing.listingCreator == msg.sender) {
+                // Found an active listing for this token by this seller - update it
+                updateListing(i, _params);
+                return i;
+            }
+        }
+
+        // No existing listing found - create new one
         require(_params.quantity > 0, "Marketplace: Quantity must be > 0");
         require(_params.quantity == 1, "Marketplace: ERC721 quantity must be 1");
         require(_params.pricePerToken > 0, "Marketplace: Price must be > 0");
@@ -168,17 +182,8 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
         return listingId;
     }
 
-    /**
-     * @inheritdoc IDirectListings
-     */
-    function updateListing(uint256 _listingId, ListingParameters memory _params)
-        external
-        override
-        whenNotPaused
-        nonReentrant
-        onlyListingCreator(_listingId)
-        listingExistsAndActive(_listingId)
-    {
+    // Internal function for updating listings
+    function _updateListing(uint256 _listingId, ListingParameters memory _params) internal {
         Listing storage listing = _listings[_listingId];
         require(_params.quantity == 1, "Marketplace: ERC721 quantity must be 1");
         require(_params.pricePerToken > 0, "Marketplace: Price must be > 0");
@@ -202,6 +207,18 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
         listing.reserved = _params.reserved;
         _currencyPrices[_listingId][_params.currency] = _params.pricePerToken;
         emit UpdatedListing(msg.sender, _listingId, listing.assetContract, listing);
+    }
+
+    // External function that calls internal implementation
+    function updateListing(uint256 _listingId, ListingParameters memory _params)
+        external
+        override
+        whenNotPaused
+        nonReentrant
+        onlyListingCreator(_listingId)
+        listingExistsAndActive(_listingId)
+    {
+        _updateListing(_listingId, _params);
     }
 
      /**
