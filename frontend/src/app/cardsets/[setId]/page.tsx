@@ -20,26 +20,6 @@ export default function CardSetDetailsPage({
     contract: nftContract,
     setId: BigInt(setId), 
   });
-
-  // Get signer from browser's Ethereum provider 
-  const [signer, setSigner] = useState<ethers.Signer | null>(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && (window as any).ethereum) {
-      const provider = new ethers.BrowserProvider((window as any).ethereum);
-      provider.getSigner().then(setSigner);
-    }
-  }, []);
-
-  const pokemonContract = signer
-    ? new ethers.Contract(
-        nftContract.address,
-        [
-          "function mintFromCardSet(uint256 setId) public payable",
-        ],
-        signer // Signer from the connected wallet
-      )
-    : null;
     
   const [isMinting, setIsMinting] = useState(false);
   
@@ -50,24 +30,39 @@ export default function CardSetDetailsPage({
         return;
       }
   
-      if (!pokemonContract) {
-        alert("Contract is not initialized. Please connect your wallet.");
+      if (typeof window === "undefined" || !(window as any).ethereum) {
+        alert("Ethereum provider is not available. Please install MetaMask.");
         return;
       }
-
+  
+      // Dynamically fetch the signer
+      const provider = new ethers.BrowserProvider((window as any).ethereum);
+      const signer = await provider.getSigner();
+      const walletAddress = await signer.getAddress();
+      console.log("Connected Wallet Address:", walletAddress);
+  
+      // Dynamically create the contract instance with the signer
+      const pokemonContract = new ethers.Contract(
+        nftContract.address,
+        [
+          "function mintFromCardSet(uint256 setId) public payable",
+        ],
+        signer
+      );
+  
       setIsMinting(true);
   
+      // Call the mint function
       const tx = await pokemonContract.mintFromCardSet(BigInt(setId), {
         value: cardSet.price,
       });
   
       await tx.wait();
       alert("Mint successful!");
-
+  
+      // Reload the page to fetch updated card set data
       window.location.reload();
-    } 
-    
-    catch (error: any) {
+    } catch (error: any) {
       console.error("Error minting from card set:", error);
       if (error.code === "INSUFFICIENT_FUNDS") {
         alert("You do not have enough ETH to mint this card.");

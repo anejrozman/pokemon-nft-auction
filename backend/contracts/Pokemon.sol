@@ -282,4 +282,11 @@ contract PokemonNFT is ERC721Base, ReentrancyGuard, Permissions {
 
         emit Withdrawal(msg.sender, balance);
     }
+
+    /**
+     * @dev Override _canMint to allow any wallet to mint.
+     */
+    function _canMint() internal view virtual override returns (bool) {
+        return true; // Allow all wallets to mint
+    }
 }
