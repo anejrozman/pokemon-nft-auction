@@ -110,22 +110,32 @@ function AuctionRow({
   nft: any;
 }) {
   const createdByYou =
-    item.auctionCreator.toLowerCase() ===
+    item?.creatorAddress.toLowerCase() ===
     account?.address.toLowerCase();
   
-  const isWinner = 
-    item.winningBid?.bidder?.toLowerCase() === 
-    account?.address.toLowerCase();
-  
-  const isEnded = 
-    Date.now() / 1000 > Number(item.endTimeInSeconds);
-
   // Get winning bid for this auction
   const { data: auctionBid } = useReadContract(getWinningBid, {
     contract: auctionHouse,
     auctionId: item.id,
   });
-        
+
+  const isWinner = 
+    auctionBid?.[0]?.toLowerCase() === 
+    account?.address.toLowerCase();
+  console.log("winningBid address:", auctionBid?.[0]?.toLowerCase());
+  console.log("account address:", account?.address.toLowerCase());
+  
+  const isEnded = 
+    Date.now() / 1000 > Number(item.endTimeInSeconds);
+  
+  console.log("Debug values:", {
+    isEnded,
+    isWinner,
+    currentTime: Date.now() / 1000,
+    endTime: Number(item.endTimeInSeconds),
+    auctionBid
+  });
+
   return (
     <Tr key={item.id.toString()}>
       <Td>
@@ -174,7 +184,7 @@ function AuctionRow({
                 auction={item}
               />
             )}
-            {isEnded && createdByYou && item.winningBid && (
+            {isEnded && createdByYou && (
               <CollectAuctionPayoutButton
                 account={account}
                 auction={item}
