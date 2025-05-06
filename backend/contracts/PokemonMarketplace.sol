@@ -134,7 +134,7 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
                 existingListing.status == Status.CREATED &&
                 existingListing.listingCreator == msg.sender) {
                 // Found an active listing for this token by this seller - update it
-                updateListing(i, _params);
+                _updateListing(i, _params);
                 return i;
             }
         }
