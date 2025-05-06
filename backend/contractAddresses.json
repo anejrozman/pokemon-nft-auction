@@ -3,3 +3,19 @@
   "marketplaceAddress": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
   "auctionHouseAddress": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
 }
+
+// // Connect to the marketplace contract
+// const Marketplace = await ethers.getContractFactory("PokemonMarketplace")
+// const marketplace = await Marketplace.attach("0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512")
+
+// // Get total listings
+// const total = await marketplace.totalListings()
+// console.log("Total listings:", total.toString())
+
+// // Get all valid listings
+// const listings = await marketplace.getAllValidListings(0, total - 1)
+// console.log("\nActive listings:", listings)
+
+// // Get a specific listing (replace 1 with the listing ID you want to check)
+// const listing = await marketplace.getListing(1)
+// console.log("\nListing #1:", listing)
