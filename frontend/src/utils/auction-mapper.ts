@@ -29,13 +29,6 @@ export function mapToExtendedAuction(auction: EnglishAuction): ExtendedEnglishAu
     } as ExtendedEnglishAuction;
   }
 
-  // Log data for debugging
-  console.log("Mapping auction:", {
-    id: auction.id,
-    assetContract: auction.assetContractAddress,
-    tokenId: auction.tokenId,
-    tokenType: typeof auction.tokenId
-  });
   
   // Safely extract winner and bid amount
   const winner = auction.winningBidder || "";
@@ -82,6 +75,5 @@ export function mapToExtendedAuctions(auctions: EnglishAuction[]): ExtendedEngli
     console.error("Invalid auctions array:", auctions);
     return [];
   }
-  console.log("Mapping", auctions.length, "auctions");
   return auctions.map(mapToExtendedAuction);
 } 

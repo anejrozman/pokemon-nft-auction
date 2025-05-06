@@ -35,8 +35,6 @@ import { CreateAuction } from "./CreateAuction";
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import dynamic from "next/dynamic";
 import { NftDetails } from "./NftDetails";
-import { DebugAuctions } from "./DebugAuctions";
-import { prepareEvent } from "thirdweb";
 import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
 import { getContract } from "thirdweb";
 import auctionHouseAbi from "@/abi/PokemonAuctionHouse.json";
@@ -122,19 +120,9 @@ function AuctionRow({
   const isWinner = 
     auctionBid?.[0]?.toLowerCase() === 
     account?.address.toLowerCase();
-  console.log("winningBid address:", auctionBid?.[0]?.toLowerCase());
-  console.log("account address:", account?.address.toLowerCase());
-  
+
   const isEnded = 
     Date.now() / 1000 > Number(item.endTimeInSeconds);
-  
-  console.log("Debug values:", {
-    isEnded,
-    isWinner,
-    currentTime: Date.now() / 1000,
-    endTime: Number(item.endTimeInSeconds),
-    auctionBid
-  });
 
   return (
     <Tr key={item.id.toString()}>
@@ -239,14 +227,9 @@ export function Token(props: Props) {
   // Convert tokenId to string for comparison to handle different data types
   const tokenIdString = tokenId.toString();
   
-  // Add console logs to help debug auction data
-  console.log("All auctions in collection:", auctionsInSelectedCollection);
   
   const auctions = (auctionsInSelectedCollection || []).filter(
     (item) => {
-      // Log each item's tokenId for debugging
-      console.log("Auction tokenId:", item.tokenId?.toString(), "Looking for:", tokenIdString);
-      
       return item.assetContractAddress?.toLowerCase() ===
         nftContract.address.toLowerCase() && 
         (item.tokenId?.toString() === tokenIdString || 
@@ -254,8 +237,6 @@ export function Token(props: Props) {
     }
   );
   
-  console.log("Filtered auctions:", auctions);
-
   const allLoaded = !isLoadingNFT && !isLoading && !isRefetchingAllListings;
 
   const ownedByYou =
@@ -278,7 +259,6 @@ export function Token(props: Props) {
   // Watch for changes in events
   useEffect(() => {
     if (events?.length) {
-      console.log("New bid events:", events);
       if (refetchAllAuctions) {
         refetchAllAuctions();
       }
@@ -293,8 +273,6 @@ export function Token(props: Props) {
       enabled: auctions.length > 0,
     }
   });
-
-  console.log("Winning bid:", winningBid);
 
   return (
     <Flex direction="column">
@@ -517,9 +495,6 @@ export function Token(props: Props) {
           </Box>
         </Flex>
       </Box>
-      
-      {/* Add debug panel for development */}
-      <DebugAuctions />
     </Flex>
   );
 }

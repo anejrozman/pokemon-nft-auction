@@ -41,14 +41,6 @@ export default function CollectAuctionButton(props: Props) {
   const isWinner = winningBid?.[0]?.toLowerCase() === account.address.toLowerCase();
   const isAuctionEnded = Date.now() / 1000 > Number(auction.endTimeInSeconds);
 
-  console.log("CollectButton Debug:", {
-    winningBid,
-    isWinner,
-    isAuctionEnded,
-    accountAddress: account.address.toLowerCase(),
-    winnerAddress: winningBid?.[0]?.toLowerCase()
-  });
-
   const handleCollect = async () => {
     if (!isWinner || !isAuctionEnded) {
       return;

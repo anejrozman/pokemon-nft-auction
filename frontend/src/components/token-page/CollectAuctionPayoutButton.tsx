@@ -42,13 +42,6 @@ export default function CollectAuctionPayoutButton(props: Props) {
   const isAuctionEnded = Date.now() / 1000 > Number(auction.endTimeInSeconds);
   const hasWinningBid = winningBid?.[0] !== undefined;
 
-  console.log("CollectPayoutButton Debug:", {
-    winningBid,
-    isSeller,
-    isAuctionEnded,
-    hasWinningBid
-  });
-
   const handleCollectPayout = async () => {
     if (!isSeller || !isAuctionEnded || !hasWinningBid) {
       return;
