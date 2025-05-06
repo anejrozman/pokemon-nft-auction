@@ -4,135 +4,281 @@ import { NFT_CONTRACTS } from "@/consts/nft_contracts";
 import { Link } from "@chakra-ui/next-js";
 import {
   Box,
+  Button,
+  Container,
   Flex,
   Heading,
   Image,
-  Stack,
-  StackDivider,
+  SimpleGrid,
   Text,
+  useColorModeValue,
+  VStack,
+  HStack,
+  IconButton,
+  Card,
+  CardBody,
 } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+// Import images directly
+import setIconImage from "@/public/set_icon.jpg";
+import auctionIconImage from "@/public/auction_icon.jpg";
 
 export default function Home() {
+  const bgGradient = "linear(to-br, #7928CA, #FF0080)";
+  const cardBg = useColorModeValue("white", "gray.800");
+  const cardHoverBg = useColorModeValue("gray.50", "gray.700");
+  
   return (
-    <Flex direction="column" mt="24px" mx="auto" maxW="90vw" gap="6">
-      {/* Website Description */}
-      <Heading
-        size="md"
-        bgGradient="linear(to-l, #7928CA, #FF0080)"
-        bgClip="text"
+    <Container maxW="container.xl" p={0}>
+      {/* Hero Section with Title */}
+      <Box 
+        w="full" 
+        py={10} 
         textAlign="center"
+        bgGradient={bgGradient}
+        color="white"
+        borderRadius="lg"
+        mb={8}
       >
-        Welcome to PokéMarket!
-      </Heading>
+        <Heading size="2xl" fontWeight="bold">
+          PokéMarket
+        </Heading>
+        <Text fontSize="xl" mt={3} maxW="container.md" mx="auto">
+          Collect, Trade, and Battle with Pokémon NFTs
+        </Text>
+      </Box>
 
-      <Stack divider={<StackDivider />} spacing="6">
-        <Box>
-          <Heading
-            size="xs"
-            textTransform="uppercase"
-            bgGradient="linear(to-l, #7928CA, #FF0080)"
-            bgClip="text"
+      {/* Main Navigation Cards - Card Sets & Auctions */}
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8} mb={16}>
+        {/* Card Sets Button */}
+        <Link href="/cardsets" _hover={{ textDecoration: "none" }}>
+          <Box
+            h={{ base: "300px", lg: "400px" }}
+            position="relative"
+            borderRadius="lg"
+            overflow="hidden"
+            transition="transform 0.3s"
+            _hover={{ transform: "translateY(-5px)" }}
           >
-            What are Pokémon?
-          </Heading>
-          <Text pt="2" fontSize="sm">
-            Pokémon are creatures with unique abilities and traits that have
-            captured the hearts of millions worldwide. Now, you can own your
-            favorite Pokémon as NFTs, bringing them to life in the digital
-            world!
-          </Text>
-        </Box>
-
-        <Box>
-          <Heading
-            size="xs"
-            textTransform="uppercase"
-            bgGradient="linear(to-l, #7928CA, #FF0080)"
-            bgClip="text"
-          >
-            Buy NFTs from Card Sets
-          </Heading>
-          <Text pt="2" fontSize="sm">
-            Explore our exclusive{" "}
-            <Link
-              href="/cardsets"
-              bgGradient="linear(to-l, #7928CA, #FF0080)"
-              bgClip="text"
-              _hover={{
-                textDecoration: "underline",
-                bgGradient: "linear(to-l, #FF0080, #7928CA)", 
-              }}
+            {/* Card Sets image */}
+            <Box
+              w="full"
+              h="full"
+              position="absolute"
+              overflow="hidden"
             >
-              Card Sets
-            </Link>{" "}
-            to mint limited-edition Pokémon NFTs. Each set contains rare and
-            unique Pokémon waiting to be discovered!
-          </Text>
-        </Box>
+              <Image
+                src={setIconImage.src}
+                alt="Card Sets"
+                objectFit="cover" 
+                w="full"
+                h="full"
+                fallback={
+                  <Box
+                    w="full"
+                    h="full"
+                    bgGradient="linear(to-br, #7928CA, #417ade)"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Text color="white" fontSize="6xl" fontWeight="bold" opacity={0.3}>
+                      CARD SETS
+                    </Text>
+                  </Box>
+                }
+              />
+              {/* Darkening overlay for better text visibility */}
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                w="full"
+                h="full"
+                bg="blackAlpha.300"
+              />
+            </Box>
+            
+            {/* Content overlay */}
+            <VStack
+              position="absolute"
+              bottom="0"
+              w="full"
+              p={8}
+              align="start"
+              bg="blackAlpha.700"
+              color="white"
+            >
+              <Heading size="lg">Card Sets</Heading>
+              <Text fontSize="md">
+                Explore and mint exclusive Pokémon cards from various sets
+              </Text>
+              <HStack pt={2}>
+                <Text fontWeight="bold">Browse Sets</Text>
+                <ArrowForwardIcon />
+              </HStack>
+            </VStack>
+          </Box>
+        </Link>
+        
+        {/* Auctions Button */}
+        <Link href="/auctions" _hover={{ textDecoration: "none" }}>
+          <Box
+            h={{ base: "300px", lg: "400px" }}
+            position="relative"
+            borderRadius="lg"
+            overflow="hidden"
+            transition="transform 0.3s"
+            _hover={{ transform: "translateY(-5px)" }}
+          >
+            {/* Auctions image */}
+            <Box
+              w="full"
+              h="full"
+              position="absolute"
+              overflow="hidden"
+            >
+              <Image
+                src={auctionIconImage.src}
+                alt="Auctions"
+                objectFit="cover"
+                w="full"
+                h="full"
+                fallback={
+                  <Box
+                    w="full"
+                    h="full"
+                    bgGradient="linear(to-br, #FF0080, #ffaa00)"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Text color="white" fontSize="6xl" fontWeight="bold" opacity={0.3}>
+                      AUCTIONS
+                    </Text>
+                  </Box>
+                }
+              />
+              {/* Darkening overlay for better text visibility */}
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                w="full"
+                h="full"
+                bg="blackAlpha.300"
+              />
+            </Box>
+            
+            {/* Content overlay */}
+            <VStack
+              position="absolute"
+              bottom="0"
+              w="full"
+              p={8}
+              align="start"
+              bg="blackAlpha.700"
+              color="white"
+            >
+              <Heading size="lg">Auctions</Heading>
+              <Text fontSize="md">
+                Bid on rare and limited Pokémon NFTs in our live auctions
+              </Text>
+              <HStack pt={2}>
+                <Text fontWeight="bold">View Auctions</Text>
+                <ArrowForwardIcon />
+              </HStack>
+            </VStack>
+          </Box>
+        </Link>
+      </SimpleGrid>
 
-        <Box>
-          <Heading
-            size="xs"
-            textTransform="uppercase"
-            bgGradient="linear(to-l, #7928CA, #FF0080)"
+      {/* Trending Collections Section */}
+      <Box mb={8}>
+        <Flex justify="space-between" align="center" mb={4}>
+          <Heading 
+            size="lg"
+            bgGradient={bgGradient}
             bgClip="text"
           >
-            Participate in Auctions
+            Trending Collections
           </Heading>
-          <Text pt="2" fontSize="sm">
-            Bid on exclusive Pokémon NFTs in our{" "}
-            <Link
-              href="/auctions"
-              bgGradient="linear(to-l, #7928CA, #FF0080)"
-              bgClip="text"
-              _hover={{
-                textDecoration: "underline",
-                bgGradient: "linear(to-l, #FF0080, #7928CA)",
-              }}
-            >
-              Auctions
-            </Link>
-            . Compete with other collectors to own the rarest Pokémon NFTs
-            available!
-          </Text>
-        </Box>
-      </Stack>
-
-      {/* Trending Collections */}
-      <Heading
-        ml="20px"
-        mt="40px"
-        bgGradient="linear(to-l, #7928CA, #FF0080)"
-        bgClip="text"
-      >
-        Trending Collections
-      </Heading>
-      <Flex
-        direction="row"
-        wrap="wrap"
-        mt="20px"
-        gap="5"
-        justifyContent="space-evenly"
-      >
-        {NFT_CONTRACTS.map((item) => (
-          <Link
-            _hover={{
-              textDecoration: "none",
-              bgGradient: "linear(to-l, #FF0080, #7928CA)", // Hover gradient
-              bgClip: "text",
-            }}
-            w={300}
-            h={400}
-            key={item.address}
-            href={`/collection/${item.chain.id.toString()}/${item.address}`}
+          <Button 
+            variant="outline" 
+            size="sm"
+            bgGradient={bgGradient}
+            bgClip="text"
+            borderColor="purple.500"
           >
-            <Image src={item.thumbnailUrl} />
-            <Text fontSize="large" mt="10px">
-              {item.title}
-            </Text>
-          </Link>
-        ))}
-      </Flex>
-    </Flex>
+            View All
+          </Button>
+        </Flex>
+        
+        {/* Horizontal Scrollable List */}
+        <Box 
+          overflowX="auto" 
+          css={{
+            '&::-webkit-scrollbar': {
+              height: '8px',
+            },
+            '&::-webkit-scrollbar-track': {
+              background: '#f1f1f1',
+              borderRadius: '10px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#888',
+              borderRadius: '10px',
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+              background: '#555',
+            },
+          }}
+        >
+          <Flex gap={5} pb={4}>
+            {NFT_CONTRACTS.map((item) => (
+              <Card 
+                key={item.address}
+                minW="250px"
+                maxW="250px"
+                bg={cardBg}
+                borderRadius="lg"
+                overflow="hidden"
+                transition="all 0.3s"
+                _hover={{ 
+                  transform: "translateY(-5px)",
+                  boxShadow: "xl"
+                }}
+              >
+                <Link 
+                  href={`/collection/${item.chain.id.toString()}/${item.address}`}
+                  _hover={{ textDecoration: "none" }}
+                >
+                  <Box h="200px" overflow="hidden">
+                    <Image 
+                      src={item.thumbnailUrl} 
+                      alt={item.title}
+                      w="full"
+                      h="full"
+                      objectFit="cover"
+                      transition="transform 0.5s"
+                      _hover={{ transform: "scale(1.05)" }}
+                    />
+                  </Box>
+                  <CardBody>
+                    <Text 
+                      fontSize="md" 
+                      fontWeight="bold"
+                      noOfLines={1}
+                    >
+                      {item.title}
+                    </Text>
+                  </CardBody>
+                </Link>
+              </Card>
+            ))}
+          </Flex>
+        </Box>
+      </Box>
+    </Container>
   );
 }
