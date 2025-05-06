@@ -217,8 +217,8 @@ export function CreateListing(props: Props) {
             });
 
             await sendAndConfirmTransaction({
-              transaction,
               account,
+              transaction,
             });
             refetchAllListings();
           }}

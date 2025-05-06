@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-import "@thirdweb-dev/contracts/base/ERC721Base.sol";
 import "@thirdweb-dev/contracts/extension/Permissions.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-// import "@openzeppelin/contracts/utils/Pausable.sol"; // Dont know how to get this working!
+import "./helpers/PausableERC721Base.sol";
+import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 // TO DO: IMPLEMENT PAUSABLE FUNCTIONALITY, 
@@ -16,9 +16,10 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
  * @title PokemonNFT
  * @dev Implementation of ERC721 token representing Pokemon cards
  */
-contract PokemonNFT is ERC721Base, ReentrancyGuard, Permissions {
+contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
     using ECDSA for bytes32; 
     using Strings for uint256;
+    
     
     // Counters
     uint256 private _cardSetId;
@@ -79,7 +80,8 @@ contract PokemonNFT is ERC721Base, ReentrancyGuard, Permissions {
         _cardSetId = 0;
 
     }
-    
+
+
     /**
      * @dev Create a card set to mint new Pokemon from
      * Only callable by DEFAULT_ADMIN_ROLE

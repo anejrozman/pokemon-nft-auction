@@ -9,6 +9,9 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol"; // Import Address library for safe ETH transfer
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import "@thirdweb-dev/contracts/eip/interface/IERC721Receiver.sol";
+
 
 /**
  * @title PokemonMarketplace
@@ -16,7 +19,7 @@ import "@openzeppelin/contracts/utils/Address.sol"; // Import Address library fo
  * NFTs are NOT escrowed; sellers must approve the marketplace contract beforehand.
  * Payouts are sent directly to the seller and platform fee recipient during the purchase.
  */
-contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausable {
+contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausable, ERC165 {
     using SafeERC20 for IERC20;
     using Address for address payable; // Use Address library for safe ETH transfer
 
@@ -68,7 +71,7 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
      */
     modifier listingExistsAndActive(uint256 _listingId) {
         Listing storage listing = _listings[_listingId];
-        require(listing.listingId == _listingId && listing.listingId != 0, "Marketplace: Listing does not exist");
+        require(listing.listingId == _listingId, "Marketplace: Listing does not exist");
         require(listing.status == Status.CREATED, "Marketplace: Listing not active");
         _;
     }
@@ -123,6 +126,20 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
         nonReentrant
         returns (uint256 listingId)
     {
+        // Check if there's an existing active listing for this token
+        for (uint256 i = 0; i < _listingCounter; i++) {
+            Listing storage existingListing = _listings[i];
+            if (existingListing.assetContract == _params.assetContract && 
+                existingListing.tokenId == _params.tokenId &&
+                existingListing.status == Status.CREATED &&
+                existingListing.listingCreator == msg.sender) {
+                // Found an active listing for this token by this seller - update it
+                _updateListing(i, _params);
+                return i;
+            }
+        }
+
+        // No existing listing found - create new one
         require(_params.quantity > 0, "Marketplace: Quantity must be > 0");
         require(_params.quantity == 1, "Marketplace: ERC721 quantity must be 1");
         require(_params.pricePerToken > 0, "Marketplace: Price must be > 0");
@@ -141,7 +158,6 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
             "Marketplace: Contract not approved to transfer NFT"
         );
 
-        _listingCounter++;
         listingId = _listingCounter;
 
         _listings[listingId] = Listing({
@@ -161,20 +177,13 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
 
         _currencyPrices[listingId][_params.currency] = _params.pricePerToken;
         emit NewListing(msg.sender, listingId, _params.assetContract, _listings[listingId]);
+        _listingCounter++; // so we increase at the end and the next one gets the
+
         return listingId;
     }
 
-    /**
-     * @inheritdoc IDirectListings
-     */
-    function updateListing(uint256 _listingId, ListingParameters memory _params)
-        external
-        override
-        whenNotPaused
-        nonReentrant
-        onlyListingCreator(_listingId)
-        listingExistsAndActive(_listingId)
-    {
+    // Internal function for updating listings
+    function _updateListing(uint256 _listingId, ListingParameters memory _params) internal {
         Listing storage listing = _listings[_listingId];
         require(_params.quantity == 1, "Marketplace: ERC721 quantity must be 1");
         require(_params.pricePerToken > 0, "Marketplace: Price must be > 0");
@@ -198,6 +207,18 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
         listing.reserved = _params.reserved;
         _currencyPrices[_listingId][_params.currency] = _params.pricePerToken;
         emit UpdatedListing(msg.sender, _listingId, listing.assetContract, listing);
+    }
+
+    // External function that calls internal implementation
+    function updateListing(uint256 _listingId, ListingParameters memory _params)
+        external
+        override
+        whenNotPaused
+        nonReentrant
+        onlyListingCreator(_listingId)
+        listingExistsAndActive(_listingId)
+    {
+        _updateListing(_listingId, _params);
     }
 
      /**
@@ -346,7 +367,7 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
      */
     function getListing(uint256 _listingId) external view override returns (Listing memory listing) {
         listing = _listings[_listingId];
-        require(listing.listingId == _listingId && listing.listingId != 0, "Marketplace: Listing does not exist");
+        require(listing.listingId == _listingId, "Marketplace: Listing does not exist");
     }
 
     /**
@@ -416,4 +437,17 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
         }
         return validListings;
     }
+
+        /*///////////////////////////////////////////////////////////////
+                        ERC 165 / 721 / 1155 logic
+    //////////////////////////////////////////////////////////////*/
+
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view virtual override(ERC165) returns (bool) {
+        return
+            interfaceId == type(IERC721Receiver).interfaceId ||
+            super.supportsInterface(interfaceId);
+    }
 } 
+
