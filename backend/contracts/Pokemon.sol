@@ -7,10 +7,8 @@ import "./helpers/PausableERC721Base.sol";
 import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
-// TO DO: IMPLEMENT PAUSABLE FUNCTIONALITY, 
-// MAKE MINTING POSSIBLE FOR ANY WALLET NOT JUST THE DEFAULT_ADMIN, 
+// TO DO: IMPLEMENT PAUSABLE FUNCTIONALITY,  
 // REMOVE FUNCTIONS WITH (DELETE FUNCTION) IN DESCRIPTION
-// COMMIT-REVEAL SCHEME IMPLEMENTATION (MAYBE)
 
 /**
  * @title PokemonNFT
