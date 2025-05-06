@@ -10,6 +10,7 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 // TO DO: IMPLEMENT PAUSABLE FUNCTIONALITY, 
 // MAKE MINTING POSSIBLE FOR ANY WALLET NOT JUST THE DEFAULT_ADMIN, 
 // REMOVE FUNCTIONS WITH (DELETE FUNCTION) IN DESCRIPTION
+// COMMIT-REVEAL SCHEME IMPLEMENTATION (MAYBE)
 
 /**
  * @title PokemonNFT
@@ -21,7 +22,7 @@ contract PokemonNFT is ERC721Base, ReentrancyGuard, Permissions {
     
     // Counters
     uint256 private _cardSetId;
-    // Pokemon card struct with IPFS metadata reference
+    // Pokemon card struct
     struct Pokemon {
         string ipfsURI;
     }
@@ -39,12 +40,13 @@ contract PokemonNFT is ERC721Base, ReentrancyGuard, Permissions {
     // Mappings 
     mapping(uint256 => Pokemon) public pokemonAttributes;
     mapping(uint256 => CardSet) public cardSets;
+    
 
     // Secret salt used for randomness
     bytes32 private _secretSalt;
 
     // Events
-    event PokemonMinted(uint256 tokenId, string ipfsURI, address owner);
+    event PokemonMinted(uint256 tokenId, string ipfsURI, address indexed owner);
     event CardSetCreated(uint id, string name, string[] cardURIs, uint256[] probabilities, uint256 supply, uint256 price);
     event SecretSaltUpdated();
     event Withdrawal(address indexed to, uint256 amount);
@@ -149,7 +151,7 @@ contract PokemonNFT is ERC721Base, ReentrancyGuard, Permissions {
     }
 
     /**
-     * @dev In production Chainlink's VRF Coordinator would be used 
+     * @dev In production Chainlink's VRF Coordinator would be used. 
      * Miners/validators can see pending transactions and potentially 
      * mine their own transactions first to get preferred results.
      */

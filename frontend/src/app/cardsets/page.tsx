@@ -65,7 +65,7 @@ export default function CardSetsPage() {
                     {set.name}
                   </Text>
                   <Text fontSize="lg" fontWeight="bold">
-                    Price: {set.price.toString()} ETH
+                    Price: {(Number(set.price) / 10**18).toString()} ETH
                   </Text>
                   <Text fontSize="lg" fontWeight="bold">
                     Available Mints: {set.supply.toString()}

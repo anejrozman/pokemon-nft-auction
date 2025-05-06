@@ -31,6 +31,21 @@ async function main() {
       probabilities: [5000, 5000],
       supply: 2,
       price: ethers.parseEther("0.02")
+    },
+    {
+      name: "Starter Box",
+      cardURIs: [
+        `ipfs://${CID}/bulbasaur.json`,
+        `ipfs://${CID}/clefairy.json`,
+        `ipfs://${CID}/squirtle.json`,
+        `ipfs://${CID}/vileplume.json`,
+        `ipfs://${CID}/jigglypuff.json`,
+        `ipfs://${CID}/diglett.json`,
+        `ipfs://${CID}/sandshrew.json`,
+      ],
+      probabilities: [1000, 2000, 1000, 2000, 1000, 2000, 1000],
+      supply: 5,
+      price: ethers.parseEther("1")
     }
   ];
 
