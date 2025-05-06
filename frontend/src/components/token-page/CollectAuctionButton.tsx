@@ -6,11 +6,12 @@ import {
 } from "@chakra-ui/react";
 import { sendAndConfirmTransaction } from "thirdweb";
 import { collectAuctionTokens } from "thirdweb/extensions/marketplace";
-import { useActiveWalletChain, useSwitchActiveWalletChain } from "thirdweb/react";
+import { useActiveWalletChain, useSwitchActiveWalletChain, useReadContract } from "thirdweb/react";
 import type { Account } from "thirdweb/wallets";
 import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
 import { getContract } from "thirdweb";
 import { client } from "@/consts/client";
+import { getWinningBid } from "@/helpers/0xf3ff3d85c43dc6b54f1a9223bb7eea02cadd8fba";
 
 type Props = {
   account: Account;
@@ -26,13 +27,27 @@ export default function CollectAuctionButton(props: Props) {
 
   // Get the auction house contract directly
   const auctionContract = getContract({
-    address: MARKETPLACE_CONTRACTS[1].address, // Use the second contract (PokemonAuctionHouse)
+    address: MARKETPLACE_CONTRACTS[1].address,
     chain: MARKETPLACE_CONTRACTS[1].chain,
     client,
   });
 
-  const isWinner = auction.winningBid?.bidder.toLowerCase() === account.address.toLowerCase();
+  // Get winning bid data from contract
+  const { data: winningBid } = useReadContract(getWinningBid, {
+    contract: auctionContract,
+    auctionId: auction.id,
+  });
+
+  const isWinner = winningBid?.[0]?.toLowerCase() === account.address.toLowerCase();
   const isAuctionEnded = Date.now() / 1000 > Number(auction.endTimeInSeconds);
+
+  console.log("CollectButton Debug:", {
+    winningBid,
+    isWinner,
+    isAuctionEnded,
+    accountAddress: account.address.toLowerCase(),
+    winnerAddress: winningBid?.[0]?.toLowerCase()
+  });
 
   const handleCollect = async () => {
     if (!isWinner || !isAuctionEnded) {

@@ -6,11 +6,12 @@ import {
 } from "@chakra-ui/react";
 import { sendAndConfirmTransaction } from "thirdweb";
 import { collectAuctionPayout } from "thirdweb/extensions/marketplace";
-import { useActiveWalletChain, useSwitchActiveWalletChain } from "thirdweb/react";
+import { useActiveWalletChain, useSwitchActiveWalletChain, useReadContract } from "thirdweb/react";
 import type { Account } from "thirdweb/wallets";
 import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
 import { getContract } from "thirdweb";
 import { client } from "@/consts/client";
+import { getWinningBid } from "@/helpers/0xf3ff3d85c43dc6b54f1a9223bb7eea02cadd8fba";
 
 type Props = {
   account: Account;
@@ -26,51 +27,64 @@ export default function CollectAuctionPayoutButton(props: Props) {
 
   // Get the auction house contract directly
   const auctionContract = getContract({
-    address: MARKETPLACE_CONTRACTS[1].address, // Use the second contract (PokemonAuctionHouse)
+    address: MARKETPLACE_CONTRACTS[1].address,
     chain: MARKETPLACE_CONTRACTS[1].chain,
     client,
   });
 
-  const isSeller = auction.auctionCreator.toLowerCase() === account.address.toLowerCase();
+  // Get winning bid data from contract
+  const { data: winningBid } = useReadContract(getWinningBid, {
+    contract: auctionContract,
+    auctionId: auction.id,
+  });
+
+  const isSeller = auction.creatorAddress.toLowerCase() === account.address.toLowerCase();
   const isAuctionEnded = Date.now() / 1000 > Number(auction.endTimeInSeconds);
-  const hasWinningBid = auction.winningBid?.bidder !== undefined;
+  const hasWinningBid = winningBid?.[0] !== undefined;
+
+  console.log("CollectPayoutButton Debug:", {
+    winningBid,
+    isSeller,
+    isAuctionEnded,
+    hasWinningBid
+  });
 
   const handleCollectPayout = async () => {
     if (!isSeller || !isAuctionEnded || !hasWinningBid) {
       return;
     }
-    
+
     // Switch chain if needed
     if (activeChain?.id !== auctionContract.chain.id) {
       await switchChain(auctionContract.chain);
     }
-    
+
     try {
       // Collect payout
       const transaction = collectAuctionPayout({
         contract: auctionContract,
         auctionId: auction.id,
       });
-      
+
       await sendAndConfirmTransaction({
         transaction,
         account,
       });
-      
+
       toast({
-        title: "Auction proceeds collected successfully!",
+        title: "Payout collected successfully!",
         status: "success",
         duration: 5000,
         isClosable: true,
       });
-      
+
       if (refetchAllAuctions) {
         refetchAllAuctions();
       }
     } catch (error) {
       console.error("Collection error:", error);
       toast({
-        title: "Failed to collect auction proceeds",
+        title: "Failed to collect payout",
         description: error instanceof Error ? error.message : "Unknown error",
         status: "error",
         duration: 5000,
@@ -88,7 +102,7 @@ export default function CollectAuctionPayoutButton(props: Props) {
       colorScheme="green" 
       onClick={handleCollectPayout}
     >
-      Collect Proceeds
+      Collect Payout
     </Button>
   );
 } 
