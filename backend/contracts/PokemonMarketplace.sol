@@ -9,6 +9,9 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol"; // Import Address library for safe ETH transfer
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import "@thirdweb-dev/contracts/eip/interface/IERC721Receiver.sol";
+
 
 /**
  * @title PokemonMarketplace
@@ -16,7 +19,7 @@ import "@openzeppelin/contracts/utils/Address.sol"; // Import Address library fo
  * NFTs are NOT escrowed; sellers must approve the marketplace contract beforehand.
  * Payouts are sent directly to the seller and platform fee recipient during the purchase.
  */
-contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausable {
+contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausable, ERC165 {
     using SafeERC20 for IERC20;
     using Address for address payable; // Use Address library for safe ETH transfer
 
@@ -141,7 +144,6 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
             "Marketplace: Contract not approved to transfer NFT"
         );
 
-        _listingCounter++;
         listingId = _listingCounter;
 
         _listings[listingId] = Listing({
@@ -161,6 +163,8 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
 
         _currencyPrices[listingId][_params.currency] = _params.pricePerToken;
         emit NewListing(msg.sender, listingId, _params.assetContract, _listings[listingId]);
+        _listingCounter++; // so we increase at the end and the next one gets the
+
         return listingId;
     }
 
@@ -346,7 +350,7 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
      */
     function getListing(uint256 _listingId) external view override returns (Listing memory listing) {
         listing = _listings[_listingId];
-        require(listing.listingId == _listingId && listing.listingId != 0, "Marketplace: Listing does not exist");
+        require(listing.listingId == _listingId, "Marketplace: Listing does not exist");
     }
 
     /**
@@ -416,4 +420,17 @@ contract PokemonMarketplace is IDirectListings, ReentrancyGuard, Ownable, Pausab
         }
         return validListings;
     }
+
+        /*///////////////////////////////////////////////////////////////
+                        ERC 165 / 721 / 1155 logic
+    //////////////////////////////////////////////////////////////*/
+
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view virtual override(ERC165) returns (bool) {
+        return
+            interfaceId == type(IERC721Receiver).interfaceId ||
+            super.supportsInterface(interfaceId);
+    }
 } 
+
