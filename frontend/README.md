@@ -5,12 +5,14 @@ This project is a decentralized marketplace for Pokémon NFTs, supporting both d
 ## Features
 
 ### NFT Marketplace
+
 - View NFT collections
 - Create and cancel direct listings
 - Buy NFTs from listings
 - View NFT details and metadata
 
 ### Auction System
+
 - Create English auctions for NFTs (ERC721 and ERC1155)
 - Place bids on active auctions
 - Buyout auctions at a predetermined price
@@ -21,6 +23,7 @@ This project is a decentralized marketplace for Pokémon NFTs, supporting both d
 ## Technical Details
 
 The application is built using:
+
 - Next.js for the frontend framework
 - Chakra UI for the component library
 - thirdweb SDK for blockchain interactions
@@ -57,6 +60,7 @@ MIT
 <p align="center"><strong>Build your own NFT Marketplace with thirdweb SDK</strong></p>
 
 ## Features
+
 - Support for multiple collections
 - Support for multiple chains
 - Create listings with custom payment currencies
@@ -66,12 +70,15 @@ MIT
 Want to request a feature? [Create a GitHub issue!](https://github.com/thirdweb-example/marketplace-template/issues/new)
 
 ## Installation
+
 ### 1. Clone the template or [fork it](https://github.com/thirdweb-example/marketplace-template/fork)
+
 ```bash
 git clone https://github.com/thirdweb-example/marketplace-template
 ```
 
 ### 2. Install the dependencies
+
 ```bash
 # npm
 npm install
@@ -84,14 +91,19 @@ pnpm install
 ```
 
 ### 3. Set up environment variables
+
 Create a file called `.env.local` (at the root level of your project) with the following content:
+
 ```
 NEXT_PUBLIC_TW_CLIENT_ID="<your-thirdweb-client-id"
 ```
+
 Don't have a thirdweb clientId? [Grab one now](https://thirdweb.com/dashboard/settings/api-keys). Make sure you set up the `Allowed Domains` properly. [Learn how](https://portal.thirdweb.com/account/api-keys)
 
 ### 4. You're set
+
 You can now run the template in your local machine.
+
 ```bash
 # npm
 npm run dev
@@ -106,12 +118,15 @@ pnpm dev
 ## Customize your marketplace
 
 ### 1. Supported networks
+
 This template allows you to build a marketplace that can handle multiple NFT collections from multiple networks. For each network you want to support, you need to deploy a [MarketplaceV3 contract](https://thirdweb.com/thirdweb.eth/MarketplaceV3) on that network.
 
 To add a chain (network) to your marketplace, head to the file [`./src/consts/chains.ts`](./src/consts/chains.ts) and add that chain to the export array:
+
 ```typescript
 export { ethereum, bsc } from "thirdweb/chains";
 ```
+
 [Learn more about thirdweb Chains](https://portal.thirdweb.com/typescript/v5/chain)
 
 If the chain you are looking is not in our [default list](https://portal.thirdweb.com/references/typescript/v5/variables), you can define your own chain using the `defineChain` method:
@@ -123,7 +138,7 @@ import { defineChain, ethereum, bsc } from "thirdweb/chains";
 const yourChainId = 4747;
 const yourCustomChain = defineChain(yourChainId);
 
-export { ethereum, bsc, yourCustomChain }
+export { ethereum, bsc, yourCustomChain };
 ```
 
 ### 2. Supported marketplaces
@@ -131,6 +146,7 @@ export { ethereum, bsc, yourCustomChain }
 Once the marketplace contract deployment's completed, you need to put the MarketplaceV3 contract address and its respective chain in the file [`/src/consts/marketplace_contracts.ts`](/src/consts/marketplace_contract.ts)
 
 Example:
+
 ```typescript
 import { yourCustomChain, ethereum } from "./chains";
 
@@ -173,8 +189,9 @@ export const SUPPORTED_TOKENS: SupportedTokens[] = [
       // Add more ERC20 here...
     ],
   },
-]
+];
 ```
+
 You have to prepare your own icon assets for each token in this list.
 
 ## Support
@@ -188,4 +205,3 @@ For help or feedback, please [visit our support site](https://thirdweb.com/suppo
 ## Security
 
 If you believe you have found a security vulnerability in any of our packages, we kindly ask you not to open a public issue; and to disclose this to us by emailing `security@thirdweb.com`.
-
