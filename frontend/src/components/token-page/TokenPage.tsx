@@ -19,12 +19,13 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { balanceOf, getNFT as getERC1155 } from "thirdweb/extensions/erc1155";
+import { balanceOf, getNFT as getERC1155, tokensClaimedEvent } from "thirdweb/extensions/erc1155";
 import { getNFT as getERC721 } from "thirdweb/extensions/erc721";
 import {
   MediaRenderer,
   useActiveAccount,
   useReadContract,
+  useContractEvents,
 } from "thirdweb/react";
 import { shortenAddress } from "thirdweb/utils";
 import { formatEther } from "viem";
@@ -35,7 +36,14 @@ import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import dynamic from "next/dynamic";
 import { NftDetails } from "./NftDetails";
 import { DebugAuctions } from "./DebugAuctions";
-
+import { prepareEvent } from "thirdweb";
+import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
+import { getContract } from "thirdweb";
+import auctionHouseAbi from "@/abi/PokemonAuctionHouse.json";
+import { Abi } from "thirdweb/utils";
+import React, { useEffect, useState } from "react";
+import { newBidEvent } from "@/helpers/0xf3ff3d85c43dc6b54f1a9223bb7eea02cadd8fba";
+import { getWinningBid } from "@/helpers/0xf3ff3d85c43dc6b54f1a9223bb7eea02cadd8fba";
 const CancelListingButton = dynamic(() => import("./CancelListingButton"), {
   ssr: false,
 });
@@ -56,6 +64,139 @@ type Props = {
   tokenId: bigint;
 };
 
+// Custom hook to batch winning bid requests
+type WinningBid = [string, string, bigint]; // [bidder, currency, bidAmount]
+
+function useWinningBids(auctions: any[], auctionHouse: any) {
+  const [winningBids, setWinningBids] = useState<Record<string, WinningBid>>({});
+
+  useEffect(() => {
+    const fetchBids = async () => {
+      const bids = await Promise.all(
+        auctions.map(async (auction) => {
+          const result = await auctionHouse.read.getWinningBid([auction.id]);
+          return { id: auction.id.toString(), bid: result as WinningBid };
+        })
+      );
+      
+      const bidsMap = bids.reduce((acc, { id, bid }) => {
+        acc[id] = bid;
+        return acc;
+      }, {} as Record<string, WinningBid>);
+      
+      setWinningBids(bidsMap);
+    };
+
+    if (auctions.length > 0) {
+      fetchBids();
+    }
+  }, [auctions, auctionHouse]);
+
+  return winningBids;
+}
+
+// Separate component for auction row
+function AuctionRow({ 
+  item, 
+  account, 
+  auctionHouse, 
+  type,
+  nft 
+}: { 
+  item: any; 
+  account: any; 
+  auctionHouse: any;
+  type: string;
+  nft: any;
+}) {
+  const createdByYou =
+    item?.creatorAddress.toLowerCase() ===
+    account?.address.toLowerCase();
+  
+  // Get winning bid for this auction
+  const { data: auctionBid } = useReadContract(getWinningBid, {
+    contract: auctionHouse,
+    auctionId: item.id,
+  });
+
+  const isWinner = 
+    auctionBid?.[0]?.toLowerCase() === 
+    account?.address.toLowerCase();
+  console.log("winningBid address:", auctionBid?.[0]?.toLowerCase());
+  console.log("account address:", account?.address.toLowerCase());
+  
+  const isEnded = 
+    Date.now() / 1000 > Number(item.endTimeInSeconds);
+  
+  console.log("Debug values:", {
+    isEnded,
+    isWinner,
+    currentTime: Date.now() / 1000,
+    endTime: Number(item.endTimeInSeconds),
+    auctionBid
+  });
+
+  return (
+    <Tr key={item.id.toString()}>
+      <Td>
+        <Text>
+          {item.minimumBidCurrencyValue.displayValue} {item.currency.name}
+        </Text> 
+      </Td>
+      <Td>
+        <Text>
+          {auctionBid
+            ? `${formatEther(auctionBid[2])} ${item.currency.symbol || item.currency.name}`
+            : "No bids"}
+        </Text>
+      </Td>
+      {type === "ERC1155" && (
+        <Td px={1}>
+          <Text>{item.quantity.toString()}</Text>
+        </Td>
+      )}
+      <Td>
+        <Text>
+          {isEnded 
+            ? "Ended" 
+            : getExpiration(item.endTimeInSeconds)}
+        </Text>
+      </Td>
+      <Td px={1}>
+        <Text>
+          {createdByYou
+            ? "You"
+            : nft?.owner ? shortenAddress(nft.owner) : "N/A"}
+        </Text>
+      </Td>
+      {account && (
+        <Td>
+          <Flex gap={2}>
+            {!isEnded && !createdByYou && (
+              <BidInAuctionButton
+                account={account}
+                auction={item}
+              />
+            )}
+            {isEnded && isWinner && (
+              <CollectAuctionButton
+                account={account}
+                auction={item}
+              />
+            )}
+            {isEnded && createdByYou && (
+              <CollectAuctionPayoutButton
+                account={account}
+                auction={item}
+              />
+            )}
+          </Flex>
+        </Td>
+      )}
+    </Tr>
+  );
+}
+
 export function Token(props: Props) {
   const {
     type,
@@ -66,6 +207,7 @@ export function Token(props: Props) {
     isRefetchingAllListings,
     listingsInSelectedCollection,
     auctionsInSelectedCollection,
+    refetchAllAuctions,
   } = useMarketplaceContext();
   const { tokenId } = props;
   const account = useActiveAccount();
@@ -118,6 +260,41 @@ export function Token(props: Props) {
 
   const ownedByYou =
     nft?.owner?.toLowerCase() === account?.address.toLowerCase();
+
+  // Get auction house contract
+  const auctionHouse = getContract({
+    address: MARKETPLACE_CONTRACTS[1].address,
+    chain: MARKETPLACE_CONTRACTS[1].chain,
+    client,
+    abi: auctionHouseAbi.abi as Abi,
+  });
+
+  const { data: events } = useContractEvents({
+    contract: auctionHouse,
+    events: [newBidEvent({ bidder: account?.address })],
+  });
+  
+  
+  // Watch for changes in events
+  useEffect(() => {
+    if (events?.length) {
+      console.log("New bid events:", events);
+      if (refetchAllAuctions) {
+        refetchAllAuctions();
+      }
+    }
+  }, [events, refetchAllAuctions]);
+
+  // Use batch read for winning bids
+  const { data: winningBid } = useReadContract(getWinningBid, {
+    contract: auctionHouse,
+    auctionId: auctions[0]?.id,
+    queryOptions: {
+      enabled: auctions.length > 0,
+    }
+  });
+
+  console.log("Winning bid:", winningBid);
 
   return (
     <Flex direction="column">
@@ -318,78 +495,16 @@ export function Token(props: Props) {
                           </Tr>
                         </Thead>
                         <Tbody>
-                          {auctions.map((item) => {
-                            const createdByYou =
-                              item.auctionCreator.toLowerCase() ===
-                              account?.address.toLowerCase();
-                            
-                            const isWinner = 
-                              item.winningBid?.bidder?.toLowerCase() === 
-                              account?.address.toLowerCase();
-                            
-                            const isEnded = 
-                              Date.now() / 1000 > Number(item.endTimeInSeconds);
-                              
-                            return (
-                              <Tr key={item.id.toString()}>
-                                <Td>
-                                  <Text>
-                                    {item.minimumBidCurrencyValue.displayValue} {item.currency.name}
-                                  </Text> 
-                                </Td>
-                                <Td>
-                                  <Text>
-                                    {item.winningBid 
-                                      ? `${formatEther(item.winningBid.bidAmount)} ${item.currency.symbol || item.currency.name}`
-                                      : "No bids"}
-                                  </Text>
-                                </Td>
-                                {type === "ERC1155" && (
-                                  <Td px={1}>
-                                    <Text>{item.quantity.toString()}</Text>
-                                  </Td>
-                                )}
-                                <Td>
-                                  <Text>
-                                    {isEnded 
-                                      ? "Ended" 
-                                      : getExpiration(item.endTimeInSeconds)}
-                                  </Text>
-                                </Td>
-                                <Td px={1}>
-                                  <Text>
-                                    {createdByYou
-                                      ? "You"
-                                      : nft?.owner ? shortenAddress(nft.owner) : "N/A"}
-                                  </Text>
-                                </Td>
-                                {account && (
-                                  <Td>
-                                    <Flex gap={2}>
-                                      {!isEnded && !createdByYou && (
-                                        <BidInAuctionButton
-                                          account={account}
-                                          auction={item}
-                                        />
-                                      )}
-                                      {isEnded && isWinner && (
-                                        <CollectAuctionButton
-                                          account={account}
-                                          auction={item}
-                                        />
-                                      )}
-                                      {isEnded && createdByYou && item.winningBid && (
-                                        <CollectAuctionPayoutButton
-                                          account={account}
-                                          auction={item}
-                                        />
-                                      )}
-                                    </Flex>
-                                  </Td>
-                                )}
-                              </Tr>
-                            );
-                          })}
+                          {auctions.map((item) => (
+                            <AuctionRow
+                              key={item.id.toString()}
+                              item={item}
+                              account={account}
+                              auctionHouse={auctionHouse}
+                              type={type}
+                              nft={nft}
+                            />
+                          ))}
                         </Tbody>
                       </Table>
                     </TableContainer>

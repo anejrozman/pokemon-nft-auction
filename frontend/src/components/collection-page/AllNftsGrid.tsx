@@ -28,7 +28,7 @@ export function AllNftsGrid() {
   const { nftContract, type, supplyInfo } = useMarketplaceContext();
   const startTokenId = supplyInfo?.startTokenId ?? 0n;
   const totalItems: bigint = supplyInfo
-    ? supplyInfo.endTokenId - supplyInfo.startTokenId + 1n
+    ? supplyInfo.endTokenId - supplyInfo.startTokenId
     : 0n;
   const numberOfPages: number = Number(
     (totalItems + BigInt(itemsPerPage) - 1n) / BigInt(itemsPerPage)
