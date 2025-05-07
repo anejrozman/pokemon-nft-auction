@@ -7,9 +7,6 @@ import "./helpers/PausableERC721Base.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-// TO DO:
-// REMOVE FUNCTIONS WITH (DELETE FUNCTION) IN DESCRIPTION
-
 /**
  * @title PokemonNFT
  * @dev Implementation of ERC721 token representing Pokemon cards
@@ -180,6 +177,8 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
      * @return The ID of the newly minted token
      */
     function mintFromCardSet(uint256 setId) public payable nonReentrant whenNotPaused returns (uint256) {
+        require(bytes(cardSets[setId].name).length > 0, "Card set does not exist");
+
         CardSet storage cardSet = cardSets[setId];
         require(cardSet.supply > 0, "Set is sold out");
         require(msg.value == cardSet.price, "Incorrect payment amount");
@@ -210,20 +209,6 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
     }
 
     /**
-     * @dev Mint a new Pokemon NFT (DELETE FUNCTION)
-     */
-    function mintPokemon(
-        address _to,
-        string memory _ipfsURI
-    ) public nonReentrant returns (uint256) {
-        mintTo(_to, _ipfsURI);
-        uint256 tokenId = getLastMintedTokenId();
-        pokemonAttributes[tokenId] = Pokemon(_ipfsURI);
-        emit PokemonMinted(tokenId, _ipfsURI, _to);
-        return tokenId;
-    }
-
-    /**
      * @dev Override _canMint to allow any wallet to mint cards from cardSets.
      */
     function _canMint() internal view virtual override returns (bool) {
@@ -233,7 +218,9 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
     // Randomness
 
     /**
-     * @dev In production Chainlink's VRF Coordinator would be used. 
+     * @dev Generate a random number
+     * Comment: In production Chainlink's VRF Coordinator would be used 
+     * since this is not a fully secure implementation.  
      * Miners/validators can see pending transactions and potentially 
      * mine their own transactions first to get preferred results.
      */
@@ -289,15 +276,16 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
      * @dev Override burn to clean up Pokemon attributes when an NFT is burned
      */
     function burn(uint256 _tokenId) public virtual override {
+        require(_exists(_tokenId), "Token does not exist");
+
         // Only token owner or approved operator can burn
         require(
             isApprovedOrOwner(msg.sender, _tokenId),
             "Not approved to burn"
         );
         
-        delete pokemonAttributes[_tokenId]; // have to delete this as we added attributes
+        delete pokemonAttributes[_tokenId]; 
         
-        // Then burn the token
         _burn(_tokenId, true);
     }
 

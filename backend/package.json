@@ -5,8 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "hardhat run --network localhost scripts/deploy.ts",
-    "mint": "hardhat run scripts/mint_pokemons.ts --network localhost", 
-    "create-set": "npx hardhat run scripts/create_card_set.ts --network localhost", 
+    "mint": "hardhat run scripts/mint_pokemons.ts --network localhost",
+    "create-set": "npx hardhat run scripts/create_card_set.ts --network localhost",
     "mint-from-set": "npx hardhat run scripts/mint_from_card_set.ts --network localhost",
     "avalible-card-sets": "npx hardhat run scripts/get_avalible_card_sets.ts --network localhost"
   },
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.3.0",
-    "@thirdweb-dev/contracts": "^3.15.0"
+    "@thirdweb-dev/contracts": "^3.15.0",
+    "ethers": "^6.14.0"
   }
 }
