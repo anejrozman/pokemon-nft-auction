@@ -30,7 +30,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useReadContract } from "thirdweb/react";
 import { MediaRenderer } from "thirdweb/react";
-import { type DirectListing, type EnglishAuction } from "thirdweb/extensions/marketplace";
+import {  type DirectListing, type EnglishAuction, getAllAuctions } from "thirdweb/extensions/marketplace";
 import { NFT, prepareContractCall, getContract } from "thirdweb";
 import { getWinningBid } from "@/helpers/0xf3ff3d85c43dc6b54f1a9223bb7eea02cadd8fba";
 import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
@@ -58,8 +58,18 @@ interface TraitFilter {
 }
 
 export default function CollectionListings() {
-  const { nftContract, marketplaceContract, allValidListings, allAuctions, isLoading } = useMarketplaceContext();
+  const { nftContract, marketplaceContract, allValidListings, refetchAllAuctions, isLoading } = useMarketplaceContext();
   
+  const auctionHouse = getContract({
+    address: MARKETPLACE_CONTRACTS[1].address,
+    chain: MARKETPLACE_CONTRACTS[1].chain,
+    client,
+  });
+
+  const {data: allAuctions } = useReadContract(getAllAuctions, {
+    contract: auctionHouse,
+    start: 0
+    });
   // Log for debugging
   useEffect(() => {
     console.log("Available listings:", allValidListings?.length);
@@ -243,6 +253,7 @@ export default function CollectionListings() {
       return hasActiveCheckboxes || hasActiveRange;
     });
     
+
     if (!hasActiveFilters) return allAuctions;
     
     return allAuctions.filter(auction => {
@@ -287,12 +298,15 @@ export default function CollectionListings() {
   }, [allAuctions, appliedFilters]);
 
 
+
   const standardAuctions = useMemo(() => {
     return filteredAuctions?.filter(auction => {
       // More reliable check for standard auctions - could be based on auction type
       return true; // Placeholder for actual condition
     }) || [];
   }, [filteredAuctions]);
+
+  
 
   const dutchAuctionContract = getContract({
       address: MARKETPLACE_CONTRACTS[2].address, // Dutch auction (PokemonDutchAuction)
@@ -396,12 +410,6 @@ export default function CollectionListings() {
   };
 
   
-  const auctionHouse = getContract({
-    address: MARKETPLACE_CONTRACTS[1].address,
-    chain: MARKETPLACE_CONTRACTS[1].chain,
-    client,
-  });
-
   // Render a single listing card
   const ListingCard = ({ listing }: { listing: DirectListing | EnglishAuction }) => {
     const isAuction = listing.type === "english-auction"
@@ -415,6 +423,8 @@ export default function CollectionListings() {
           auctionId: listing.id,
         })
       : { data: undefined };
+
+
   
     return (
       <Card key={listingId} overflow="hidden" borderRadius="lg" borderWidth="1px" p={4}>
