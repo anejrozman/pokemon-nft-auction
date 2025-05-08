@@ -2,15 +2,10 @@
 pragma solidity ^0.8.28;
 
 import "@thirdweb-dev/contracts/extension/Permissions.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import "./helpers/PausableERC721Base.sol";
 import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
+import "./helpers/PausableERC721Base.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-
-// TO DO: IMPLEMENT PAUSABLE FUNCTIONALITY, 
-// MAKE MINTING POSSIBLE FOR ANY WALLET NOT JUST THE DEFAULT_ADMIN, 
-// REMOVE FUNCTIONS WITH (DELETE FUNCTION) IN DESCRIPTION
-// COMMIT-REVEAL SCHEME IMPLEMENTATION (MAYBE)
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title PokemonNFT
@@ -28,7 +23,6 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
         string ipfsURI;
     }
     // CardSet struct for minting new Pokemon card NFT's
-    // Probabilities should sum to 10_000
     struct CardSet {
         uint256 id; 
         string name; 
@@ -49,12 +43,20 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
     // Events
     event PokemonMinted(uint256 tokenId, string ipfsURI, address indexed owner);
     event CardSetCreated(uint id, string name, string[] cardURIs, uint256[] probabilities, uint256 supply, uint256 price);
+    event CardSetBurned(uint256 indexed setId);
     event SecretSaltUpdated();
     event Withdrawal(address indexed to, uint256 amount);
-    event ContractPaused(address account);
-    event ContractUnpaused(address account);  
+    event ContractPaused();
+    event ContractUnpaused();  
 
-
+    /**
+     * @dev Constructor to initialize the contract
+     * @param _defaultAdmin Address of the default admin
+     * @param _name Name of the ERC721 token
+     * @param _symbol Symbol of the ERC721 token
+     * @param _royaltyRecipient Address to receive royalties
+     * @param _royaltyBps Royalty percentage in basis points
+     */
     constructor(
         address _defaultAdmin, 
         string memory _name,
@@ -81,10 +83,15 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
 
     }
 
+    // Card Set Management
 
     /**
      * @dev Create a card set to mint new Pokemon from
-     * Only callable by DEFAULT_ADMIN_ROLE
+     * @param name Name of the card set
+     * @param cardURIs Array of IPFS URIs for the cards
+     * @param probabilities Array of probabilities for each card
+     * @param supply Total supply of the card set
+     * @param price Price per card in the set (in wei)
      */
     function createCardSet(
         string memory name,
@@ -118,53 +125,15 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
     }
 
     /**
-     * @dev Mint a new Pokemon NFT from a card set
-     * @param setId The ID of the card set to mint from
-     * @return The ID of the newly minted token
+     * @dev Burn a card set
+     * @param setId The ID of the card set to burn
      */
-    function mintFromCardSet(uint256 setId) public payable nonReentrant returns (uint256) {
-        CardSet storage cardSet = cardSets[setId];
-        require(cardSet.supply > 0, "Set is sold out");
-        require(msg.value == cardSet.price, "Incorrect payment amount");
+    function burnCardSet(uint256 setId) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(cardSets[setId].supply > 0, "Card set does not exist or is already burned");
     
-        uint256 randomNumber = getRandomNumber(block.timestamp) % 10000;
-
-        uint256 cumulative = 0;
-        uint256 randomIndex = 0;
-        for (uint256 i = 0; i < cardSet.probabilities.length; i++) {
-            cumulative += cardSet.probabilities[i];
-            if (randomNumber < cumulative) {
-                randomIndex = i;
-                break;
-            }
-        }
+        delete cardSets[setId];
     
-        string memory selectedURI = cardSet.cardURIs[randomIndex];
-
-        mintTo(msg.sender, selectedURI);
-        uint256 tokenId = getLastMintedTokenId();
-        pokemonAttributes[tokenId] = Pokemon(selectedURI);
-    
-        cardSet.supply--;
-    
-        emit PokemonMinted(tokenId, selectedURI, msg.sender);
-    
-        return tokenId;
-    }
-
-    /**
-     * @dev In production Chainlink's VRF Coordinator would be used. 
-     * Miners/validators can see pending transactions and potentially 
-     * mine their own transactions first to get preferred results.
-     */
-    function getRandomNumber(uint256 seed) internal view returns (uint256) {
-        return uint256(keccak256(abi.encodePacked(
-                seed,
-                block.timestamp,
-                block.prevrandao,
-                msg.sender, 
-                _secretSalt
-        )));
+        emit CardSetBurned(setId);
     }
 
     function getCardSet(uint256 setId) external view returns (CardSet memory) {
@@ -200,29 +169,81 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
         return availableCardSets;
     }
 
+    // Minting
+
+    /**
+     * @dev Mint a new Pokemon NFT from a card set
+     * @param setId The ID of the card set to mint from
+     * @return The ID of the newly minted token
+     */
+    function mintFromCardSet(uint256 setId) public payable nonReentrant whenNotPaused returns (uint256) {
+        require(bytes(cardSets[setId].name).length > 0, "Card set does not exist");
+
+        CardSet storage cardSet = cardSets[setId];
+        require(cardSet.supply > 0, "Set is sold out");
+        require(msg.value == cardSet.price, "Incorrect payment amount");
+    
+        uint256 randomNumber = getRandomNumber(block.timestamp) % 10000;
+
+        uint256 cumulative = 0;
+        uint256 randomIndex = 0;
+        for (uint256 i = 0; i < cardSet.probabilities.length; i++) {
+            cumulative += cardSet.probabilities[i];
+            if (randomNumber < cumulative) {
+                randomIndex = i;
+                break;
+            }
+        }
+    
+        string memory selectedURI = cardSet.cardURIs[randomIndex];
+
+        mintTo(msg.sender, selectedURI);
+        uint256 tokenId = getLastMintedTokenId();
+        pokemonAttributes[tokenId] = Pokemon(selectedURI);
+    
+        cardSet.supply--;
+    
+        emit PokemonMinted(tokenId, selectedURI, msg.sender);
+    
+        return tokenId;
+    }
+
+    /**
+     * @dev Override _canMint to allow any wallet to mint cards from cardSets.
+     */
+    function _canMint() internal view virtual override returns (bool) {
+        return true; // Allow all wallets to mint
+    }
+
+    // Randomness
+
+    /**
+     * @dev Generate a random number
+     * Comment: In production Chainlink's VRF Coordinator would be used 
+     * since this is not a fully secure implementation.  
+     * Miners/validators can see pending transactions and potentially 
+     * mine their own transactions first to get preferred results.
+     */
+    function getRandomNumber(uint256 seed) internal view returns (uint256) {
+        return uint256(keccak256(abi.encodePacked(
+                seed,
+                block.timestamp,
+                block.prevrandao,
+                msg.sender, 
+                _secretSalt
+        )));
+    }
+
+    /**
+     * @dev Update the secret salt used for randomness
+     */
     function updateSecretSalt() external onlyRole(DEFAULT_ADMIN_ROLE) {
         _secretSalt = keccak256(abi.encodePacked(block.timestamp, block.prevrandao, address(this)));
 
         emit SecretSaltUpdated();
     }
 
-    function getLastMintedTokenId() public view returns (uint256) {
-        return nextTokenIdToMint() - 1;
-    }
-    
-    /**
-     * @dev Mint a new Pokemon NFT with attributes (DELETE FUNCTION)
-     */
-    function mintPokemon(
-        address _to,
-        string memory _ipfsURI
-    ) public nonReentrant returns (uint256) {
-        mintTo(_to, _ipfsURI);
-        uint256 tokenId = getLastMintedTokenId();
-        pokemonAttributes[tokenId] = Pokemon(_ipfsURI);
-        emit PokemonMinted(tokenId, _ipfsURI, _to);
-        return tokenId;
-    }
+    // Token data
 
     /**
      * @dev Returns the metadata URI for a given tokenId
@@ -233,21 +254,12 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
     }
 
     /**
-     * @dev Override burn to clean up Pokemon attributes when an NFT is burned (DELETE FUNCTION)
+     * @dev Returns ID of the last minted token
      */
-    function burn(uint256 _tokenId) public virtual override {
-        // Only token owner or approved operator can burn
-        require(
-            isApprovedOrOwner(msg.sender, _tokenId),
-            "Not approved to burn"
-        );
-        
-        delete pokemonAttributes[_tokenId]; // have to delete this as we added attributes
-        
-        // Then burn the token
-        _burn(_tokenId, true);
+    function getLastMintedTokenId() public view returns (uint256) {
+        return nextTokenIdToMint() - 1;
     }
-    
+
     /**
      * @dev Get attributes of a Pokemon
      * @param tokenId The token ID to query
@@ -258,19 +270,42 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
         return pokemonAttributes[tokenId];
     }
 
-    // /**
-    //  * @dev Pause the contract
-    //  */
-    // function pause() external onlyRole(DEFAULT_ADMIN_ROLE) {
-    //     _pause();
-    // }
+    // Token burning
+
+    /**
+     * @dev Override burn to clean up Pokemon attributes when an NFT is burned
+     */
+    function burn(uint256 _tokenId) public virtual override {
+        require(_exists(_tokenId), "Token does not exist");
+
+        // Only token owner or approved operator can burn
+        require(
+            isApprovedOrOwner(msg.sender, _tokenId),
+            "Not approved to burn"
+        );
+        
+        delete pokemonAttributes[_tokenId]; 
+        
+        _burn(_tokenId, true);
+    }
+
+    // Administrative functions
+
+    /**
+     * @dev Pause the contract
+     */
+    function pause() external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _pause(); 
+        emit ContractPaused();
+    }
     
-    // /**
-    //  * @dev Unpause the contract
-    //  */
-    // function unpause() external onlyRole(DEFAULT_ADMIN_ROLE) {
-    //     _unpause();
-    // }
+    /**
+     * @dev Unpause the contract
+     */
+    function unpause() external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _unpause();
+        emit ContractUnpaused();
+    }
     
     /**
      * @dev Withdraw funds from the contract
@@ -283,12 +318,5 @@ contract PokemonNFT is ReentrancyGuard, Permissions, PausableERC721Base {
         require(success, "Withdrawal failed");
 
         emit Withdrawal(msg.sender, balance);
-    }
-
-    /**
-     * @dev Override _canMint to allow any wallet to mint.
-     */
-    function _canMint() internal view virtual override returns (bool) {
-        return true; // Allow all wallets to mint
     }
 }

@@ -87,7 +87,7 @@ export default function CardSetsPage() {
                     _hover={{ filter: "grayscale(0%)" }}
                   >
                     <Image
-                      src={Number(set.supply) > 3 ? 
+                      src={Number(set.price) > 0.03 * 10**18 ? 
                         starterSetIcon.src : 
                         rareSetIcon.src}
                       alt={set.name}
