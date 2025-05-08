@@ -27,38 +27,38 @@ Follow these steps to set up and run the project locally.
 
 ### 2. Backend Setup & Deployment
 
-1.  **Install Dependencies:**
-    Navigate to the `backend` directory and install the necessary packages:
-    ```bash
-    cd backend
-    npm install
-    ```
-
-2.  **Start Local Blockchain Node:**
-    Open a terminal in the `backend` folder and start a local Hardhat node. This will also output sample account private keys you can use for testing.
+1.  **Quickstart:**
+    In the `backend` directory, just run:
     ```bash
     npx hardhat node
+    npm run deploy
+    npm run create-sets
     ```
-    Keep this terminal running.
+    That's it. Now you can use the app as normal from the frontend page.
 
-3.  **Deploy & Mint Contracts:**
-    Open a *second* terminal, also in the `backend` folder. Run the deployment and minting scripts sequentially:
-    ```bash
-    # Deploy the NFT, Marketplace, and Auction House contracts
-    npm run deploy 
-    
-    # Mint some sample Pokemon NFTs to the deployer account
-    npm run mint 
-    ```
-
-4.  **Record Contract Addresses:**
-    When you run `npm run deploy`, the terminal will output the addresses of the deployed contracts. **Copy these addresses** – you'll need them for the frontend configuration. It will look something like this:
-    ```
-    Deploying contracts with the account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-    PokemonNFT deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
-    PokemonMarketplace deployed to: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
-    PokemonAuctionHouse deployed to: 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 
-    ```
+2.  **(Advanced) Manual Steps:**
+    If you want to see the manual process:
+    - Install dependencies:
+      ```bash
+      cd backend
+      npm install
+      ```
+    - Start the local blockchain node:
+      ```bash
+      npx hardhat node
+      ```
+    - Deploy contracts:
+      ```bash
+      npm run deploy
+      ```
+    - Mint some sample Pokemon NFTs (if needed):
+      ```bash
+      npm run mint
+      ```
+    - (Optional) Create sets:
+      ```bash
+      npm run create-sets
+      ```
 
 ### 3. Frontend Configuration
 
@@ -135,37 +135,8 @@ To interact with the marketplace (list, bid, buy), you need to connect a wallet 
 3.  **Connect Wallet:** In the frontend application, connect your wallet and ensure it's switched to the "Hardhat" network you just added. You should now see the minted NFTs and be able to interact with the marketplace features.
 
 
-### 6. Developing and further testing
-1. Once you did all of above you can navigate to http://localhost:3000/ (I prefer using Chrome, it's easier to debug)
-2. Then you can modify files like the TokenPage etc.
-3. The auction works and lists them all properly, but currently the issue it does not show the latest bid- for this I advise you to look into `frontend/src/components/token-page/BidInAuctionButton.tsx` or `frontend/src/types/auction.ts` or look into `PokemonAuctionHouse.sol` within the backend
-
-```sol
-
-    function getWinningBid(uint256 _auctionId)
-        external
-        view
-        override
-        auctionExists(_auctionId)
-        returns (address bidder, address currency, uint256 bidAmount)
-    {
-        Bid storage winningBid = _winningBids[_auctionId];
-        bidder = winningBid.bidder;
-        currency = _auctions[_auctionId].currency; // Currency is part of auction params
-        bidAmount = winningBid.bidAmount;
-    }
-```
-
-how this should or interacts with the backend and frontend, you might have to dive into `pokemon-nft/frontend/node_modules/thirdweb/src/extensions/marketplace/english-auctions/read/getWinningBid.ts`.
-
-
-### 7. Current Issues
-- Auction does not show the latest bid properly
-- To make a listing sometimes you have to list it twice, so check what is going wrong there.
-- Add more pokemons to mint- or rare drops potentially?
-
-
-### Debug
+### Debug & Testing
+Run `npx hardhat test` within `/backend/` folder
 
 - It's easiest to restart the hardhat node and run the deploy and mint script, instead of copy pasting the address each time over. I noticed the deployment addresses are generated deterministically, so it's easiest to just restart the backend. 
 - The first address:
