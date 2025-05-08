@@ -44,12 +44,13 @@ export function AllNftsGrid() {
         : itemsPerPage;
     pages.push({ start: Number(currentStartTokenId), count: count });
   }
+  const hasPage = pages.length > 0 && pages[currentPageIndex];
   const { data: allNFTs } = useReadContract(
     type === "ERC1155" ? getNFTs1155 : getNFTs721,
     {
       contract: nftContract,
-      start: pages[currentPageIndex].start,
-      count: pages[currentPageIndex].count,
+      start: hasPage ? pages[currentPageIndex].start : 0,
+      count: hasPage ? pages[currentPageIndex].count : 0,
     }
   );
   const len = allNFTs?.length ?? 0;
