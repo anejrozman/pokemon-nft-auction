@@ -27,7 +27,7 @@ export default function Home() {
   const bgGradient = "linear(to-br, #7928CA, #FF0080)";
   const cardBg = useColorModeValue("white", "gray.800");
   const cardHoverBg = useColorModeValue("gray.50", "gray.700");
-  
+
   return (
     <Container maxW="container.xl" p={0}>
       {/* Main Navigation Cards - Card Sets & Auctions */}
@@ -43,16 +43,11 @@ export default function Home() {
             _hover={{ transform: "translateY(-5px)" }}
           >
             {/* Card Sets image */}
-            <Box
-              w="full"
-              h="full"
-              position="absolute"
-              overflow="hidden"
-            >
+            <Box w="full" h="full" position="absolute" overflow="hidden">
               <Image
                 src={setIconImage.src}
                 alt="Card Sets"
-                objectFit="cover" 
+                objectFit="cover"
                 w="full"
                 h="full"
                 fallback={
@@ -64,7 +59,12 @@ export default function Home() {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Text color="white" fontSize="6xl" fontWeight="bold" opacity={0.3}>
+                    <Text
+                      color="white"
+                      fontSize="6xl"
+                      fontWeight="bold"
+                      opacity={0.3}
+                    >
                       CARD SETS
                     </Text>
                   </Box>
@@ -80,7 +80,7 @@ export default function Home() {
                 bg="blackAlpha.300"
               />
             </Box>
-            
+
             {/* Content overlay */}
             <VStack
               position="absolute"
@@ -102,7 +102,7 @@ export default function Home() {
             </VStack>
           </Box>
         </Link>
-        
+
         {/* Auctions Button */}
         <Link href="/auctions" _hover={{ textDecoration: "none" }}>
           <Box
@@ -114,12 +114,7 @@ export default function Home() {
             _hover={{ transform: "translateY(-5px)" }}
           >
             {/* Auctions image */}
-            <Box
-              w="full"
-              h="full"
-              position="absolute"
-              overflow="hidden"
-            >
+            <Box w="full" h="full" position="absolute" overflow="hidden">
               <Image
                 src={auctionIconImage.src}
                 alt="Auctions"
@@ -135,7 +130,12 @@ export default function Home() {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Text color="white" fontSize="6xl" fontWeight="bold" opacity={0.3}>
+                    <Text
+                      color="white"
+                      fontSize="6xl"
+                      fontWeight="bold"
+                      opacity={0.3}
+                    >
                       AUCTIONS
                     </Text>
                   </Box>
@@ -151,7 +151,7 @@ export default function Home() {
                 bg="blackAlpha.300"
               />
             </Box>
-            
+
             {/* Content overlay */}
             <VStack
               position="absolute"
@@ -178,15 +178,11 @@ export default function Home() {
       {/* Trending Collections Section */}
       <Box mb={8}>
         <Flex justify="space-between" align="center" mb={4}>
-          <Heading 
-            size="lg"
-            bgGradient={bgGradient}
-            bgClip="text"
-          >
+          <Heading size="lg" bgGradient={bgGradient} bgClip="text">
             Pokemon Collections
           </Heading>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="sm"
             bgGradient={bgGradient}
             bgClip="text"
@@ -195,30 +191,30 @@ export default function Home() {
             View All
           </Button>
         </Flex>
-        
+
         {/* Horizontal Scrollable List */}
-        <Box 
-          overflowX="auto" 
+        <Box
+          overflowX="auto"
           css={{
-            '&::-webkit-scrollbar': {
-              height: '8px',
+            "&::-webkit-scrollbar": {
+              height: "8px",
             },
-            '&::-webkit-scrollbar-track': {
-              background: '#f1f1f1',
-              borderRadius: '10px',
+            "&::-webkit-scrollbar-track": {
+              background: "#f1f1f1",
+              borderRadius: "10px",
             },
-            '&::-webkit-scrollbar-thumb': {
-              background: '#888',
-              borderRadius: '10px',
+            "&::-webkit-scrollbar-thumb": {
+              background: "#888",
+              borderRadius: "10px",
             },
-            '&::-webkit-scrollbar-thumb:hover': {
-              background: '#555',
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "#555",
             },
           }}
         >
           <Flex gap={5} pb={4}>
             {NFT_CONTRACTS.map((item) => (
-              <Card 
+              <Card
                 key={item.address}
                 minW="250px"
                 maxW="250px"
@@ -226,18 +222,20 @@ export default function Home() {
                 borderRadius="lg"
                 overflow="hidden"
                 transition="all 0.3s"
-                _hover={{ 
+                _hover={{
                   transform: "translateY(-5px)",
-                  boxShadow: "xl"
+                  boxShadow: "xl",
                 }}
               >
-                <Link 
-                  href={`/collection/${item.chain.id.toString()}/${item.address}`}
+                <Link
+                  href={`/collection/${item.chain.id.toString()}/${
+                    item.address
+                  }`}
                   _hover={{ textDecoration: "none" }}
                 >
                   <Box h="200px" overflow="hidden">
-                    <Image 
-                      src={item.thumbnailUrl} 
+                    <Image
+                      src={item.thumbnailUrl}
                       alt={item.title}
                       w="full"
                       h="full"
@@ -247,11 +245,7 @@ export default function Home() {
                     />
                   </Box>
                   <CardBody>
-                    <Text 
-                      fontSize="md" 
-                      fontWeight="bold"
-                      noOfLines={1}
-                    >
+                    <Text fontSize="md" fontWeight="bold" noOfLines={1}>
                       {item.title}
                     </Text>
                   </CardBody>

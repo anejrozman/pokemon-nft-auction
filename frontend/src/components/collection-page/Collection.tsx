@@ -75,8 +75,7 @@ export function Collection() {
                 All items{" "}
                 {supplyInfo
                   ? `(${(
-                      supplyInfo.endTokenId -
-                      supplyInfo.startTokenId
+                      supplyInfo.endTokenId - supplyInfo.startTokenId
                     ).toString()})`
                   : ""}
               </Tab>

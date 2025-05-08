@@ -1,43 +1,43 @@
 {
-    "name": "Pidgey",
-    "description": "A small, brown bird Pokémon with a cream-colored face and underside. It's a Normal/Flying type known as the Tiny Bird Pokémon.",
-    "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/pidgey.png",
-    "attributes": [
-      {
-        "trait_type": "Type",
-        "value": "Normal/Flying"
-      },
-      {
-        "trait_type": "Level",
-        "value": 3
-      },
-      {
-        "trait_type": "HP",
-        "value": 40
-      },
-      {
-        "trait_type": "Attack",
-        "value": 45
-      },
-      {
-        "trait_type": "Defense",
-        "value": 40
-      },
-      {
-        "trait_type": "Special",
-        "value": 35
-      },
-      {
-        "trait_type": "Speed",
-        "value": 56
-      },
-      {
-        "trait_type": "Generation",
-        "value": 1
-      },
-      {
-        "trait_type": "Shiny",
-        "value": false
-      }
-    ]
-  }
+  "name": "Pidgey",
+  "description": "A small, brown bird Pokémon with a cream-colored face and underside. It's a Normal/Flying type known as the Tiny Bird Pokémon.",
+  "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/pidgey.png",
+  "attributes": [
+    {
+      "trait_type": "Type",
+      "value": "Normal/Flying"
+    },
+    {
+      "trait_type": "Level",
+      "value": 3
+    },
+    {
+      "trait_type": "HP",
+      "value": 40
+    },
+    {
+      "trait_type": "Attack",
+      "value": 45
+    },
+    {
+      "trait_type": "Defense",
+      "value": 40
+    },
+    {
+      "trait_type": "Special",
+      "value": 35
+    },
+    {
+      "trait_type": "Speed",
+      "value": 56
+    },
+    {
+      "trait_type": "Generation",
+      "value": 1
+    },
+    {
+      "trait_type": "Shiny",
+      "value": false
+    }
+  ]
+}

@@ -7,16 +7,31 @@ import {
 } from "thirdweb";
 
 /**
-* Contract events
-*/
+ * Contract events
+ */
 
 /**
  * Represents the filters for the "Approval" event.
  */
 export type ApprovalEventFilters = Partial<{
-  owner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"owner","type":"address"}>
-approved: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"approved","type":"address"}>
-tokenId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  owner: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "owner";
+    type: "address";
+  }>;
+  approved: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "approved";
+    type: "address";
+  }>;
+  tokenId: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 }>;
 
 /**
@@ -42,18 +57,28 @@ tokenId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","n
  */
 export function approvalEvent(filters: ApprovalEventFilters = {}) {
   return prepareEvent({
-    signature: "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+    signature:
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "ApprovalForAll" event.
  */
 export type ApprovalForAllEventFilters = Partial<{
-  owner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"owner","type":"address"}>
-operator: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"operator","type":"address"}>
+  owner: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "owner";
+    type: "address";
+  }>;
+  operator: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "operator";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -78,13 +103,11 @@ operator: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","
  */
 export function approvalForAllEvent(filters: ApprovalForAllEventFilters = {}) {
   return prepareEvent({
-    signature: "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+    signature:
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
     filters,
   });
-};
-  
-
-
+}
 
 /**
  * Creates an event object for the BatchMetadataUpdate event.
@@ -104,12 +127,10 @@ export function approvalForAllEvent(filters: ApprovalForAllEventFilters = {}) {
  */
 export function batchMetadataUpdateEvent() {
   return prepareEvent({
-    signature: "event BatchMetadataUpdate(uint256 _fromTokenId, uint256 _toTokenId)",
+    signature:
+      "event BatchMetadataUpdate(uint256 _fromTokenId, uint256 _toTokenId)",
   });
-};
-  
-
-
+}
 
 /**
  * Creates an event object for the CardSetCreated event.
@@ -129,12 +150,10 @@ export function batchMetadataUpdateEvent() {
  */
 export function cardSetCreatedEvent() {
   return prepareEvent({
-    signature: "event CardSetCreated(uint256 id, string name, string[] cardURIs, uint256[] probabilities, uint256 supply, uint256 price)",
+    signature:
+      "event CardSetCreated(uint256 id, string name, string[] cardURIs, uint256[] probabilities, uint256 supply, uint256 price)",
   });
-};
-  
-
-
+}
 
 /**
  * Creates an event object for the ContractURIUpdated event.
@@ -156,14 +175,18 @@ export function contractURIUpdatedEvent() {
   return prepareEvent({
     signature: "event ContractURIUpdated(string prevURI, string newURI)",
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "DefaultRoyalty" event.
  */
 export type DefaultRoyaltyEventFilters = Partial<{
-  newRoyaltyRecipient: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"newRoyaltyRecipient","type":"address"}>
+  newRoyaltyRecipient: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "newRoyaltyRecipient";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -187,13 +210,11 @@ export type DefaultRoyaltyEventFilters = Partial<{
  */
 export function defaultRoyaltyEvent(filters: DefaultRoyaltyEventFilters = {}) {
   return prepareEvent({
-    signature: "event DefaultRoyalty(address indexed newRoyaltyRecipient, uint256 newRoyaltyBps)",
+    signature:
+      "event DefaultRoyalty(address indexed newRoyaltyRecipient, uint256 newRoyaltyBps)",
     filters,
   });
-};
-  
-
-
+}
 
 /**
  * Creates an event object for the MetadataFrozen event.
@@ -215,15 +236,24 @@ export function metadataFrozenEvent() {
   return prepareEvent({
     signature: "event MetadataFrozen()",
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "OwnerUpdated" event.
  */
 export type OwnerUpdatedEventFilters = Partial<{
-  prevOwner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"prevOwner","type":"address"}>
-newOwner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}>
+  prevOwner: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "prevOwner";
+    type: "address";
+  }>;
+  newOwner: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "newOwner";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -248,13 +278,11 @@ newOwner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","
  */
 export function ownerUpdatedEvent(filters: OwnerUpdatedEventFilters = {}) {
   return prepareEvent({
-    signature: "event OwnerUpdated(address indexed prevOwner, address indexed newOwner)",
+    signature:
+      "event OwnerUpdated(address indexed prevOwner, address indexed newOwner)",
     filters,
   });
-};
-  
-
-
+}
 
 /**
  * Creates an event object for the PokemonMinted event.
@@ -274,18 +302,33 @@ export function ownerUpdatedEvent(filters: OwnerUpdatedEventFilters = {}) {
  */
 export function pokemonMintedEvent() {
   return prepareEvent({
-    signature: "event PokemonMinted(uint256 tokenId, string ipfsURI, address owner)",
+    signature:
+      "event PokemonMinted(uint256 tokenId, string ipfsURI, address owner)",
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "RoleAdminChanged" event.
  */
 export type RoleAdminChangedEventFilters = Partial<{
-  role: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"}>
-previousAdminRole: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"}>
-newAdminRole: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}>
+  role: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "bytes32";
+    name: "role";
+    type: "bytes32";
+  }>;
+  previousAdminRole: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "bytes32";
+    name: "previousAdminRole";
+    type: "bytes32";
+  }>;
+  newAdminRole: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "bytes32";
+    name: "newAdminRole";
+    type: "bytes32";
+  }>;
 }>;
 
 /**
@@ -309,21 +352,38 @@ newAdminRole: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"bytes3
  * });
  * ```
  */
-export function roleAdminChangedEvent(filters: RoleAdminChangedEventFilters = {}) {
+export function roleAdminChangedEvent(
+  filters: RoleAdminChangedEventFilters = {}
+) {
   return prepareEvent({
-    signature: "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+    signature:
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "RoleGranted" event.
  */
 export type RoleGrantedEventFilters = Partial<{
-  role: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"}>
-account: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"account","type":"address"}>
-sender: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"sender","type":"address"}>
+  role: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "bytes32";
+    name: "role";
+    type: "bytes32";
+  }>;
+  account: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "account";
+    type: "address";
+  }>;
+  sender: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "sender";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -349,19 +409,34 @@ sender: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","na
  */
 export function roleGrantedEvent(filters: RoleGrantedEventFilters = {}) {
   return prepareEvent({
-    signature: "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+    signature:
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "RoleRevoked" event.
  */
 export type RoleRevokedEventFilters = Partial<{
-  role: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"}>
-account: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"account","type":"address"}>
-sender: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"sender","type":"address"}>
+  role: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "bytes32";
+    name: "role";
+    type: "bytes32";
+  }>;
+  account: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "account";
+    type: "address";
+  }>;
+  sender: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "sender";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -387,18 +462,28 @@ sender: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","na
  */
 export function roleRevokedEvent(filters: RoleRevokedEventFilters = {}) {
   return prepareEvent({
-    signature: "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+    signature:
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "RoyaltyForToken" event.
  */
 export type RoyaltyForTokenEventFilters = Partial<{
-  tokenId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}>
-royaltyRecipient: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"royaltyRecipient","type":"address"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
+  royaltyRecipient: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "royaltyRecipient";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -421,21 +506,38 @@ royaltyRecipient: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"ad
  * });
  * ```
  */
-export function royaltyForTokenEvent(filters: RoyaltyForTokenEventFilters = {}) {
+export function royaltyForTokenEvent(
+  filters: RoyaltyForTokenEventFilters = {}
+) {
   return prepareEvent({
-    signature: "event RoyaltyForToken(uint256 indexed tokenId, address indexed royaltyRecipient, uint256 royaltyBps)",
+    signature:
+      "event RoyaltyForToken(uint256 indexed tokenId, address indexed royaltyRecipient, uint256 royaltyBps)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "Transfer" event.
  */
 export type TransferEventFilters = Partial<{
-  from: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"from","type":"address"}>
-to: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"to","type":"address"}>
-tokenId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  from: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "from";
+    type: "address";
+  }>;
+  to: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "to";
+    type: "address";
+  }>;
+  tokenId: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 }>;
 
 /**
@@ -461,17 +563,22 @@ tokenId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","n
  */
 export function transferEvent(filters: TransferEventFilters = {}) {
   return prepareEvent({
-    signature: "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+    signature:
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "Withdrawal" event.
  */
 export type WithdrawalEventFilters = Partial<{
-  to: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"to","type":"address"}>
+  to: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "to";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -498,14 +605,11 @@ export function withdrawalEvent(filters: WithdrawalEventFilters = {}) {
     signature: "event Withdrawal(address indexed to, uint256 amount)",
     filters,
   });
-};
-  
+}
 
 /**
-* Contract read functions
-*/
-
-
+ * Contract read functions
+ */
 
 /**
  * Calls the "DEFAULT_ADMIN_ROLE" function on the contract.
@@ -519,32 +623,33 @@ export function withdrawalEvent(filters: WithdrawalEventFilters = {}) {
  *
  * ```
  */
-export async function DEFAULT_ADMIN_ROLE(
-  options: BaseTransactionOptions
-) {
+export async function DEFAULT_ADMIN_ROLE(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xa217fddf",
-  [],
-  [
-    {
-      "internalType": "bytes32",
-      "name": "",
-      "type": "bytes32"
-    }
-  ]
-],
-    params: []
+      "0xa217fddf",
+      [],
+      [
+        {
+          internalType: "bytes32",
+          name: "",
+          type: "bytes32",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "balanceOf" function.
  */
 export type BalanceOfParams = {
-  owner: AbiParameterToPrimitiveType<{"internalType":"address","name":"owner","type":"address"}>
+  owner: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "owner";
+    type: "address";
+  }>;
 };
 
 /**
@@ -567,32 +672,35 @@ export async function balanceOf(
   return readContract({
     contract: options.contract,
     method: [
-  "0x70a08231",
-  [
-    {
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.owner]
+      "0x70a08231",
+      [
+        {
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
+      ],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [options.owner],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "batchFrozen" function.
  */
 export type BatchFrozenParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
+  arg_0: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -615,32 +723,35 @@ export async function batchFrozen(
   return readContract({
     contract: options.contract,
     method: [
-  "0x83040532",
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.arg_0]
+      "0x83040532",
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.arg_0],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "cardSets" function.
  */
 export type CardSetsParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
+  arg_0: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -663,43 +774,40 @@ export async function cardSets(
   return readContract({
     contract: options.contract,
     method: [
-  "0x46716e62",
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256",
-      "name": "id",
-      "type": "uint256"
-    },
-    {
-      "internalType": "string",
-      "name": "name",
-      "type": "string"
-    },
-    {
-      "internalType": "uint256",
-      "name": "supply",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "price",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.arg_0]
+      "0x46716e62",
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "uint256",
+          name: "id",
+          type: "uint256",
+        },
+        {
+          internalType: "string",
+          name: "name",
+          type: "string",
+        },
+        {
+          internalType: "uint256",
+          name: "supply",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "price",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [options.arg_0],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "commitRevealTimelock" function on the contract.
@@ -713,32 +821,33 @@ export async function cardSets(
  *
  * ```
  */
-export async function commitRevealTimelock(
-  options: BaseTransactionOptions
-) {
+export async function commitRevealTimelock(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xbf9f3cb6",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0xbf9f3cb6",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "commitments" function.
  */
 export type CommitmentsParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"bytes32","name":"","type":"bytes32"}>
+  arg_0: AbiParameterToPrimitiveType<{
+    internalType: "bytes32";
+    name: "";
+    type: "bytes32";
+  }>;
 };
 
 /**
@@ -761,43 +870,40 @@ export async function commitments(
   return readContract({
     contract: options.contract,
     method: [
-  "0x839df945",
-  [
-    {
-      "internalType": "bytes32",
-      "name": "",
-      "type": "bytes32"
-    }
-  ],
-  [
-    {
-      "internalType": "bytes32",
-      "name": "commit",
-      "type": "bytes32"
-    },
-    {
-      "internalType": "uint256",
-      "name": "blockNumber",
-      "type": "uint256"
-    },
-    {
-      "internalType": "bool",
-      "name": "revealed",
-      "type": "bool"
-    },
-    {
-      "internalType": "address",
-      "name": "committer",
-      "type": "address"
-    }
-  ]
-],
-    params: [options.arg_0]
+      "0x839df945",
+      [
+        {
+          internalType: "bytes32",
+          name: "",
+          type: "bytes32",
+        },
+      ],
+      [
+        {
+          internalType: "bytes32",
+          name: "commit",
+          type: "bytes32",
+        },
+        {
+          internalType: "uint256",
+          name: "blockNumber",
+          type: "uint256",
+        },
+        {
+          internalType: "bool",
+          name: "revealed",
+          type: "bool",
+        },
+        {
+          internalType: "address",
+          name: "committer",
+          type: "address",
+        },
+      ],
+    ],
+    params: [options.arg_0],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "contractURI" function on the contract.
@@ -811,32 +917,33 @@ export async function commitments(
  *
  * ```
  */
-export async function contractURI(
-  options: BaseTransactionOptions
-) {
+export async function contractURI(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xe8a3d485",
-  [],
-  [
-    {
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }
-  ]
-],
-    params: []
+      "0xe8a3d485",
+      [],
+      [
+        {
+          internalType: "string",
+          name: "",
+          type: "string",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "explicitOwnershipOf" function.
  */
 export type ExplicitOwnershipOfParams = {
-  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -859,49 +966,52 @@ export async function explicitOwnershipOf(
   return readContract({
     contract: options.contract,
     method: [
-  "0xc23dc68f",
-  [
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "components": [
+      "0xc23dc68f",
+      [
         {
-          "internalType": "address",
-          "name": "addr",
-          "type": "address"
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
         },
-        {
-          "internalType": "uint64",
-          "name": "startTimestamp",
-          "type": "uint64"
-        },
-        {
-          "internalType": "bool",
-          "name": "burned",
-          "type": "bool"
-        }
       ],
-      "internalType": "struct IERC721A.TokenOwnership",
-      "name": "",
-      "type": "tuple"
-    }
-  ]
-],
-    params: [options.tokenId]
+      [
+        {
+          components: [
+            {
+              internalType: "address",
+              name: "addr",
+              type: "address",
+            },
+            {
+              internalType: "uint64",
+              name: "startTimestamp",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "burned",
+              type: "bool",
+            },
+          ],
+          internalType: "struct IERC721A.TokenOwnership",
+          name: "",
+          type: "tuple",
+        },
+      ],
+    ],
+    params: [options.tokenId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "explicitOwnershipsOf" function.
  */
 export type ExplicitOwnershipsOfParams = {
-  tokenIds: AbiParameterToPrimitiveType<{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}>
+  tokenIds: AbiParameterToPrimitiveType<{
+    internalType: "uint256[]";
+    name: "tokenIds";
+    type: "uint256[]";
+  }>;
 };
 
 /**
@@ -924,49 +1034,52 @@ export async function explicitOwnershipsOf(
   return readContract({
     contract: options.contract,
     method: [
-  "0x5bbb2177",
-  [
-    {
-      "internalType": "uint256[]",
-      "name": "tokenIds",
-      "type": "uint256[]"
-    }
-  ],
-  [
-    {
-      "components": [
+      "0x5bbb2177",
+      [
         {
-          "internalType": "address",
-          "name": "addr",
-          "type": "address"
+          internalType: "uint256[]",
+          name: "tokenIds",
+          type: "uint256[]",
         },
-        {
-          "internalType": "uint64",
-          "name": "startTimestamp",
-          "type": "uint64"
-        },
-        {
-          "internalType": "bool",
-          "name": "burned",
-          "type": "bool"
-        }
       ],
-      "internalType": "struct IERC721A.TokenOwnership[]",
-      "name": "",
-      "type": "tuple[]"
-    }
-  ]
-],
-    params: [options.tokenIds]
+      [
+        {
+          components: [
+            {
+              internalType: "address",
+              name: "addr",
+              type: "address",
+            },
+            {
+              internalType: "uint64",
+              name: "startTimestamp",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "burned",
+              type: "bool",
+            },
+          ],
+          internalType: "struct IERC721A.TokenOwnership[]",
+          name: "",
+          type: "tuple[]",
+        },
+      ],
+    ],
+    params: [options.tokenIds],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getApproved" function.
  */
 export type GetApprovedParams = {
-  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -989,28 +1102,25 @@ export async function getApproved(
   return readContract({
     contract: options.contract,
     method: [
-  "0x081812fc",
-  [
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: [options.tokenId]
+      "0x081812fc",
+      [
+        {
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+    ],
+    params: [options.tokenId],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "getAvailableCardSets" function on the contract.
@@ -1024,60 +1134,55 @@ export async function getApproved(
  *
  * ```
  */
-export async function getAvailableCardSets(
-  options: BaseTransactionOptions
-) {
+export async function getAvailableCardSets(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x9a767b5e",
-  [],
-  [
-    {
-      "components": [
+      "0x9a767b5e",
+      [],
+      [
         {
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
+          components: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string[]",
+              name: "cardURIs",
+              type: "string[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "probabilities",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256",
+              name: "supply",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "price",
+              type: "uint256",
+            },
+          ],
+          internalType: "struct PokemonNFT.CardSet[]",
+          name: "",
+          type: "tuple[]",
         },
-        {
-          "internalType": "string",
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "internalType": "string[]",
-          "name": "cardURIs",
-          "type": "string[]"
-        },
-        {
-          "internalType": "uint256[]",
-          "name": "probabilities",
-          "type": "uint256[]"
-        },
-        {
-          "internalType": "uint256",
-          "name": "supply",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "price",
-          "type": "uint256"
-        }
       ],
-      "internalType": "struct PokemonNFT.CardSet[]",
-      "name": "",
-      "type": "tuple[]"
-    }
-  ]
-],
-    params: []
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "getBaseURICount" function on the contract.
@@ -1091,32 +1196,33 @@ export async function getAvailableCardSets(
  *
  * ```
  */
-export async function getBaseURICount(
-  options: BaseTransactionOptions
-) {
+export async function getBaseURICount(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x63b45e2d",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0x63b45e2d",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getBatchIdAtIndex" function.
  */
 export type GetBatchIdAtIndexParams = {
-  index: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_index","type":"uint256"}>
+  index: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_index";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1139,32 +1245,35 @@ export async function getBatchIdAtIndex(
   return readContract({
     contract: options.contract,
     method: [
-  "0x2419f51b",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_index",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.index]
+      "0x2419f51b",
+      [
+        {
+          internalType: "uint256",
+          name: "_index",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [options.index],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getCardSet" function.
  */
 export type GetCardSetParams = {
-  setId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"setId","type":"uint256"}>
+  setId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "setId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1187,60 +1296,57 @@ export async function getCardSet(
   return readContract({
     contract: options.contract,
     method: [
-  "0xb1a8908b",
-  [
-    {
-      "internalType": "uint256",
-      "name": "setId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "components": [
+      "0xb1a8908b",
+      [
         {
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "setId",
+          type: "uint256",
         },
-        {
-          "internalType": "string",
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "internalType": "string[]",
-          "name": "cardURIs",
-          "type": "string[]"
-        },
-        {
-          "internalType": "uint256[]",
-          "name": "probabilities",
-          "type": "uint256[]"
-        },
-        {
-          "internalType": "uint256",
-          "name": "supply",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "price",
-          "type": "uint256"
-        }
       ],
-      "internalType": "struct PokemonNFT.CardSet",
-      "name": "",
-      "type": "tuple"
-    }
-  ]
-],
-    params: [options.setId]
+      [
+        {
+          components: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string[]",
+              name: "cardURIs",
+              type: "string[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "probabilities",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256",
+              name: "supply",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "price",
+              type: "uint256",
+            },
+          ],
+          internalType: "struct PokemonNFT.CardSet",
+          name: "",
+          type: "tuple",
+        },
+      ],
+    ],
+    params: [options.setId],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "getCardSetCount" function on the contract.
@@ -1254,28 +1360,23 @@ export async function getCardSet(
  *
  * ```
  */
-export async function getCardSetCount(
-  options: BaseTransactionOptions
-) {
+export async function getCardSetCount(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xdf04e66e",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0xdf04e66e",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "getDefaultRoyaltyInfo" function on the contract.
@@ -1289,33 +1390,28 @@ export async function getCardSetCount(
  *
  * ```
  */
-export async function getDefaultRoyaltyInfo(
-  options: BaseTransactionOptions
-) {
+export async function getDefaultRoyaltyInfo(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xb24f2d39",
-  [],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    },
-    {
-      "internalType": "uint16",
-      "name": "",
-      "type": "uint16"
-    }
-  ]
-],
-    params: []
+      "0xb24f2d39",
+      [],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+        {
+          internalType: "uint16",
+          name: "",
+          type: "uint16",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "getLastMintedTokenId" function on the contract.
@@ -1329,32 +1425,33 @@ export async function getDefaultRoyaltyInfo(
  *
  * ```
  */
-export async function getLastMintedTokenId(
-  options: BaseTransactionOptions
-) {
+export async function getLastMintedTokenId(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x7974e46a",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0x7974e46a",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getPokemonAttributes" function.
  */
 export type GetPokemonAttributesParams = {
-  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1377,39 +1474,42 @@ export async function getPokemonAttributes(
   return readContract({
     contract: options.contract,
     method: [
-  "0xaf05033c",
-  [
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "components": [
+      "0xaf05033c",
+      [
         {
-          "internalType": "string",
-          "name": "ipfsURI",
-          "type": "string"
-        }
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
       ],
-      "internalType": "struct PokemonNFT.Pokemon",
-      "name": "",
-      "type": "tuple"
-    }
-  ]
-],
-    params: [options.tokenId]
+      [
+        {
+          components: [
+            {
+              internalType: "string",
+              name: "ipfsURI",
+              type: "string",
+            },
+          ],
+          internalType: "struct PokemonNFT.Pokemon",
+          name: "",
+          type: "tuple",
+        },
+      ],
+    ],
+    params: [options.tokenId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getRoleAdmin" function.
  */
 export type GetRoleAdminParams = {
-  role: AbiParameterToPrimitiveType<{"internalType":"bytes32","name":"role","type":"bytes32"}>
+  role: AbiParameterToPrimitiveType<{
+    internalType: "bytes32";
+    name: "role";
+    type: "bytes32";
+  }>;
 };
 
 /**
@@ -1432,32 +1532,35 @@ export async function getRoleAdmin(
   return readContract({
     contract: options.contract,
     method: [
-  "0x248a9ca3",
-  [
-    {
-      "internalType": "bytes32",
-      "name": "role",
-      "type": "bytes32"
-    }
-  ],
-  [
-    {
-      "internalType": "bytes32",
-      "name": "",
-      "type": "bytes32"
-    }
-  ]
-],
-    params: [options.role]
+      "0x248a9ca3",
+      [
+        {
+          internalType: "bytes32",
+          name: "role",
+          type: "bytes32",
+        },
+      ],
+      [
+        {
+          internalType: "bytes32",
+          name: "",
+          type: "bytes32",
+        },
+      ],
+    ],
+    params: [options.role],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getRoyaltyInfoForToken" function.
  */
 export type GetRoyaltyInfoForTokenParams = {
-  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_tokenId","type":"uint256"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1480,38 +1583,45 @@ export async function getRoyaltyInfoForToken(
   return readContract({
     contract: options.contract,
     method: [
-  "0x4cc157df",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_tokenId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    },
-    {
-      "internalType": "uint16",
-      "name": "",
-      "type": "uint16"
-    }
-  ]
-],
-    params: [options.tokenId]
+      "0x4cc157df",
+      [
+        {
+          internalType: "uint256",
+          name: "_tokenId",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+        {
+          internalType: "uint16",
+          name: "",
+          type: "uint16",
+        },
+      ],
+    ],
+    params: [options.tokenId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "hasRole" function.
  */
 export type HasRoleParams = {
-  role: AbiParameterToPrimitiveType<{"internalType":"bytes32","name":"role","type":"bytes32"}>
-account: AbiParameterToPrimitiveType<{"internalType":"address","name":"account","type":"address"}>
+  role: AbiParameterToPrimitiveType<{
+    internalType: "bytes32";
+    name: "role";
+    type: "bytes32";
+  }>;
+  account: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "account";
+    type: "address";
+  }>;
 };
 
 /**
@@ -1529,44 +1639,49 @@ account: AbiParameterToPrimitiveType<{"internalType":"address","name":"account",
  *
  * ```
  */
-export async function hasRole(
-  options: BaseTransactionOptions<HasRoleParams>
-) {
+export async function hasRole(options: BaseTransactionOptions<HasRoleParams>) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x91d14854",
-  [
-    {
-      "internalType": "bytes32",
-      "name": "role",
-      "type": "bytes32"
-    },
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.role, options.account]
+      "0x91d14854",
+      [
+        {
+          internalType: "bytes32",
+          name: "role",
+          type: "bytes32",
+        },
+        {
+          internalType: "address",
+          name: "account",
+          type: "address",
+        },
+      ],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.role, options.account],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "hasRoleWithSwitch" function.
  */
 export type HasRoleWithSwitchParams = {
-  role: AbiParameterToPrimitiveType<{"internalType":"bytes32","name":"role","type":"bytes32"}>
-account: AbiParameterToPrimitiveType<{"internalType":"address","name":"account","type":"address"}>
+  role: AbiParameterToPrimitiveType<{
+    internalType: "bytes32";
+    name: "role";
+    type: "bytes32";
+  }>;
+  account: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "account";
+    type: "address";
+  }>;
 };
 
 /**
@@ -1590,38 +1705,45 @@ export async function hasRoleWithSwitch(
   return readContract({
     contract: options.contract,
     method: [
-  "0xa32fa5b3",
-  [
-    {
-      "internalType": "bytes32",
-      "name": "role",
-      "type": "bytes32"
-    },
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.role, options.account]
+      "0xa32fa5b3",
+      [
+        {
+          internalType: "bytes32",
+          name: "role",
+          type: "bytes32",
+        },
+        {
+          internalType: "address",
+          name: "account",
+          type: "address",
+        },
+      ],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.role, options.account],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "isApprovedForAll" function.
  */
 export type IsApprovedForAllParams = {
-  owner: AbiParameterToPrimitiveType<{"internalType":"address","name":"owner","type":"address"}>
-operator: AbiParameterToPrimitiveType<{"internalType":"address","name":"operator","type":"address"}>
+  owner: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "owner";
+    type: "address";
+  }>;
+  operator: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "operator";
+    type: "address";
+  }>;
 };
 
 /**
@@ -1645,38 +1767,45 @@ export async function isApprovedForAll(
   return readContract({
     contract: options.contract,
     method: [
-  "0xe985e9c5",
-  [
-    {
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "operator",
-      "type": "address"
-    }
-  ],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.owner, options.operator]
+      "0xe985e9c5",
+      [
+        {
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "operator",
+          type: "address",
+        },
+      ],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.owner, options.operator],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "isApprovedOrOwner" function.
  */
 export type IsApprovedOrOwnerParams = {
-  operator: AbiParameterToPrimitiveType<{"internalType":"address","name":"_operator","type":"address"}>
-tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_tokenId","type":"uint256"}>
+  operator: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "_operator";
+    type: "address";
+  }>;
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1700,33 +1829,30 @@ export async function isApprovedOrOwner(
   return readContract({
     contract: options.contract,
     method: [
-  "0x430c2081",
-  [
-    {
-      "internalType": "address",
-      "name": "_operator",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "_tokenId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "bool",
-      "name": "isApprovedOrOwnerOf",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.operator, options.tokenId]
+      "0x430c2081",
+      [
+        {
+          internalType: "address",
+          name: "_operator",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "_tokenId",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "bool",
+          name: "isApprovedOrOwnerOf",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.operator, options.tokenId],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "name" function on the contract.
@@ -1740,28 +1866,23 @@ export async function isApprovedOrOwner(
  *
  * ```
  */
-export async function name(
-  options: BaseTransactionOptions
-) {
+export async function name(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x06fdde03",
-  [],
-  [
-    {
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }
-  ]
-],
-    params: []
+      "0x06fdde03",
+      [],
+      [
+        {
+          internalType: "string",
+          name: "",
+          type: "string",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "nextTokenIdToMint" function on the contract.
@@ -1775,28 +1896,23 @@ export async function name(
  *
  * ```
  */
-export async function nextTokenIdToMint(
-  options: BaseTransactionOptions
-) {
+export async function nextTokenIdToMint(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x3b1475a7",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0x3b1475a7",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "owner" function on the contract.
@@ -1810,32 +1926,33 @@ export async function nextTokenIdToMint(
  *
  * ```
  */
-export async function owner(
-  options: BaseTransactionOptions
-) {
+export async function owner(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x8da5cb5b",
-  [],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: []
+      "0x8da5cb5b",
+      [],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "ownerOf" function.
  */
 export type OwnerOfParams = {
-  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1852,38 +1969,39 @@ export type OwnerOfParams = {
  *
  * ```
  */
-export async function ownerOf(
-  options: BaseTransactionOptions<OwnerOfParams>
-) {
+export async function ownerOf(options: BaseTransactionOptions<OwnerOfParams>) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x6352211e",
-  [
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: [options.tokenId]
+      "0x6352211e",
+      [
+        {
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+    ],
+    params: [options.tokenId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "pokemonAttributes" function.
  */
 export type PokemonAttributesParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
+  arg_0: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1906,33 +2024,40 @@ export async function pokemonAttributes(
   return readContract({
     contract: options.contract,
     method: [
-  "0xb260325a",
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "string",
-      "name": "ipfsURI",
-      "type": "string"
-    }
-  ]
-],
-    params: [options.arg_0]
+      "0xb260325a",
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "string",
+          name: "ipfsURI",
+          type: "string",
+        },
+      ],
+    ],
+    params: [options.arg_0],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "royaltyInfo" function.
  */
 export type RoyaltyInfoParams = {
-  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
-salePrice: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"salePrice","type":"uint256"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
+  salePrice: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "salePrice";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1956,42 +2081,45 @@ export async function royaltyInfo(
   return readContract({
     contract: options.contract,
     method: [
-  "0x2a55205a",
-  [
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "salePrice",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "address",
-      "name": "receiver",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "royaltyAmount",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.tokenId, options.salePrice]
+      "0x2a55205a",
+      [
+        {
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "salePrice",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "address",
+          name: "receiver",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "royaltyAmount",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [options.tokenId, options.salePrice],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "supportsInterface" function.
  */
 export type SupportsInterfaceParams = {
-  interfaceId: AbiParameterToPrimitiveType<{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}>
+  interfaceId: AbiParameterToPrimitiveType<{
+    internalType: "bytes4";
+    name: "interfaceId";
+    type: "bytes4";
+  }>;
 };
 
 /**
@@ -2014,28 +2142,25 @@ export async function supportsInterface(
   return readContract({
     contract: options.contract,
     method: [
-  "0x01ffc9a7",
-  [
-    {
-      "internalType": "bytes4",
-      "name": "interfaceId",
-      "type": "bytes4"
-    }
-  ],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.interfaceId]
+      "0x01ffc9a7",
+      [
+        {
+          internalType: "bytes4",
+          name: "interfaceId",
+          type: "bytes4",
+        },
+      ],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.interfaceId],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "symbol" function on the contract.
@@ -2049,32 +2174,33 @@ export async function supportsInterface(
  *
  * ```
  */
-export async function symbol(
-  options: BaseTransactionOptions
-) {
+export async function symbol(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x95d89b41",
-  [],
-  [
-    {
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }
-  ]
-],
-    params: []
+      "0x95d89b41",
+      [],
+      [
+        {
+          internalType: "string",
+          name: "",
+          type: "string",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "tokenURI" function.
  */
 export type TokenURIParams = {
-  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -2097,32 +2223,35 @@ export async function tokenURI(
   return readContract({
     contract: options.contract,
     method: [
-  "0xc87b56dd",
-  [
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }
-  ]
-],
-    params: [options.tokenId]
+      "0xc87b56dd",
+      [
+        {
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "string",
+          name: "",
+          type: "string",
+        },
+      ],
+    ],
+    params: [options.tokenId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "tokensOfOwner" function.
  */
 export type TokensOfOwnerParams = {
-  owner: AbiParameterToPrimitiveType<{"internalType":"address","name":"owner","type":"address"}>
+  owner: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "owner";
+    type: "address";
+  }>;
 };
 
 /**
@@ -2145,34 +2274,45 @@ export async function tokensOfOwner(
   return readContract({
     contract: options.contract,
     method: [
-  "0x8462151c",
-  [
-    {
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256[]",
-      "name": "",
-      "type": "uint256[]"
-    }
-  ]
-],
-    params: [options.owner]
+      "0x8462151c",
+      [
+        {
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
+      ],
+      [
+        {
+          internalType: "uint256[]",
+          name: "",
+          type: "uint256[]",
+        },
+      ],
+    ],
+    params: [options.owner],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "tokensOfOwnerIn" function.
  */
 export type TokensOfOwnerInParams = {
-  owner: AbiParameterToPrimitiveType<{"internalType":"address","name":"owner","type":"address"}>
-start: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"start","type":"uint256"}>
-stop: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"stop","type":"uint256"}>
+  owner: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "owner";
+    type: "address";
+  }>;
+  start: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "start";
+    type: "uint256";
+  }>;
+  stop: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "stop";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -2197,38 +2337,35 @@ export async function tokensOfOwnerIn(
   return readContract({
     contract: options.contract,
     method: [
-  "0x99a2557a",
-  [
-    {
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "start",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "stop",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256[]",
-      "name": "",
-      "type": "uint256[]"
-    }
-  ]
-],
-    params: [options.owner, options.start, options.stop]
+      "0x99a2557a",
+      [
+        {
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "start",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "stop",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "uint256[]",
+          name: "",
+          type: "uint256[]",
+        },
+      ],
+    ],
+    params: [options.owner, options.start, options.stop],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "totalSupply" function on the contract.
@@ -2242,37 +2379,42 @@ export async function tokensOfOwnerIn(
  *
  * ```
  */
-export async function totalSupply(
-  options: BaseTransactionOptions
-) {
+export async function totalSupply(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x18160ddd",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0x18160ddd",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
-* Contract write functions
-*/
+ * Contract write functions
+ */
 
 /**
  * Represents the parameters for the "approve" function.
  */
 export type ApproveParams = {
-  to: AbiParameterToPrimitiveType<{"internalType":"address","name":"to","type":"address"}>
-tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  to: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "to";
+    type: "address";
+  }>;
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -2293,40 +2435,53 @@ tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId",
  *
  * ```
  */
-export function approve(
-  options: BaseTransactionOptions<ApproveParams>
-) {
+export function approve(options: BaseTransactionOptions<ApproveParams>) {
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x095ea7b3",
-  [
-    {
-      "internalType": "address",
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.to, options.tokenId]
+      "0x095ea7b3",
+      [
+        {
+          internalType: "address",
+          name: "to",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.to, options.tokenId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "batchMintTo" function.
  */
 export type BatchMintToParams = {
-  to: AbiParameterToPrimitiveType<{"internalType":"address","name":"_to","type":"address"}>
-quantity: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_quantity","type":"uint256"}>
-baseURI: AbiParameterToPrimitiveType<{"internalType":"string","name":"_baseURI","type":"string"}>
-data: AbiParameterToPrimitiveType<{"internalType":"bytes","name":"_data","type":"bytes"}>
+  to: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "_to";
+    type: "address";
+  }>;
+  quantity: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_quantity";
+    type: "uint256";
+  }>;
+  baseURI: AbiParameterToPrimitiveType<{
+    internalType: "string";
+    name: "_baseURI";
+    type: "string";
+  }>;
+  data: AbiParameterToPrimitiveType<{
+    internalType: "bytes";
+    name: "_data";
+    type: "bytes";
+  }>;
 };
 
 /**
@@ -2355,41 +2510,44 @@ export function batchMintTo(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x754a81d9",
-  [
-    {
-      "internalType": "address",
-      "name": "_to",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "_quantity",
-      "type": "uint256"
-    },
-    {
-      "internalType": "string",
-      "name": "_baseURI",
-      "type": "string"
-    },
-    {
-      "internalType": "bytes",
-      "name": "_data",
-      "type": "bytes"
-    }
-  ],
-  []
-],
-    params: [options.to, options.quantity, options.baseURI, options.data]
+      "0x754a81d9",
+      [
+        {
+          internalType: "address",
+          name: "_to",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "_quantity",
+          type: "uint256",
+        },
+        {
+          internalType: "string",
+          name: "_baseURI",
+          type: "string",
+        },
+        {
+          internalType: "bytes",
+          name: "_data",
+          type: "bytes",
+        },
+      ],
+      [],
+    ],
+    params: [options.to, options.quantity, options.baseURI, options.data],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "burn" function.
  */
 export type BurnParams = {
-  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_tokenId","type":"uint256"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -2409,36 +2567,53 @@ export type BurnParams = {
  *
  * ```
  */
-export function burn(
-  options: BaseTransactionOptions<BurnParams>
-) {
+export function burn(options: BaseTransactionOptions<BurnParams>) {
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x42966c68",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_tokenId",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.tokenId]
+      "0x42966c68",
+      [
+        {
+          internalType: "uint256",
+          name: "_tokenId",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.tokenId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "createCardSet" function.
  */
 export type CreateCardSetParams = {
-  name: AbiParameterToPrimitiveType<{"internalType":"string","name":"name","type":"string"}>
-cardURIs: AbiParameterToPrimitiveType<{"internalType":"string[]","name":"cardURIs","type":"string[]"}>
-probabilities: AbiParameterToPrimitiveType<{"internalType":"uint256[]","name":"probabilities","type":"uint256[]"}>
-supply: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"supply","type":"uint256"}>
-price: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"price","type":"uint256"}>
+  name: AbiParameterToPrimitiveType<{
+    internalType: "string";
+    name: "name";
+    type: "string";
+  }>;
+  cardURIs: AbiParameterToPrimitiveType<{
+    internalType: "string[]";
+    name: "cardURIs";
+    type: "string[]";
+  }>;
+  probabilities: AbiParameterToPrimitiveType<{
+    internalType: "uint256[]";
+    name: "probabilities";
+    type: "uint256[]";
+  }>;
+  supply: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "supply";
+    type: "uint256";
+  }>;
+  price: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "price";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -2468,47 +2643,60 @@ export function createCardSet(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x7d7aed2e",
-  [
-    {
-      "internalType": "string",
-      "name": "name",
-      "type": "string"
-    },
-    {
-      "internalType": "string[]",
-      "name": "cardURIs",
-      "type": "string[]"
-    },
-    {
-      "internalType": "uint256[]",
-      "name": "probabilities",
-      "type": "uint256[]"
-    },
-    {
-      "internalType": "uint256",
-      "name": "supply",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "price",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.name, options.cardURIs, options.probabilities, options.supply, options.price]
+      "0x7d7aed2e",
+      [
+        {
+          internalType: "string",
+          name: "name",
+          type: "string",
+        },
+        {
+          internalType: "string[]",
+          name: "cardURIs",
+          type: "string[]",
+        },
+        {
+          internalType: "uint256[]",
+          name: "probabilities",
+          type: "uint256[]",
+        },
+        {
+          internalType: "uint256",
+          name: "supply",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "price",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [
+      options.name,
+      options.cardURIs,
+      options.probabilities,
+      options.supply,
+      options.price,
+    ],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "grantRole" function.
  */
 export type GrantRoleParams = {
-  role: AbiParameterToPrimitiveType<{"internalType":"bytes32","name":"role","type":"bytes32"}>
-account: AbiParameterToPrimitiveType<{"internalType":"address","name":"account","type":"address"}>
+  role: AbiParameterToPrimitiveType<{
+    internalType: "bytes32";
+    name: "role";
+    type: "bytes32";
+  }>;
+  account: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "account";
+    type: "address";
+  }>;
 };
 
 /**
@@ -2529,37 +2717,38 @@ account: AbiParameterToPrimitiveType<{"internalType":"address","name":"account",
  *
  * ```
  */
-export function grantRole(
-  options: BaseTransactionOptions<GrantRoleParams>
-) {
+export function grantRole(options: BaseTransactionOptions<GrantRoleParams>) {
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x2f2ff15d",
-  [
-    {
-      "internalType": "bytes32",
-      "name": "role",
-      "type": "bytes32"
-    },
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.role, options.account]
+      "0x2f2ff15d",
+      [
+        {
+          internalType: "bytes32",
+          name: "role",
+          type: "bytes32",
+        },
+        {
+          internalType: "address",
+          name: "account",
+          type: "address",
+        },
+      ],
+      [],
+    ],
+    params: [options.role, options.account],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "mintFromCardSet" function.
  */
 export type MintFromCardSetParams = {
-  setId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"setId","type":"uint256"}>
+  setId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "setId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -2585,33 +2774,40 @@ export function mintFromCardSet(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x963158b3",
-  [
-    {
-      "internalType": "uint256",
-      "name": "setId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.setId]
+      "0x963158b3",
+      [
+        {
+          internalType: "uint256",
+          name: "setId",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [options.setId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "mintPokemon" function.
  */
 export type MintPokemonParams = {
-  to: AbiParameterToPrimitiveType<{"internalType":"address","name":"_to","type":"address"}>
-ipfsURI: AbiParameterToPrimitiveType<{"internalType":"string","name":"_ipfsURI","type":"string"}>
+  to: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "_to";
+    type: "address";
+  }>;
+  ipfsURI: AbiParameterToPrimitiveType<{
+    internalType: "string";
+    name: "_ipfsURI";
+    type: "string";
+  }>;
 };
 
 /**
@@ -2638,38 +2834,45 @@ export function mintPokemon(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x8212fa46",
-  [
-    {
-      "internalType": "address",
-      "name": "_to",
-      "type": "address"
-    },
-    {
-      "internalType": "string",
-      "name": "_ipfsURI",
-      "type": "string"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.to, options.ipfsURI]
+      "0x8212fa46",
+      [
+        {
+          internalType: "address",
+          name: "_to",
+          type: "address",
+        },
+        {
+          internalType: "string",
+          name: "_ipfsURI",
+          type: "string",
+        },
+      ],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [options.to, options.ipfsURI],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "mintTo" function.
  */
 export type MintToParams = {
-  to: AbiParameterToPrimitiveType<{"internalType":"address","name":"_to","type":"address"}>
-tokenURI: AbiParameterToPrimitiveType<{"internalType":"string","name":"_tokenURI","type":"string"}>
+  to: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "_to";
+    type: "address";
+  }>;
+  tokenURI: AbiParameterToPrimitiveType<{
+    internalType: "string";
+    name: "_tokenURI";
+    type: "string";
+  }>;
 };
 
 /**
@@ -2690,37 +2893,38 @@ tokenURI: AbiParameterToPrimitiveType<{"internalType":"string","name":"_tokenURI
  *
  * ```
  */
-export function mintTo(
-  options: BaseTransactionOptions<MintToParams>
-) {
+export function mintTo(options: BaseTransactionOptions<MintToParams>) {
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x0075a317",
-  [
-    {
-      "internalType": "address",
-      "name": "_to",
-      "type": "address"
-    },
-    {
-      "internalType": "string",
-      "name": "_tokenURI",
-      "type": "string"
-    }
-  ],
-  []
-],
-    params: [options.to, options.tokenURI]
+      "0x0075a317",
+      [
+        {
+          internalType: "address",
+          name: "_to",
+          type: "address",
+        },
+        {
+          internalType: "string",
+          name: "_tokenURI",
+          type: "string",
+        },
+      ],
+      [],
+    ],
+    params: [options.to, options.tokenURI],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "multicall" function.
  */
 export type MulticallParams = {
-  data: AbiParameterToPrimitiveType<{"internalType":"bytes[]","name":"data","type":"bytes[]"}>
+  data: AbiParameterToPrimitiveType<{
+    internalType: "bytes[]";
+    name: "data";
+    type: "bytes[]";
+  }>;
 };
 
 /**
@@ -2740,39 +2944,44 @@ export type MulticallParams = {
  *
  * ```
  */
-export function multicall(
-  options: BaseTransactionOptions<MulticallParams>
-) {
+export function multicall(options: BaseTransactionOptions<MulticallParams>) {
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xac9650d8",
-  [
-    {
-      "internalType": "bytes[]",
-      "name": "data",
-      "type": "bytes[]"
-    }
-  ],
-  [
-    {
-      "internalType": "bytes[]",
-      "name": "results",
-      "type": "bytes[]"
-    }
-  ]
-],
-    params: [options.data]
+      "0xac9650d8",
+      [
+        {
+          internalType: "bytes[]",
+          name: "data",
+          type: "bytes[]",
+        },
+      ],
+      [
+        {
+          internalType: "bytes[]",
+          name: "results",
+          type: "bytes[]",
+        },
+      ],
+    ],
+    params: [options.data],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "renounceRole" function.
  */
 export type RenounceRoleParams = {
-  role: AbiParameterToPrimitiveType<{"internalType":"bytes32","name":"role","type":"bytes32"}>
-account: AbiParameterToPrimitiveType<{"internalType":"address","name":"account","type":"address"}>
+  role: AbiParameterToPrimitiveType<{
+    internalType: "bytes32";
+    name: "role";
+    type: "bytes32";
+  }>;
+  account: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "account";
+    type: "address";
+  }>;
 };
 
 /**
@@ -2799,32 +3008,39 @@ export function renounceRole(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x36568abe",
-  [
-    {
-      "internalType": "bytes32",
-      "name": "role",
-      "type": "bytes32"
-    },
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.role, options.account]
+      "0x36568abe",
+      [
+        {
+          internalType: "bytes32",
+          name: "role",
+          type: "bytes32",
+        },
+        {
+          internalType: "address",
+          name: "account",
+          type: "address",
+        },
+      ],
+      [],
+    ],
+    params: [options.role, options.account],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "revokeRole" function.
  */
 export type RevokeRoleParams = {
-  role: AbiParameterToPrimitiveType<{"internalType":"bytes32","name":"role","type":"bytes32"}>
-account: AbiParameterToPrimitiveType<{"internalType":"address","name":"account","type":"address"}>
+  role: AbiParameterToPrimitiveType<{
+    internalType: "bytes32";
+    name: "role";
+    type: "bytes32";
+  }>;
+  account: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "account";
+    type: "address";
+  }>;
 };
 
 /**
@@ -2845,39 +3061,48 @@ account: AbiParameterToPrimitiveType<{"internalType":"address","name":"account",
  *
  * ```
  */
-export function revokeRole(
-  options: BaseTransactionOptions<RevokeRoleParams>
-) {
+export function revokeRole(options: BaseTransactionOptions<RevokeRoleParams>) {
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xd547741f",
-  [
-    {
-      "internalType": "bytes32",
-      "name": "role",
-      "type": "bytes32"
-    },
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.role, options.account]
+      "0xd547741f",
+      [
+        {
+          internalType: "bytes32",
+          name: "role",
+          type: "bytes32",
+        },
+        {
+          internalType: "address",
+          name: "account",
+          type: "address",
+        },
+      ],
+      [],
+    ],
+    params: [options.role, options.account],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "safeTransferFrom" function.
  */
 export type SafeTransferFromParams = {
-  from: AbiParameterToPrimitiveType<{"internalType":"address","name":"from","type":"address"}>
-to: AbiParameterToPrimitiveType<{"internalType":"address","name":"to","type":"address"}>
-tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  from: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "from";
+    type: "address";
+  }>;
+  to: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "to";
+    type: "address";
+  }>;
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -2905,37 +3130,44 @@ export function safeTransferFrom(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x42842e0e",
-  [
-    {
-      "internalType": "address",
-      "name": "from",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.from, options.to, options.tokenId]
+      "0x42842e0e",
+      [
+        {
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "to",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.from, options.to, options.tokenId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "setApprovalForAll" function.
  */
 export type SetApprovalForAllParams = {
-  operator: AbiParameterToPrimitiveType<{"internalType":"address","name":"operator","type":"address"}>
-approved: AbiParameterToPrimitiveType<{"internalType":"bool","name":"approved","type":"bool"}>
+  operator: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "operator";
+    type: "address";
+  }>;
+  approved: AbiParameterToPrimitiveType<{
+    internalType: "bool";
+    name: "approved";
+    type: "bool";
+  }>;
 };
 
 /**
@@ -2962,31 +3194,34 @@ export function setApprovalForAll(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xa22cb465",
-  [
-    {
-      "internalType": "address",
-      "name": "operator",
-      "type": "address"
-    },
-    {
-      "internalType": "bool",
-      "name": "approved",
-      "type": "bool"
-    }
-  ],
-  []
-],
-    params: [options.operator, options.approved]
+      "0xa22cb465",
+      [
+        {
+          internalType: "address",
+          name: "operator",
+          type: "address",
+        },
+        {
+          internalType: "bool",
+          name: "approved",
+          type: "bool",
+        },
+      ],
+      [],
+    ],
+    params: [options.operator, options.approved],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "setContractURI" function.
  */
 export type SetContractURIParams = {
-  uri: AbiParameterToPrimitiveType<{"internalType":"string","name":"_uri","type":"string"}>
+  uri: AbiParameterToPrimitiveType<{
+    internalType: "string";
+    name: "_uri";
+    type: "string";
+  }>;
 };
 
 /**
@@ -3012,27 +3247,34 @@ export function setContractURI(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x938e3d7b",
-  [
-    {
-      "internalType": "string",
-      "name": "_uri",
-      "type": "string"
-    }
-  ],
-  []
-],
-    params: [options.uri]
+      "0x938e3d7b",
+      [
+        {
+          internalType: "string",
+          name: "_uri",
+          type: "string",
+        },
+      ],
+      [],
+    ],
+    params: [options.uri],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "setDefaultRoyaltyInfo" function.
  */
 export type SetDefaultRoyaltyInfoParams = {
-  royaltyRecipient: AbiParameterToPrimitiveType<{"internalType":"address","name":"_royaltyRecipient","type":"address"}>
-royaltyBps: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_royaltyBps","type":"uint256"}>
+  royaltyRecipient: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "_royaltyRecipient";
+    type: "address";
+  }>;
+  royaltyBps: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_royaltyBps";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -3059,31 +3301,34 @@ export function setDefaultRoyaltyInfo(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x600dd5ea",
-  [
-    {
-      "internalType": "address",
-      "name": "_royaltyRecipient",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "_royaltyBps",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.royaltyRecipient, options.royaltyBps]
+      "0x600dd5ea",
+      [
+        {
+          internalType: "address",
+          name: "_royaltyRecipient",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "_royaltyBps",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.royaltyRecipient, options.royaltyBps],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "setOwner" function.
  */
 export type SetOwnerParams = {
-  newOwner: AbiParameterToPrimitiveType<{"internalType":"address","name":"_newOwner","type":"address"}>
+  newOwner: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "_newOwner";
+    type: "address";
+  }>;
 };
 
 /**
@@ -3103,34 +3348,43 @@ export type SetOwnerParams = {
  *
  * ```
  */
-export function setOwner(
-  options: BaseTransactionOptions<SetOwnerParams>
-) {
+export function setOwner(options: BaseTransactionOptions<SetOwnerParams>) {
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x13af4035",
-  [
-    {
-      "internalType": "address",
-      "name": "_newOwner",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.newOwner]
+      "0x13af4035",
+      [
+        {
+          internalType: "address",
+          name: "_newOwner",
+          type: "address",
+        },
+      ],
+      [],
+    ],
+    params: [options.newOwner],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "setRoyaltyInfoForToken" function.
  */
 export type SetRoyaltyInfoForTokenParams = {
-  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_tokenId","type":"uint256"}>
-recipient: AbiParameterToPrimitiveType<{"internalType":"address","name":"_recipient","type":"address"}>
-bps: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_bps","type":"uint256"}>
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_tokenId";
+    type: "uint256";
+  }>;
+  recipient: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "_recipient";
+    type: "address";
+  }>;
+  bps: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_bps";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -3158,38 +3412,49 @@ export function setRoyaltyInfoForToken(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x9bcf7a15",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_tokenId",
-      "type": "uint256"
-    },
-    {
-      "internalType": "address",
-      "name": "_recipient",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "_bps",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.tokenId, options.recipient, options.bps]
+      "0x9bcf7a15",
+      [
+        {
+          internalType: "uint256",
+          name: "_tokenId",
+          type: "uint256",
+        },
+        {
+          internalType: "address",
+          name: "_recipient",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "_bps",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.tokenId, options.recipient, options.bps],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "transferFrom" function.
  */
 export type TransferFromParams = {
-  from: AbiParameterToPrimitiveType<{"internalType":"address","name":"from","type":"address"}>
-to: AbiParameterToPrimitiveType<{"internalType":"address","name":"to","type":"address"}>
-tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+  from: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "from";
+    type: "address";
+  }>;
+  to: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "to";
+    type: "address";
+  }>;
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -3217,36 +3482,39 @@ export function transferFrom(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x23b872dd",
-  [
-    {
-      "internalType": "address",
-      "name": "from",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.from, options.to, options.tokenId]
+      "0x23b872dd",
+      [
+        {
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "to",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.from, options.to, options.tokenId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "updateCommitRevealTimelock" function.
  */
 export type UpdateCommitRevealTimelockParams = {
-  newTimelock: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"newTimelock","type":"uint256"}>
+  newTimelock: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "newTimelock";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -3272,22 +3540,19 @@ export function updateCommitRevealTimelock(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xf6a1cd4e",
-  [
-    {
-      "internalType": "uint256",
-      "name": "newTimelock",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.newTimelock]
+      "0xf6a1cd4e",
+      [
+        {
+          internalType: "uint256",
+          name: "newTimelock",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.newTimelock],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "updateSecretSalt" function on the contract.
@@ -3304,22 +3569,13 @@ export function updateCommitRevealTimelock(
  *
  * ```
  */
-export function updateSecretSalt(
-  options: BaseTransactionOptions
-) {
+export function updateSecretSalt(options: BaseTransactionOptions) {
   return prepareContractCall({
     contract: options.contract,
-    method: [
-  "0xa5d81295",
-  [],
-  []
-],
-    params: []
+    method: ["0xa5d81295", [], []],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "withdraw" function on the contract.
@@ -3336,18 +3592,10 @@ export function updateSecretSalt(
  *
  * ```
  */
-export function withdraw(
-  options: BaseTransactionOptions
-) {
+export function withdraw(options: BaseTransactionOptions) {
   return prepareContractCall({
     contract: options.contract,
-    method: [
-  "0x3ccfd60b",
-  [],
-  []
-],
-    params: []
+    method: ["0x3ccfd60b", [], []],
+    params: [],
   });
-};
-
-
+}

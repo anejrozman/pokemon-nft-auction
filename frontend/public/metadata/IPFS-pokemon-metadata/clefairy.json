@@ -1,43 +1,43 @@
 {
-    "name": "Clefairy",
-    "description": "A pink, fairy-like Pokémon with pointed ears and a curled tuft of fur on its forehead. It's a Fairy type known as the Fairy Pokémon.",
-    "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/clefairy.png",
-    "attributes": [
-      {
-        "trait_type": "Type",
-        "value": "Fairy"
-      },
-      {
-        "trait_type": "Level",
-        "value": 10
-      },
-      {
-        "trait_type": "HP",
-        "value": 70
-      },
-      {
-        "trait_type": "Attack",
-        "value": 45
-      },
-      {
-        "trait_type": "Defense",
-        "value": 48
-      },
-      {
-        "trait_type": "Special",
-        "value": 60
-      },
-      {
-        "trait_type": "Speed",
-        "value": 35
-      },
-      {
-        "trait_type": "Generation",
-        "value": 1
-      },
-      {
-        "trait_type": "Shiny",
-        "value": false
-      }
-    ]
-  }
+  "name": "Clefairy",
+  "description": "A pink, fairy-like Pokémon with pointed ears and a curled tuft of fur on its forehead. It's a Fairy type known as the Fairy Pokémon.",
+  "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/clefairy.png",
+  "attributes": [
+    {
+      "trait_type": "Type",
+      "value": "Fairy"
+    },
+    {
+      "trait_type": "Level",
+      "value": 10
+    },
+    {
+      "trait_type": "HP",
+      "value": 70
+    },
+    {
+      "trait_type": "Attack",
+      "value": 45
+    },
+    {
+      "trait_type": "Defense",
+      "value": 48
+    },
+    {
+      "trait_type": "Special",
+      "value": 60
+    },
+    {
+      "trait_type": "Speed",
+      "value": 35
+    },
+    {
+      "trait_type": "Generation",
+      "value": 1
+    },
+    {
+      "trait_type": "Shiny",
+      "value": false
+    }
+  ]
+}

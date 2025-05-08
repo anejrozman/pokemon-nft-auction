@@ -34,4 +34,4 @@ export interface ExtendedEnglishAuction extends ThirdwebEnglishAuction {
   status: "CREATED" | "COMPLETED" | "CANCELLED";
   auctionCreator: string;
   winningBid?: WinningBid;
-} 
+}

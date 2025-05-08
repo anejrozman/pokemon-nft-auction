@@ -1,12 +1,13 @@
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import { ExtendedEnglishAuction } from "@/types/auction";
-import {
-  Button,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import { sendAndConfirmTransaction } from "thirdweb";
 import { collectAuctionPayout } from "thirdweb/extensions/marketplace";
-import { useActiveWalletChain, useSwitchActiveWalletChain, useReadContract } from "thirdweb/react";
+import {
+  useActiveWalletChain,
+  useSwitchActiveWalletChain,
+  useReadContract,
+} from "thirdweb/react";
 import type { Account } from "thirdweb/wallets";
 import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
 import { getContract } from "thirdweb";
@@ -38,7 +39,8 @@ export default function CollectAuctionPayoutButton(props: Props) {
     auctionId: auction.id,
   });
 
-  const isSeller = auction.creatorAddress.toLowerCase() === account.address.toLowerCase();
+  const isSeller =
+    auction.creatorAddress.toLowerCase() === account.address.toLowerCase();
   const isAuctionEnded = Date.now() / 1000 > Number(auction.endTimeInSeconds);
   const hasWinningBid = winningBid?.[0] !== undefined;
 
@@ -91,11 +93,8 @@ export default function CollectAuctionPayoutButton(props: Props) {
   }
 
   return (
-    <Button 
-      colorScheme="green" 
-      onClick={handleCollectPayout}
-    >
+    <Button colorScheme="green" onClick={handleCollectPayout}>
       Collect Payout
     </Button>
   );
-} 
+}

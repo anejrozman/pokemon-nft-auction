@@ -20,11 +20,9 @@ export type SupportedTokens = {
  * check that in https://thirdweb.com/<chain-id>/<marketplace-v3-address>/permissions -> Asset
  * By default the Marketplace V3 contract supports any asset (token)
  */
-export const SUPPORTED_TOKENS: SupportedTokens[] = [
-];
+export const SUPPORTED_TOKENS: SupportedTokens[] = [];
 
 export const NATIVE_TOKEN_ICON_MAP: { [key in Chain["id"]]: string } = {
   1: "/native-token-icons/eth.png",
   [hardhatLocal.id]: "/native-token-icons/eth.png", // Add your local chain
-
 };

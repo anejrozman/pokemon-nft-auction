@@ -2,7 +2,9 @@ import { ExtendedEnglishAuction, WinningBid } from "@/types/auction";
 import { EnglishAuction } from "thirdweb/extensions/marketplace";
 
 // Map from ThirdWeb EnglishAuction type to our ExtendedEnglishAuction type
-export function mapToExtendedAuction(auction: EnglishAuction): ExtendedEnglishAuction {
+export function mapToExtendedAuction(
+  auction: EnglishAuction
+): ExtendedEnglishAuction {
   if (!auction) {
     console.error("Received null/undefined auction in mapper");
     // Return a default object to prevent crashes
@@ -15,7 +17,7 @@ export function mapToExtendedAuction(auction: EnglishAuction): ExtendedEnglishAu
         name: "ETH",
         symbol: "ETH",
         decimals: 18,
-        address: ""
+        address: "",
       },
       minimumBidAmount: "0",
       buyoutBidAmount: "0",
@@ -25,26 +27,27 @@ export function mapToExtendedAuction(auction: EnglishAuction): ExtendedEnglishAu
       endTimeInSeconds: 0n,
       status: "CREATED",
       auctionCreator: "",
-      winningBid: undefined
+      winningBid: undefined,
     } as ExtendedEnglishAuction;
   }
 
-  
   // Safely extract winner and bid amount
   const winner = auction.winningBidder || "";
   const bidAmount = auction.winningBidAmount?.toString() || "0";
-  
+
   // Create winning bid object if there is a winner
-  const winningBid: WinningBid | undefined = winner ? {
-    bidder: winner,
-    bidAmount: bidAmount,
-    currencyValue: {
-      symbol: "ETH", // Default, should be updated based on actual currency
-      name: "Ethereum",
-      decimals: 18
-    }
-  } : undefined;
-  
+  const winningBid: WinningBid | undefined = winner
+    ? {
+        bidder: winner,
+        bidAmount: bidAmount,
+        currencyValue: {
+          symbol: "ETH", // Default, should be updated based on actual currency
+          name: "Ethereum",
+          decimals: 18,
+        },
+      }
+    : undefined;
+
   return {
     ...auction,
     id: auction.id || 0n,
@@ -55,7 +58,7 @@ export function mapToExtendedAuction(auction: EnglishAuction): ExtendedEnglishAu
       name: "ETH", // Default, should be updated based on actual currency
       symbol: "ETH",
       decimals: 18,
-      address: auction.currency || ""
+      address: auction.currency || "",
     },
     minimumBidAmount: auction.minimumBidAmount?.toString() || "0",
     buyoutBidAmount: auction.buyoutBidAmount?.toString() || "0",
@@ -63,17 +66,20 @@ export function mapToExtendedAuction(auction: EnglishAuction): ExtendedEnglishAu
     bidBufferBps: auction.bidBufferBps || 0n,
     startTimeInSeconds: auction.startTimeInSeconds || 0n,
     endTimeInSeconds: auction.endTimeInSeconds || 0n,
-    status: auction.status as "CREATED" | "COMPLETED" | "CANCELLED" || "CREATED",
+    status:
+      (auction.status as "CREATED" | "COMPLETED" | "CANCELLED") || "CREATED",
     auctionCreator: auction.auctionCreator || "",
-    winningBid
+    winningBid,
   };
 }
 
 // Map an array of ThirdWeb EnglishAuction to ExtendedEnglishAuction
-export function mapToExtendedAuctions(auctions: EnglishAuction[]): ExtendedEnglishAuction[] {
+export function mapToExtendedAuctions(
+  auctions: EnglishAuction[]
+): ExtendedEnglishAuction[] {
   if (!auctions || !Array.isArray(auctions)) {
     console.error("Invalid auctions array:", auctions);
     return [];
   }
   return auctions.map(mapToExtendedAuction);
-} 
+}

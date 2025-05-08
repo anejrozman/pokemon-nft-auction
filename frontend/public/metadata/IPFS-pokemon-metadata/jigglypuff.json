@@ -1,43 +1,43 @@
 {
-    "name": "Jigglypuff",
-    "description": "A round, pink Pokémon with large, blue eyes and pointed ears. It's a Normal/Fairy type known as the Balloon Pokémon.",
-    "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/jigglypuff.png",
-    "attributes": [
-      {
-        "trait_type": "Type",
-        "value": "Normal/Fairy"
-      },
-      {
-        "trait_type": "Level",
-        "value": 9
-      },
-      {
-        "trait_type": "HP",
-        "value": 115
-      },
-      {
-        "trait_type": "Attack",
-        "value": 45
-      },
-      {
-        "trait_type": "Defense",
-        "value": 20
-      },
-      {
-        "trait_type": "Special",
-        "value": 45
-      },
-      {
-        "trait_type": "Speed",
-        "value": 20
-      },
-      {
-        "trait_type": "Generation",
-        "value": 1
-      },
-      {
-        "trait_type": "Shiny",
-        "value": false
-      }
-    ]
-  }
+  "name": "Jigglypuff",
+  "description": "A round, pink Pokémon with large, blue eyes and pointed ears. It's a Normal/Fairy type known as the Balloon Pokémon.",
+  "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/jigglypuff.png",
+  "attributes": [
+    {
+      "trait_type": "Type",
+      "value": "Normal/Fairy"
+    },
+    {
+      "trait_type": "Level",
+      "value": 9
+    },
+    {
+      "trait_type": "HP",
+      "value": 115
+    },
+    {
+      "trait_type": "Attack",
+      "value": 45
+    },
+    {
+      "trait_type": "Defense",
+      "value": 20
+    },
+    {
+      "trait_type": "Special",
+      "value": 45
+    },
+    {
+      "trait_type": "Speed",
+      "value": 20
+    },
+    {
+      "trait_type": "Generation",
+      "value": 1
+    },
+    {
+      "trait_type": "Shiny",
+      "value": false
+    }
+  ]
+}

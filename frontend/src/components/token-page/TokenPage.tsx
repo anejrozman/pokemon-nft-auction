@@ -19,7 +19,11 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { balanceOf, getNFT as getERC1155, tokensClaimedEvent } from "thirdweb/extensions/erc1155";
+import {
+  balanceOf,
+  getNFT as getERC1155,
+  tokensClaimedEvent,
+} from "thirdweb/extensions/erc1155";
 import { getNFT as getERC721 } from "thirdweb/extensions/erc721";
 import {
   MediaRenderer,
@@ -54,9 +58,12 @@ const BidInAuctionButton = dynamic(() => import("./BidInAuctionButton"), {
 const CollectAuctionButton = dynamic(() => import("./CollectAuctionButton"), {
   ssr: false,
 });
-const CollectAuctionPayoutButton = dynamic(() => import("./CollectAuctionPayoutButton"), {
-  ssr: false,
-});
+const CollectAuctionPayoutButton = dynamic(
+  () => import("./CollectAuctionPayoutButton"),
+  {
+    ssr: false,
+  }
+);
 
 type Props = {
   tokenId: bigint;
@@ -66,7 +73,9 @@ type Props = {
 type WinningBid = [string, string, bigint]; // [bidder, currency, bidAmount]
 
 function useWinningBids(auctions: any[], auctionHouse: any) {
-  const [winningBids, setWinningBids] = useState<Record<string, WinningBid>>({});
+  const [winningBids, setWinningBids] = useState<Record<string, WinningBid>>(
+    {}
+  );
 
   useEffect(() => {
     const fetchBids = async () => {
@@ -76,12 +85,12 @@ function useWinningBids(auctions: any[], auctionHouse: any) {
           return { id: auction.id.toString(), bid: result as WinningBid };
         })
       );
-      
+
       const bidsMap = bids.reduce((acc, { id, bid }) => {
         acc[id] = bid;
         return acc;
       }, {} as Record<string, WinningBid>);
-      
+
       setWinningBids(bidsMap);
     };
 
@@ -94,47 +103,46 @@ function useWinningBids(auctions: any[], auctionHouse: any) {
 }
 
 // Separate component for auction row
-function AuctionRow({ 
-  item, 
-  account, 
-  auctionHouse, 
+function AuctionRow({
+  item,
+  account,
+  auctionHouse,
   type,
-  nft 
-}: { 
-  item: any; 
-  account: any; 
+  nft,
+}: {
+  item: any;
+  account: any;
   auctionHouse: any;
   type: string;
   nft: any;
 }) {
   const createdByYou =
-    item?.creatorAddress.toLowerCase() ===
-    account?.address.toLowerCase();
-  
+    item?.creatorAddress.toLowerCase() === account?.address.toLowerCase();
+
   // Get winning bid for this auction
   const { data: auctionBid } = useReadContract(getWinningBid, {
     contract: auctionHouse,
     auctionId: item.id,
   });
 
-  const isWinner = 
-    auctionBid?.[0]?.toLowerCase() === 
-    account?.address.toLowerCase();
+  const isWinner =
+    auctionBid?.[0]?.toLowerCase() === account?.address.toLowerCase();
 
-  const isEnded = 
-    Date.now() / 1000 > Number(item.endTimeInSeconds);
+  const isEnded = Date.now() / 1000 > Number(item.endTimeInSeconds);
 
   return (
     <Tr key={item.id.toString()}>
       <Td>
         <Text>
           {item.minimumBidCurrencyValue.displayValue} {item.currency.name}
-        </Text> 
+        </Text>
       </Td>
       <Td>
         <Text>
           {auctionBid
-            ? `${formatEther(auctionBid[2])} ${item.currency.symbol || item.currency.name}`
+            ? `${formatEther(auctionBid[2])} ${
+                item.currency.symbol || item.currency.name
+              }`
             : "No bids"}
         </Text>
       </Td>
@@ -144,39 +152,28 @@ function AuctionRow({
         </Td>
       )}
       <Td>
-        <Text>
-          {isEnded 
-            ? "Ended" 
-            : getExpiration(item.endTimeInSeconds)}
-        </Text>
+        <Text>{isEnded ? "Ended" : getExpiration(item.endTimeInSeconds)}</Text>
       </Td>
       <Td px={1}>
         <Text>
           {createdByYou
             ? "You"
-            : nft?.owner ? shortenAddress(nft.owner) : "N/A"}
+            : nft?.owner
+            ? shortenAddress(nft.owner)
+            : "N/A"}
         </Text>
       </Td>
       {account && (
         <Td>
           <Flex gap={2}>
             {!isEnded && !createdByYou && (
-              <BidInAuctionButton
-                account={account}
-                auction={item}
-              />
+              <BidInAuctionButton account={account} auction={item} />
             )}
             {isEnded && isWinner && (
-              <CollectAuctionButton
-                account={account}
-                auction={item}
-              />
+              <CollectAuctionButton account={account} auction={item} />
             )}
             {isEnded && createdByYou && (
-              <CollectAuctionPayoutButton
-                account={account}
-                auction={item}
-              />
+              <CollectAuctionPayoutButton account={account} auction={item} />
             )}
           </Flex>
         </Td>
@@ -226,17 +223,16 @@ export function Token(props: Props) {
 
   // Convert tokenId to string for comparison to handle different data types
   const tokenIdString = tokenId.toString();
-  
-  
-  const auctions = (auctionsInSelectedCollection || []).filter(
-    (item) => {
-      return item.assetContractAddress?.toLowerCase() ===
-        nftContract.address.toLowerCase() && 
-        (item.tokenId?.toString() === tokenIdString || 
-         item.tokenId === BigInt(tokenId));
-    }
-  );
-  
+
+  const auctions = (auctionsInSelectedCollection || []).filter((item) => {
+    return (
+      item.assetContractAddress?.toLowerCase() ===
+        nftContract.address.toLowerCase() &&
+      (item.tokenId?.toString() === tokenIdString ||
+        item.tokenId === BigInt(tokenId))
+    );
+  });
+
   const allLoaded = !isLoadingNFT && !isLoading && !isRefetchingAllListings;
 
   const ownedByYou =
@@ -254,8 +250,7 @@ export function Token(props: Props) {
     contract: auctionHouse,
     events: [newBidEvent({ bidder: account?.address })],
   });
-  
-  
+
   // Watch for changes in events
   useEffect(() => {
     if (events?.length) {
@@ -271,7 +266,7 @@ export function Token(props: Props) {
     auctionId: auctions[0]?.id,
     queryOptions: {
       enabled: auctions.length > 0,
-    }
+    },
   });
 
   return (
@@ -415,9 +410,11 @@ export function Token(props: Props) {
                                   <Text>
                                     {item.creatorAddress.toLowerCase() ===
                                     account?.address.toLowerCase()
-                                      ? "You" :
-                                      nft?.owner ? shortenAddress(nft.owner) : "N/A"}
-                                      </Text>
+                                      ? "You"
+                                      : nft?.owner
+                                      ? shortenAddress(nft.owner)
+                                      : "N/A"}
+                                  </Text>
                                 </Td>
                                 {account && (
                                   <Td>
@@ -504,11 +501,11 @@ function getExpiration(endTimeInSeconds: bigint) {
   const milliseconds: bigint = endTimeInSeconds * 1000n;
 
   // Fix: Create the Date object directly from the timestamp milliseconds.
-  const futureDate = new Date(Number(milliseconds)); 
+  const futureDate = new Date(Number(milliseconds));
 
   // Check if the date is valid before formatting
   if (isNaN(futureDate.getTime())) {
-    return "Invalid Date"; 
+    return "Invalid Date";
   }
 
   // Format the future date

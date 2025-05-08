@@ -28,7 +28,6 @@ import { Abi } from "thirdweb/utils";
 import { isGetAuctionSupported } from "thirdweb/extensions/marketplace";
 export type NftType = "ERC1155" | "ERC721";
 
-
 /**
  * Support for English auction
  */
@@ -105,7 +104,7 @@ export default function MarketplaceProvider({
     chain: marketplaceContract.chain,
     client,
   });
-  
+
   // Get auction house contract (second contract in the array)
   const auctionHouse = getContract({
     address: MARKETPLACE_CONTRACTS[1].address,
@@ -156,14 +155,14 @@ export default function MarketplaceProvider({
           contract.address.toLowerCase()
       )
     : [];
-    const {
-      data: allAuctions,
-      isLoading: isLoadingAuctions,
-      refetch: refetchAllAuctions,
-      isRefetching: isRefetchingAllAuctions,
-    } = useReadContract(getAllAuctions, {
-      contract: auctionHouse,
-    });
+  const {
+    data: allAuctions,
+    isLoading: isLoadingAuctions,
+    refetch: refetchAllAuctions,
+    isRefetching: isRefetchingAllAuctions,
+  } = useReadContract(getAllAuctions, {
+    contract: auctionHouse,
+  });
 
   // Convert standard EnglishAuction objects to ExtendedEnglishAuction objects
   const extendedAuctions = useMemo(() => {

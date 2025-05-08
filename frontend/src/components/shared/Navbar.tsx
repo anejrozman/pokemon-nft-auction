@@ -52,58 +52,58 @@ export function Navbar() {
           >
             POKÉMARKET
           </Heading>
-          <Text 
-            fontSize="sm" 
-            color="gray.500"
-            fontStyle="italic"
-          >
+          <Text fontSize="sm" color="gray.500" fontStyle="italic">
             Collect, Trade, and make each other jealous with Pokémon NFTs
           </Text>
         </VStack>
-        <Flex direction="row" alignItems="center" gap={4} display={{ lg: "flex", base: "none" }}>
-            {/* Mint button */}
-            <Button
-              as={Link}
-              href="/cardsets"
-              fontWeight="bold"
-              bgGradient="linear(to-l, #7928CA, #FF0080)"
-              color="white"
-              _hover={{
-                bgGradient: "linear(to-l, #FF0080, #7928CA)",
-                transform: "translateY(-2px)",
-              }}
-              _active={{
-                transform: "translateY(0)",
-              }}
-              transition="all 0.2s"
-              size="md"
-              borderRadius="md"
-            >
-              Mint
-            </Button>
-            
-            {/* Auctions button */}
-            <Button
-              as={Link}
-              href="/auctions"
-              fontWeight="bold"
-              bgGradient="linear(to-l, #7928CA, #FF0080)"
-              color="white"
-              _hover={{
-                bgGradient: "linear(to-l, #FF0080, #7928CA)",
-                transform: "translateY(-2px)",
-              }}
-              _active={{
-                transform: "translateY(0)",
-              }}
-              transition="all 0.2s"
-              size="md"
-              borderRadius="md"
-            >
-              Auctions
-            </Button>
+        <Flex
+          direction="row"
+          alignItems="center"
+          gap={4}
+          display={{ lg: "flex", base: "none" }}
+        >
+          {/* Mint button */}
+          <Button
+            as={Link}
+            href="/cardsets"
+            fontWeight="bold"
+            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            color="white"
+            _hover={{
+              bgGradient: "linear(to-l, #FF0080, #7928CA)",
+              transform: "translateY(-2px)",
+            }}
+            _active={{
+              transform: "translateY(0)",
+            }}
+            transition="all 0.2s"
+            size="md"
+            borderRadius="md"
+          >
+            Mint
+          </Button>
 
-            
+          {/* Auctions button */}
+          <Button
+            as={Link}
+            href="/auctions"
+            fontWeight="bold"
+            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            color="white"
+            _hover={{
+              bgGradient: "linear(to-l, #FF0080, #7928CA)",
+              transform: "translateY(-2px)",
+            }}
+            _active={{
+              transform: "translateY(0)",
+            }}
+            transition="all 0.2s"
+            size="md"
+            borderRadius="md"
+          >
+            Auctions
+          </Button>
+
           {account && wallet ? (
             <ProfileButton address={account.address} wallet={wallet} />
           ) : (

@@ -7,14 +7,19 @@ import {
 } from "thirdweb";
 
 /**
-* Contract events
-*/
+ * Contract events
+ */
 
 /**
  * Represents the filters for the "DutchAuctionCompleted" event.
  */
 export type DutchAuctionCompletedEventFilters = Partial<{
-  auctionId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"auctionId","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "uint256";
+    name: "auctionId";
+    type: "uint256";
+  }>;
 }>;
 
 /**
@@ -36,20 +41,32 @@ export type DutchAuctionCompletedEventFilters = Partial<{
  * });
  * ```
  */
-export function dutchAuctionCompletedEvent(filters: DutchAuctionCompletedEventFilters = {}) {
+export function dutchAuctionCompletedEvent(
+  filters: DutchAuctionCompletedEventFilters = {}
+) {
   return prepareEvent({
-    signature: "event DutchAuctionCompleted(uint256 indexed auctionId, address buyer, uint256 price)",
+    signature:
+      "event DutchAuctionCompleted(uint256 indexed auctionId, address buyer, uint256 price)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "DutchAuctionCreated" event.
  */
 export type DutchAuctionCreatedEventFilters = Partial<{
-  auctionId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"auctionId","type":"uint256"}>
-seller: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"seller","type":"address"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "uint256";
+    name: "auctionId";
+    type: "uint256";
+  }>;
+  seller: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "seller";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -72,20 +89,32 @@ seller: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","na
  * });
  * ```
  */
-export function dutchAuctionCreatedEvent(filters: DutchAuctionCreatedEventFilters = {}) {
+export function dutchAuctionCreatedEvent(
+  filters: DutchAuctionCreatedEventFilters = {}
+) {
   return prepareEvent({
-    signature: "event DutchAuctionCreated(uint256 indexed auctionId, address indexed seller, uint256 tokenId, uint256 startPrice, uint256 endPrice, uint256 duration, uint256 decayExponent, address currency)",
+    signature:
+      "event DutchAuctionCreated(uint256 indexed auctionId, address indexed seller, uint256 tokenId, uint256 startPrice, uint256 endPrice, uint256 duration, uint256 decayExponent, address currency)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "OwnershipTransferred" event.
  */
 export type OwnershipTransferredEventFilters = Partial<{
-  previousOwner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"}>
-newOwner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}>
+  previousOwner: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "previousOwner";
+    type: "address";
+  }>;
+  newOwner: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "newOwner";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -108,15 +137,15 @@ newOwner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","
  * });
  * ```
  */
-export function ownershipTransferredEvent(filters: OwnershipTransferredEventFilters = {}) {
+export function ownershipTransferredEvent(
+  filters: OwnershipTransferredEventFilters = {}
+) {
   return prepareEvent({
-    signature: "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+    signature:
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
     filters,
   });
-};
-  
-
-
+}
 
 /**
  * Creates an event object for the Paused event.
@@ -138,10 +167,7 @@ export function pausedEvent() {
   return prepareEvent({
     signature: "event Paused(address account)",
   });
-};
-  
-
-
+}
 
 /**
  * Creates an event object for the Unpaused event.
@@ -163,14 +189,11 @@ export function unpausedEvent() {
   return prepareEvent({
     signature: "event Unpaused(address account)",
   });
-};
-  
+}
 
 /**
-* Contract read functions
-*/
-
-
+ * Contract read functions
+ */
 
 /**
  * Calls the "NATIVE_TOKEN" function on the contract.
@@ -184,28 +207,23 @@ export function unpausedEvent() {
  *
  * ```
  */
-export async function NATIVE_TOKEN(
-  options: BaseTransactionOptions
-) {
+export async function NATIVE_TOKEN(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x31f7d964",
-  [],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: []
+      "0x31f7d964",
+      [],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "auctionCounter" function on the contract.
@@ -219,32 +237,33 @@ export async function NATIVE_TOKEN(
  *
  * ```
  */
-export async function auctionCounter(
-  options: BaseTransactionOptions
-) {
+export async function auctionCounter(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xa7e76644",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0xa7e76644",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "auctions" function.
  */
 export type AuctionsParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
+  arg_0: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -267,77 +286,80 @@ export async function auctions(
   return readContract({
     contract: options.contract,
     method: [
-  "0x571a26a0",
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "address",
-      "name": "seller",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "nftAddress",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "startPrice",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "endPrice",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "startTime",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "duration",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "decayExponent",
-      "type": "uint256"
-    },
-    {
-      "internalType": "address",
-      "name": "currency",
-      "type": "address"
-    },
-    {
-      "internalType": "bool",
-      "name": "active",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.arg_0]
+      "0x571a26a0",
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "address",
+          name: "seller",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "nftAddress",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "startPrice",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "endPrice",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "startTime",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "duration",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "decayExponent",
+          type: "uint256",
+        },
+        {
+          internalType: "address",
+          name: "currency",
+          type: "address",
+        },
+        {
+          internalType: "bool",
+          name: "active",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.arg_0],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getCurrentPrice" function.
  */
 export type GetCurrentPriceParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"auctionId","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "auctionId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -360,28 +382,25 @@ export async function getCurrentPrice(
   return readContract({
     contract: options.contract,
     method: [
-  "0xc55d0f56",
-  [
-    {
-      "internalType": "uint256",
-      "name": "auctionId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.auctionId]
+      "0xc55d0f56",
+      [
+        {
+          internalType: "uint256",
+          name: "auctionId",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [options.auctionId],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "marketplaceFeeBps" function on the contract.
@@ -395,28 +414,23 @@ export async function getCurrentPrice(
  *
  * ```
  */
-export async function marketplaceFeeBps(
-  options: BaseTransactionOptions
-) {
+export async function marketplaceFeeBps(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xd3929c8a",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0xd3929c8a",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "owner" function on the contract.
@@ -430,28 +444,23 @@ export async function marketplaceFeeBps(
  *
  * ```
  */
-export async function owner(
-  options: BaseTransactionOptions
-) {
+export async function owner(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x8da5cb5b",
-  [],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: []
+      "0x8da5cb5b",
+      [],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "paused" function on the contract.
@@ -465,28 +474,23 @@ export async function owner(
  *
  * ```
  */
-export async function paused(
-  options: BaseTransactionOptions
-) {
+export async function paused(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x5c975abb",
-  [],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: []
+      "0x5c975abb",
+      [],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "platformFeeRecipient" function on the contract.
@@ -500,36 +504,37 @@ export async function paused(
  *
  * ```
  */
-export async function platformFeeRecipient(
-  options: BaseTransactionOptions
-) {
+export async function platformFeeRecipient(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xeb13554f",
-  [],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: []
+      "0xeb13554f",
+      [],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
-* Contract write functions
-*/
+ * Contract write functions
+ */
 
 /**
  * Represents the parameters for the "buy" function.
  */
 export type BuyParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"auctionId","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "auctionId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -549,38 +554,63 @@ export type BuyParams = {
  *
  * ```
  */
-export function buy(
-  options: BaseTransactionOptions<BuyParams>
-) {
+export function buy(options: BaseTransactionOptions<BuyParams>) {
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xd96a094a",
-  [
-    {
-      "internalType": "uint256",
-      "name": "auctionId",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.auctionId]
+      "0xd96a094a",
+      [
+        {
+          internalType: "uint256",
+          name: "auctionId",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.auctionId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "createDutchAuction" function.
  */
 export type CreateDutchAuctionParams = {
-  nftAddress: AbiParameterToPrimitiveType<{"internalType":"address","name":"nftAddress","type":"address"}>
-tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
-startPrice: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"startPrice","type":"uint256"}>
-endPrice: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"endPrice","type":"uint256"}>
-duration: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"duration","type":"uint256"}>
-decayExponent: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"decayExponent","type":"uint256"}>
-currency: AbiParameterToPrimitiveType<{"internalType":"address","name":"currency","type":"address"}>
+  nftAddress: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "nftAddress";
+    type: "address";
+  }>;
+  tokenId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "tokenId";
+    type: "uint256";
+  }>;
+  startPrice: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "startPrice";
+    type: "uint256";
+  }>;
+  endPrice: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "endPrice";
+    type: "uint256";
+  }>;
+  duration: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "duration";
+    type: "uint256";
+  }>;
+  decayExponent: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "decayExponent";
+    type: "uint256";
+  }>;
+  currency: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "currency";
+    type: "address";
+  }>;
 };
 
 /**
@@ -612,52 +642,57 @@ export function createDutchAuction(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x571c6573",
-  [
-    {
-      "internalType": "address",
-      "name": "nftAddress",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "startPrice",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "endPrice",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "duration",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "decayExponent",
-      "type": "uint256"
-    },
-    {
-      "internalType": "address",
-      "name": "currency",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.nftAddress, options.tokenId, options.startPrice, options.endPrice, options.duration, options.decayExponent, options.currency]
+      "0x571c6573",
+      [
+        {
+          internalType: "address",
+          name: "nftAddress",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "startPrice",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "endPrice",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "duration",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "decayExponent",
+          type: "uint256",
+        },
+        {
+          internalType: "address",
+          name: "currency",
+          type: "address",
+        },
+      ],
+      [],
+    ],
+    params: [
+      options.nftAddress,
+      options.tokenId,
+      options.startPrice,
+      options.endPrice,
+      options.duration,
+      options.decayExponent,
+      options.currency,
+    ],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "pause" function on the contract.
@@ -674,22 +709,13 @@ export function createDutchAuction(
  *
  * ```
  */
-export function pause(
-  options: BaseTransactionOptions
-) {
+export function pause(options: BaseTransactionOptions) {
   return prepareContractCall({
     contract: options.contract,
-    method: [
-  "0x8456cb59",
-  [],
-  []
-],
-    params: []
+    method: ["0x8456cb59", [], []],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "renounceOwnership" function on the contract.
@@ -706,26 +732,23 @@ export function pause(
  *
  * ```
  */
-export function renounceOwnership(
-  options: BaseTransactionOptions
-) {
+export function renounceOwnership(options: BaseTransactionOptions) {
   return prepareContractCall({
     contract: options.contract,
-    method: [
-  "0x715018a6",
-  [],
-  []
-],
-    params: []
+    method: ["0x715018a6", [], []],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "setMarketplaceFee" function.
  */
 export type SetMarketplaceFeeParams = {
-  newFeeBps: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_newFeeBps","type":"uint256"}>
+  newFeeBps: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_newFeeBps";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -751,26 +774,29 @@ export function setMarketplaceFee(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x9407ea98",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_newFeeBps",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.newFeeBps]
+      "0x9407ea98",
+      [
+        {
+          internalType: "uint256",
+          name: "_newFeeBps",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.newFeeBps],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "setPlatformFeeRecipient" function.
  */
 export type SetPlatformFeeRecipientParams = {
-  newRecipient: AbiParameterToPrimitiveType<{"internalType":"address","name":"_newRecipient","type":"address"}>
+  newRecipient: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "_newRecipient";
+    type: "address";
+  }>;
 };
 
 /**
@@ -796,26 +822,29 @@ export function setPlatformFeeRecipient(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x1871e243",
-  [
-    {
-      "internalType": "address",
-      "name": "_newRecipient",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.newRecipient]
+      "0x1871e243",
+      [
+        {
+          internalType: "address",
+          name: "_newRecipient",
+          type: "address",
+        },
+      ],
+      [],
+    ],
+    params: [options.newRecipient],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "transferOwnership" function.
  */
 export type TransferOwnershipParams = {
-  newOwner: AbiParameterToPrimitiveType<{"internalType":"address","name":"newOwner","type":"address"}>
+  newOwner: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "newOwner";
+    type: "address";
+  }>;
 };
 
 /**
@@ -841,22 +870,19 @@ export function transferOwnership(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xf2fde38b",
-  [
-    {
-      "internalType": "address",
-      "name": "newOwner",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.newOwner]
+      "0xf2fde38b",
+      [
+        {
+          internalType: "address",
+          name: "newOwner",
+          type: "address",
+        },
+      ],
+      [],
+    ],
+    params: [options.newOwner],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "unpause" function on the contract.
@@ -873,18 +899,10 @@ export function transferOwnership(
  *
  * ```
  */
-export function unpause(
-  options: BaseTransactionOptions
-) {
+export function unpause(options: BaseTransactionOptions) {
   return prepareContractCall({
     contract: options.contract,
-    method: [
-  "0x3f4ba83a",
-  [],
-  []
-],
-    params: []
+    method: ["0x3f4ba83a", [], []],
+    params: [],
   });
-};
-
-
+}

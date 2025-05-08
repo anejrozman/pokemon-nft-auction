@@ -7,16 +7,31 @@ import {
 } from "thirdweb";
 
 /**
-* Contract events
-*/
+ * Contract events
+ */
 
 /**
  * Represents the filters for the "AuctionClosed" event.
  */
 export type AuctionClosedEventFilters = Partial<{
-  auctionId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"auctionId","type":"uint256"}>
-assetContract: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"assetContract","type":"address"}>
-closer: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"closer","type":"address"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "uint256";
+    name: "auctionId";
+    type: "uint256";
+  }>;
+  assetContract: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "assetContract";
+    type: "address";
+  }>;
+  closer: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "closer";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -42,18 +57,28 @@ closer: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","na
  */
 export function auctionClosedEvent(filters: AuctionClosedEventFilters = {}) {
   return prepareEvent({
-    signature: "event AuctionClosed(uint256 indexed auctionId, address indexed assetContract, address indexed closer, uint256 tokenId, address auctionCreator, address winningBidder)",
+    signature:
+      "event AuctionClosed(uint256 indexed auctionId, address indexed assetContract, address indexed closer, uint256 tokenId, address auctionCreator, address winningBidder)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "CancelledAuction" event.
  */
 export type CancelledAuctionEventFilters = Partial<{
-  auctionCreator: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"auctionCreator","type":"address"}>
-auctionId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"auctionId","type":"uint256"}>
+  auctionCreator: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "auctionCreator";
+    type: "address";
+  }>;
+  auctionId: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "uint256";
+    name: "auctionId";
+    type: "uint256";
+  }>;
 }>;
 
 /**
@@ -76,21 +101,38 @@ auctionId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256",
  * });
  * ```
  */
-export function cancelledAuctionEvent(filters: CancelledAuctionEventFilters = {}) {
+export function cancelledAuctionEvent(
+  filters: CancelledAuctionEventFilters = {}
+) {
   return prepareEvent({
-    signature: "event CancelledAuction(address indexed auctionCreator, uint256 indexed auctionId)",
+    signature:
+      "event CancelledAuction(address indexed auctionCreator, uint256 indexed auctionId)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "NewAuction" event.
  */
 export type NewAuctionEventFilters = Partial<{
-  auctionCreator: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"auctionCreator","type":"address"}>
-auctionId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"auctionId","type":"uint256"}>
-assetContract: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"assetContract","type":"address"}>
+  auctionCreator: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "auctionCreator";
+    type: "address";
+  }>;
+  auctionId: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "uint256";
+    name: "auctionId";
+    type: "uint256";
+  }>;
+  assetContract: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "assetContract";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -116,19 +158,34 @@ assetContract: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"addre
  */
 export function newAuctionEvent(filters: NewAuctionEventFilters = {}) {
   return prepareEvent({
-    signature: "event NewAuction(address indexed auctionCreator, uint256 indexed auctionId, address indexed assetContract, (uint256 auctionId, uint256 tokenId, uint256 quantity, uint256 minimumBidAmount, uint256 buyoutBidAmount, uint64 timeBufferInSeconds, uint64 bidBufferBps, uint64 startTimestamp, uint64 endTimestamp, address auctionCreator, address assetContract, address currency, uint8 tokenType, uint8 status) auction)",
+    signature:
+      "event NewAuction(address indexed auctionCreator, uint256 indexed auctionId, address indexed assetContract, (uint256 auctionId, uint256 tokenId, uint256 quantity, uint256 minimumBidAmount, uint256 buyoutBidAmount, uint64 timeBufferInSeconds, uint64 bidBufferBps, uint64 startTimestamp, uint64 endTimestamp, address auctionCreator, address assetContract, address currency, uint8 tokenType, uint8 status) auction)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "NewBid" event.
  */
 export type NewBidEventFilters = Partial<{
-  auctionId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"auctionId","type":"uint256"}>
-bidder: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"bidder","type":"address"}>
-assetContract: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"assetContract","type":"address"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "uint256";
+    name: "auctionId";
+    type: "uint256";
+  }>;
+  bidder: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "bidder";
+    type: "address";
+  }>;
+  assetContract: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "assetContract";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -154,18 +211,28 @@ assetContract: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"addre
  */
 export function newBidEvent(filters: NewBidEventFilters = {}) {
   return prepareEvent({
-    signature: "event NewBid(uint256 indexed auctionId, address indexed bidder, address indexed assetContract, uint256 bidAmount, (uint256 auctionId, uint256 tokenId, uint256 quantity, uint256 minimumBidAmount, uint256 buyoutBidAmount, uint64 timeBufferInSeconds, uint64 bidBufferBps, uint64 startTimestamp, uint64 endTimestamp, address auctionCreator, address assetContract, address currency, uint8 tokenType, uint8 status) auction)",
+    signature:
+      "event NewBid(uint256 indexed auctionId, address indexed bidder, address indexed assetContract, uint256 bidAmount, (uint256 auctionId, uint256 tokenId, uint256 quantity, uint256 minimumBidAmount, uint256 buyoutBidAmount, uint64 timeBufferInSeconds, uint64 bidBufferBps, uint64 startTimestamp, uint64 endTimestamp, address auctionCreator, address assetContract, address currency, uint8 tokenType, uint8 status) auction)",
     filters,
   });
-};
-  
+}
 
 /**
  * Represents the filters for the "OwnershipTransferred" event.
  */
 export type OwnershipTransferredEventFilters = Partial<{
-  previousOwner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"}>
-newOwner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}>
+  previousOwner: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "previousOwner";
+    type: "address";
+  }>;
+  newOwner: AbiParameterToPrimitiveType<{
+    indexed: true;
+    internalType: "address";
+    name: "newOwner";
+    type: "address";
+  }>;
 }>;
 
 /**
@@ -188,15 +255,15 @@ newOwner: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","
  * });
  * ```
  */
-export function ownershipTransferredEvent(filters: OwnershipTransferredEventFilters = {}) {
+export function ownershipTransferredEvent(
+  filters: OwnershipTransferredEventFilters = {}
+) {
   return prepareEvent({
-    signature: "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+    signature:
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
     filters,
   });
-};
-  
-
-
+}
 
 /**
  * Creates an event object for the Paused event.
@@ -218,10 +285,7 @@ export function pausedEvent() {
   return prepareEvent({
     signature: "event Paused(address account)",
   });
-};
-  
-
-
+}
 
 /**
  * Creates an event object for the Unpaused event.
@@ -243,14 +307,11 @@ export function unpausedEvent() {
   return prepareEvent({
     signature: "event Unpaused(address account)",
   });
-};
-  
+}
 
 /**
-* Contract read functions
-*/
-
-
+ * Contract read functions
+ */
 
 /**
  * Calls the "NATIVE_TOKEN" function on the contract.
@@ -264,33 +325,38 @@ export function unpausedEvent() {
  *
  * ```
  */
-export async function NATIVE_TOKEN(
-  options: BaseTransactionOptions
-) {
+export async function NATIVE_TOKEN(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x31f7d964",
-  [],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: []
+      "0x31f7d964",
+      [],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getAllAuctions" function.
  */
 export type GetAllAuctionsParams = {
-  startId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_startId","type":"uint256"}>
-endId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_endId","type":"uint256"}>
+  startId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_startId";
+    type: "uint256";
+  }>;
+  endId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_endId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -314,110 +380,117 @@ export async function getAllAuctions(
   return readContract({
     contract: options.contract,
     method: [
-  "0xc291537c",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_startId",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "_endId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "components": [
+      "0xc291537c",
+      [
         {
-          "internalType": "uint256",
-          "name": "auctionId",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_startId",
+          type: "uint256",
         },
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_endId",
+          type: "uint256",
         },
-        {
-          "internalType": "uint256",
-          "name": "quantity",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "minimumBidAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "buyoutBidAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint64",
-          "name": "timeBufferInSeconds",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "bidBufferBps",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "startTimestamp",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "endTimestamp",
-          "type": "uint64"
-        },
-        {
-          "internalType": "address",
-          "name": "auctionCreator",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "assetContract",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "currency",
-          "type": "address"
-        },
-        {
-          "internalType": "enum IEnglishAuctions.TokenType",
-          "name": "tokenType",
-          "type": "uint8"
-        },
-        {
-          "internalType": "enum IEnglishAuctions.Status",
-          "name": "status",
-          "type": "uint8"
-        }
       ],
-      "internalType": "struct IEnglishAuctions.Auction[]",
-      "name": "auctions",
-      "type": "tuple[]"
-    }
-  ]
-],
-    params: [options.startId, options.endId]
+      [
+        {
+          components: [
+            {
+              internalType: "uint256",
+              name: "auctionId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "quantity",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "minimumBidAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "buyoutBidAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint64",
+              name: "timeBufferInSeconds",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "bidBufferBps",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "startTimestamp",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "endTimestamp",
+              type: "uint64",
+            },
+            {
+              internalType: "address",
+              name: "auctionCreator",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "assetContract",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "currency",
+              type: "address",
+            },
+            {
+              internalType: "enum IEnglishAuctions.TokenType",
+              name: "tokenType",
+              type: "uint8",
+            },
+            {
+              internalType: "enum IEnglishAuctions.Status",
+              name: "status",
+              type: "uint8",
+            },
+          ],
+          internalType: "struct IEnglishAuctions.Auction[]",
+          name: "auctions",
+          type: "tuple[]",
+        },
+      ],
+    ],
+    params: [options.startId, options.endId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getAllValidAuctions" function.
  */
 export type GetAllValidAuctionsParams = {
-  startId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_startId","type":"uint256"}>
-endId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_endId","type":"uint256"}>
+  startId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_startId";
+    type: "uint256";
+  }>;
+  endId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_endId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -441,109 +514,112 @@ export async function getAllValidAuctions(
   return readContract({
     contract: options.contract,
     method: [
-  "0x7b063801",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_startId",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "_endId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "components": [
+      "0x7b063801",
+      [
         {
-          "internalType": "uint256",
-          "name": "auctionId",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_startId",
+          type: "uint256",
         },
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_endId",
+          type: "uint256",
         },
-        {
-          "internalType": "uint256",
-          "name": "quantity",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "minimumBidAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "buyoutBidAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint64",
-          "name": "timeBufferInSeconds",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "bidBufferBps",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "startTimestamp",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "endTimestamp",
-          "type": "uint64"
-        },
-        {
-          "internalType": "address",
-          "name": "auctionCreator",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "assetContract",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "currency",
-          "type": "address"
-        },
-        {
-          "internalType": "enum IEnglishAuctions.TokenType",
-          "name": "tokenType",
-          "type": "uint8"
-        },
-        {
-          "internalType": "enum IEnglishAuctions.Status",
-          "name": "status",
-          "type": "uint8"
-        }
       ],
-      "internalType": "struct IEnglishAuctions.Auction[]",
-      "name": "validAuctions",
-      "type": "tuple[]"
-    }
-  ]
-],
-    params: [options.startId, options.endId]
+      [
+        {
+          components: [
+            {
+              internalType: "uint256",
+              name: "auctionId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "quantity",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "minimumBidAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "buyoutBidAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint64",
+              name: "timeBufferInSeconds",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "bidBufferBps",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "startTimestamp",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "endTimestamp",
+              type: "uint64",
+            },
+            {
+              internalType: "address",
+              name: "auctionCreator",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "assetContract",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "currency",
+              type: "address",
+            },
+            {
+              internalType: "enum IEnglishAuctions.TokenType",
+              name: "tokenType",
+              type: "uint8",
+            },
+            {
+              internalType: "enum IEnglishAuctions.Status",
+              name: "status",
+              type: "uint8",
+            },
+          ],
+          internalType: "struct IEnglishAuctions.Auction[]",
+          name: "validAuctions",
+          type: "tuple[]",
+        },
+      ],
+    ],
+    params: [options.startId, options.endId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getAuction" function.
  */
 export type GetAuctionParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_auctionId","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_auctionId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -566,104 +642,107 @@ export async function getAuction(
   return readContract({
     contract: options.contract,
     method: [
-  "0x78bd7935",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_auctionId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "components": [
+      "0x78bd7935",
+      [
         {
-          "internalType": "uint256",
-          "name": "auctionId",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_auctionId",
+          type: "uint256",
         },
-        {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "quantity",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "minimumBidAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "buyoutBidAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint64",
-          "name": "timeBufferInSeconds",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "bidBufferBps",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "startTimestamp",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "endTimestamp",
-          "type": "uint64"
-        },
-        {
-          "internalType": "address",
-          "name": "auctionCreator",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "assetContract",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "currency",
-          "type": "address"
-        },
-        {
-          "internalType": "enum IEnglishAuctions.TokenType",
-          "name": "tokenType",
-          "type": "uint8"
-        },
-        {
-          "internalType": "enum IEnglishAuctions.Status",
-          "name": "status",
-          "type": "uint8"
-        }
       ],
-      "internalType": "struct IEnglishAuctions.Auction",
-      "name": "auction",
-      "type": "tuple"
-    }
-  ]
-],
-    params: [options.auctionId]
+      [
+        {
+          components: [
+            {
+              internalType: "uint256",
+              name: "auctionId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "quantity",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "minimumBidAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "buyoutBidAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint64",
+              name: "timeBufferInSeconds",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "bidBufferBps",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "startTimestamp",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "endTimestamp",
+              type: "uint64",
+            },
+            {
+              internalType: "address",
+              name: "auctionCreator",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "assetContract",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "currency",
+              type: "address",
+            },
+            {
+              internalType: "enum IEnglishAuctions.TokenType",
+              name: "tokenType",
+              type: "uint8",
+            },
+            {
+              internalType: "enum IEnglishAuctions.Status",
+              name: "status",
+              type: "uint8",
+            },
+          ],
+          internalType: "struct IEnglishAuctions.Auction",
+          name: "auction",
+          type: "tuple",
+        },
+      ],
+    ],
+    params: [options.auctionId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "getWinningBid" function.
  */
 export type GetWinningBidParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_auctionId","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_auctionId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -686,42 +765,45 @@ export async function getWinningBid(
   return readContract({
     contract: options.contract,
     method: [
-  "0x6891939d",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_auctionId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "address",
-      "name": "bidder",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "currency",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "bidAmount",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.auctionId]
+      "0x6891939d",
+      [
+        {
+          internalType: "uint256",
+          name: "_auctionId",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "address",
+          name: "bidder",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "currency",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "bidAmount",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [options.auctionId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "isAuctionExpired" function.
  */
 export type IsAuctionExpiredParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_auctionId","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_auctionId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -744,33 +826,40 @@ export async function isAuctionExpired(
   return readContract({
     contract: options.contract,
     method: [
-  "0x1389b117",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_auctionId",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.auctionId]
+      "0x1389b117",
+      [
+        {
+          internalType: "uint256",
+          name: "_auctionId",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.auctionId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "isNewWinningBid" function.
  */
 export type IsNewWinningBidParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_auctionId","type":"uint256"}>
-bidAmount: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_bidAmount","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_auctionId";
+    type: "uint256";
+  }>;
+  bidAmount: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_bidAmount";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -794,33 +883,30 @@ export async function isNewWinningBid(
   return readContract({
     contract: options.contract,
     method: [
-  "0x2eb566bd",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_auctionId",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "_bidAmount",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.auctionId, options.bidAmount]
+      "0x2eb566bd",
+      [
+        {
+          internalType: "uint256",
+          name: "_auctionId",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "_bidAmount",
+          type: "uint256",
+        },
+      ],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.auctionId, options.bidAmount],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "marketplaceFeeBps" function on the contract.
@@ -834,35 +920,48 @@ export async function isNewWinningBid(
  *
  * ```
  */
-export async function marketplaceFeeBps(
-  options: BaseTransactionOptions
-) {
+export async function marketplaceFeeBps(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xd3929c8a",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0xd3929c8a",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "onERC721Received" function.
  */
 export type OnERC721ReceivedParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"address","name":"","type":"address"}>
-arg_1: AbiParameterToPrimitiveType<{"internalType":"address","name":"","type":"address"}>
-arg_2: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
-arg_3: AbiParameterToPrimitiveType<{"internalType":"bytes","name":"","type":"bytes"}>
+  arg_0: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "";
+    type: "address";
+  }>;
+  arg_1: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "";
+    type: "address";
+  }>;
+  arg_2: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "";
+    type: "uint256";
+  }>;
+  arg_3: AbiParameterToPrimitiveType<{
+    internalType: "bytes";
+    name: "";
+    type: "bytes";
+  }>;
 };
 
 /**
@@ -888,43 +987,40 @@ export async function onERC721Received(
   return readContract({
     contract: options.contract,
     method: [
-  "0x150b7a02",
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    },
-    {
-      "internalType": "bytes",
-      "name": "",
-      "type": "bytes"
-    }
-  ],
-  [
-    {
-      "internalType": "bytes4",
-      "name": "",
-      "type": "bytes4"
-    }
-  ]
-],
-    params: [options.arg_0, options.arg_1, options.arg_2, options.arg_3]
+      "0x150b7a02",
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+        {
+          internalType: "bytes",
+          name: "",
+          type: "bytes",
+        },
+      ],
+      [
+        {
+          internalType: "bytes4",
+          name: "",
+          type: "bytes4",
+        },
+      ],
+    ],
+    params: [options.arg_0, options.arg_1, options.arg_2, options.arg_3],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "owner" function on the contract.
@@ -938,28 +1034,23 @@ export async function onERC721Received(
  *
  * ```
  */
-export async function owner(
-  options: BaseTransactionOptions
-) {
+export async function owner(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x8da5cb5b",
-  [],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: []
+      "0x8da5cb5b",
+      [],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "paused" function on the contract.
@@ -973,28 +1064,23 @@ export async function owner(
  *
  * ```
  */
-export async function paused(
-  options: BaseTransactionOptions
-) {
+export async function paused(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x5c975abb",
-  [],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: []
+      "0x5c975abb",
+      [],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "platformFeeRecipient" function on the contract.
@@ -1008,32 +1094,33 @@ export async function paused(
  *
  * ```
  */
-export async function platformFeeRecipient(
-  options: BaseTransactionOptions
-) {
+export async function platformFeeRecipient(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xeb13554f",
-  [],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: []
+      "0xeb13554f",
+      [],
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "supportsInterface" function.
  */
 export type SupportsInterfaceParams = {
-  interfaceId: AbiParameterToPrimitiveType<{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}>
+  interfaceId: AbiParameterToPrimitiveType<{
+    internalType: "bytes4";
+    name: "interfaceId";
+    type: "bytes4";
+  }>;
 };
 
 /**
@@ -1056,28 +1143,25 @@ export async function supportsInterface(
   return readContract({
     contract: options.contract,
     method: [
-  "0x01ffc9a7",
-  [
-    {
-      "internalType": "bytes4",
-      "name": "interfaceId",
-      "type": "bytes4"
-    }
-  ],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ]
-],
-    params: [options.interfaceId]
+      "0x01ffc9a7",
+      [
+        {
+          internalType: "bytes4",
+          name: "interfaceId",
+          type: "bytes4",
+        },
+      ],
+      [
+        {
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
+      ],
+    ],
+    params: [options.interfaceId],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "totalAuctions" function on the contract.
@@ -1091,37 +1175,42 @@ export async function supportsInterface(
  *
  * ```
  */
-export async function totalAuctions(
-  options: BaseTransactionOptions
-) {
+export async function totalAuctions(options: BaseTransactionOptions) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x16002f4a",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
+      "0x16002f4a",
+      [],
+      [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [],
   });
-};
-
+}
 
 /**
-* Contract write functions
-*/
+ * Contract write functions
+ */
 
 /**
  * Represents the parameters for the "bidInAuction" function.
  */
 export type BidInAuctionParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_auctionId","type":"uint256"}>
-bidAmount: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_bidAmount","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_auctionId";
+    type: "uint256";
+  }>;
+  bidAmount: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_bidAmount";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1148,31 +1237,34 @@ export function bidInAuction(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x0858e5ad",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_auctionId",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "_bidAmount",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.auctionId, options.bidAmount]
+      "0x0858e5ad",
+      [
+        {
+          internalType: "uint256",
+          name: "_auctionId",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "_bidAmount",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.auctionId, options.bidAmount],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "cancelAuction" function.
  */
 export type CancelAuctionParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_auctionId","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_auctionId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1198,26 +1290,29 @@ export function cancelAuction(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x96b5a755",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_auctionId",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.auctionId]
+      "0x96b5a755",
+      [
+        {
+          internalType: "uint256",
+          name: "_auctionId",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.auctionId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "collectAuctionPayout" function.
  */
 export type CollectAuctionPayoutParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_auctionId","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_auctionId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1243,26 +1338,29 @@ export function collectAuctionPayout(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xebf05a62",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_auctionId",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.auctionId]
+      "0xebf05a62",
+      [
+        {
+          internalType: "uint256",
+          name: "_auctionId",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.auctionId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "collectAuctionTokens" function.
  */
 export type CollectAuctionTokensParams = {
-  auctionId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_auctionId","type":"uint256"}>
+  auctionId: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_auctionId";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1288,26 +1386,41 @@ export function collectAuctionTokens(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x03a54fe0",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_auctionId",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.auctionId]
+      "0x03a54fe0",
+      [
+        {
+          internalType: "uint256",
+          name: "_auctionId",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.auctionId],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "createAuction" function.
  */
 export type CreateAuctionParams = {
-  params: AbiParameterToPrimitiveType<{"components":[{"internalType":"address","name":"assetContract","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"uint256","name":"quantity","type":"uint256"},{"internalType":"address","name":"currency","type":"address"},{"internalType":"uint256","name":"minimumBidAmount","type":"uint256"},{"internalType":"uint256","name":"buyoutBidAmount","type":"uint256"},{"internalType":"uint64","name":"timeBufferInSeconds","type":"uint64"},{"internalType":"uint64","name":"bidBufferBps","type":"uint64"},{"internalType":"uint64","name":"startTimestamp","type":"uint64"},{"internalType":"uint64","name":"endTimestamp","type":"uint64"}],"internalType":"struct IEnglishAuctions.AuctionParameters","name":"_params","type":"tuple"}>
+  params: AbiParameterToPrimitiveType<{
+    components: [
+      { internalType: "address"; name: "assetContract"; type: "address" },
+      { internalType: "uint256"; name: "tokenId"; type: "uint256" },
+      { internalType: "uint256"; name: "quantity"; type: "uint256" },
+      { internalType: "address"; name: "currency"; type: "address" },
+      { internalType: "uint256"; name: "minimumBidAmount"; type: "uint256" },
+      { internalType: "uint256"; name: "buyoutBidAmount"; type: "uint256" },
+      { internalType: "uint64"; name: "timeBufferInSeconds"; type: "uint64" },
+      { internalType: "uint64"; name: "bidBufferBps"; type: "uint64" },
+      { internalType: "uint64"; name: "startTimestamp"; type: "uint64" },
+      { internalType: "uint64"; name: "endTimestamp"; type: "uint64" }
+    ];
+    internalType: "struct IEnglishAuctions.AuctionParameters";
+    name: "_params";
+    type: "tuple";
+  }>;
 };
 
 /**
@@ -1333,88 +1446,107 @@ export function createAuction(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x16654d40",
-  [
-    {
-      "components": [
+      "0x16654d40",
+      [
         {
-          "internalType": "address",
-          "name": "assetContract",
-          "type": "address"
+          components: [
+            {
+              internalType: "address",
+              name: "assetContract",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "quantity",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "currency",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "minimumBidAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "buyoutBidAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint64",
+              name: "timeBufferInSeconds",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "bidBufferBps",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "startTimestamp",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "endTimestamp",
+              type: "uint64",
+            },
+          ],
+          internalType: "struct IEnglishAuctions.AuctionParameters",
+          name: "_params",
+          type: "tuple",
         },
-        {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "quantity",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "currency",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "minimumBidAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "buyoutBidAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint64",
-          "name": "timeBufferInSeconds",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "bidBufferBps",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "startTimestamp",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "endTimestamp",
-          "type": "uint64"
-        }
       ],
-      "internalType": "struct IEnglishAuctions.AuctionParameters",
-      "name": "_params",
-      "type": "tuple"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256",
-      "name": "auctionId",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.params]
+      [
+        {
+          internalType: "uint256",
+          name: "auctionId",
+          type: "uint256",
+        },
+      ],
+    ],
+    params: [options.params],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "onERC1155BatchReceived" function.
  */
 export type OnERC1155BatchReceivedParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"address","name":"","type":"address"}>
-arg_1: AbiParameterToPrimitiveType<{"internalType":"address","name":"","type":"address"}>
-arg_2: AbiParameterToPrimitiveType<{"internalType":"uint256[]","name":"","type":"uint256[]"}>
-arg_3: AbiParameterToPrimitiveType<{"internalType":"uint256[]","name":"","type":"uint256[]"}>
-arg_4: AbiParameterToPrimitiveType<{"internalType":"bytes","name":"","type":"bytes"}>
+  arg_0: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "";
+    type: "address";
+  }>;
+  arg_1: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "";
+    type: "address";
+  }>;
+  arg_2: AbiParameterToPrimitiveType<{
+    internalType: "uint256[]";
+    name: "";
+    type: "uint256[]";
+  }>;
+  arg_3: AbiParameterToPrimitiveType<{
+    internalType: "uint256[]";
+    name: "";
+    type: "uint256[]";
+  }>;
+  arg_4: AbiParameterToPrimitiveType<{
+    internalType: "bytes";
+    name: "";
+    type: "bytes";
+  }>;
 };
 
 /**
@@ -1444,56 +1576,81 @@ export function onERC1155BatchReceived(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xbc197c81",
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256[]",
-      "name": "",
-      "type": "uint256[]"
-    },
-    {
-      "internalType": "uint256[]",
-      "name": "",
-      "type": "uint256[]"
-    },
-    {
-      "internalType": "bytes",
-      "name": "",
-      "type": "bytes"
-    }
-  ],
-  [
-    {
-      "internalType": "bytes4",
-      "name": "",
-      "type": "bytes4"
-    }
-  ]
-],
-    params: [options.arg_0, options.arg_1, options.arg_2, options.arg_3, options.arg_4]
+      "0xbc197c81",
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+        {
+          internalType: "uint256[]",
+          name: "",
+          type: "uint256[]",
+        },
+        {
+          internalType: "uint256[]",
+          name: "",
+          type: "uint256[]",
+        },
+        {
+          internalType: "bytes",
+          name: "",
+          type: "bytes",
+        },
+      ],
+      [
+        {
+          internalType: "bytes4",
+          name: "",
+          type: "bytes4",
+        },
+      ],
+    ],
+    params: [
+      options.arg_0,
+      options.arg_1,
+      options.arg_2,
+      options.arg_3,
+      options.arg_4,
+    ],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "onERC1155Received" function.
  */
 export type OnERC1155ReceivedParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"address","name":"","type":"address"}>
-arg_1: AbiParameterToPrimitiveType<{"internalType":"address","name":"","type":"address"}>
-arg_2: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
-arg_3: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
-arg_4: AbiParameterToPrimitiveType<{"internalType":"bytes","name":"","type":"bytes"}>
+  arg_0: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "";
+    type: "address";
+  }>;
+  arg_1: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "";
+    type: "address";
+  }>;
+  arg_2: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "";
+    type: "uint256";
+  }>;
+  arg_3: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "";
+    type: "uint256";
+  }>;
+  arg_4: AbiParameterToPrimitiveType<{
+    internalType: "bytes";
+    name: "";
+    type: "bytes";
+  }>;
 };
 
 /**
@@ -1523,48 +1680,51 @@ export function onERC1155Received(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xf23a6e61",
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    },
-    {
-      "internalType": "bytes",
-      "name": "",
-      "type": "bytes"
-    }
-  ],
-  [
-    {
-      "internalType": "bytes4",
-      "name": "",
-      "type": "bytes4"
-    }
-  ]
-],
-    params: [options.arg_0, options.arg_1, options.arg_2, options.arg_3, options.arg_4]
+      "0xf23a6e61",
+      [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+        {
+          internalType: "bytes",
+          name: "",
+          type: "bytes",
+        },
+      ],
+      [
+        {
+          internalType: "bytes4",
+          name: "",
+          type: "bytes4",
+        },
+      ],
+    ],
+    params: [
+      options.arg_0,
+      options.arg_1,
+      options.arg_2,
+      options.arg_3,
+      options.arg_4,
+    ],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "pause" function on the contract.
@@ -1581,22 +1741,13 @@ export function onERC1155Received(
  *
  * ```
  */
-export function pause(
-  options: BaseTransactionOptions
-) {
+export function pause(options: BaseTransactionOptions) {
   return prepareContractCall({
     contract: options.contract,
-    method: [
-  "0x8456cb59",
-  [],
-  []
-],
-    params: []
+    method: ["0x8456cb59", [], []],
+    params: [],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "renounceOwnership" function on the contract.
@@ -1613,26 +1764,23 @@ export function pause(
  *
  * ```
  */
-export function renounceOwnership(
-  options: BaseTransactionOptions
-) {
+export function renounceOwnership(options: BaseTransactionOptions) {
   return prepareContractCall({
     contract: options.contract,
-    method: [
-  "0x715018a6",
-  [],
-  []
-],
-    params: []
+    method: ["0x715018a6", [], []],
+    params: [],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "setMarketplaceFee" function.
  */
 export type SetMarketplaceFeeParams = {
-  newFeeBps: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_newFeeBps","type":"uint256"}>
+  newFeeBps: AbiParameterToPrimitiveType<{
+    internalType: "uint256";
+    name: "_newFeeBps";
+    type: "uint256";
+  }>;
 };
 
 /**
@@ -1658,26 +1806,29 @@ export function setMarketplaceFee(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x9407ea98",
-  [
-    {
-      "internalType": "uint256",
-      "name": "_newFeeBps",
-      "type": "uint256"
-    }
-  ],
-  []
-],
-    params: [options.newFeeBps]
+      "0x9407ea98",
+      [
+        {
+          internalType: "uint256",
+          name: "_newFeeBps",
+          type: "uint256",
+        },
+      ],
+      [],
+    ],
+    params: [options.newFeeBps],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "setPlatformFeeRecipient" function.
  */
 export type SetPlatformFeeRecipientParams = {
-  newRecipient: AbiParameterToPrimitiveType<{"internalType":"address","name":"_newRecipient","type":"address"}>
+  newRecipient: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "_newRecipient";
+    type: "address";
+  }>;
 };
 
 /**
@@ -1703,26 +1854,29 @@ export function setPlatformFeeRecipient(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x1871e243",
-  [
-    {
-      "internalType": "address",
-      "name": "_newRecipient",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.newRecipient]
+      "0x1871e243",
+      [
+        {
+          internalType: "address",
+          name: "_newRecipient",
+          type: "address",
+        },
+      ],
+      [],
+    ],
+    params: [options.newRecipient],
   });
-};
-
+}
 
 /**
  * Represents the parameters for the "transferOwnership" function.
  */
 export type TransferOwnershipParams = {
-  newOwner: AbiParameterToPrimitiveType<{"internalType":"address","name":"newOwner","type":"address"}>
+  newOwner: AbiParameterToPrimitiveType<{
+    internalType: "address";
+    name: "newOwner";
+    type: "address";
+  }>;
 };
 
 /**
@@ -1748,22 +1902,19 @@ export function transferOwnership(
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0xf2fde38b",
-  [
-    {
-      "internalType": "address",
-      "name": "newOwner",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.newOwner]
+      "0xf2fde38b",
+      [
+        {
+          internalType: "address",
+          name: "newOwner",
+          type: "address",
+        },
+      ],
+      [],
+    ],
+    params: [options.newOwner],
   });
-};
-
-
-
+}
 
 /**
  * Calls the "unpause" function on the contract.
@@ -1780,18 +1931,10 @@ export function transferOwnership(
  *
  * ```
  */
-export function unpause(
-  options: BaseTransactionOptions
-) {
+export function unpause(options: BaseTransactionOptions) {
   return prepareContractCall({
     contract: options.contract,
-    method: [
-  "0x3f4ba83a",
-  [],
-  []
-],
-    params: []
+    method: ["0x3f4ba83a", [], []],
+    params: [],
   });
-};
-
-
+}

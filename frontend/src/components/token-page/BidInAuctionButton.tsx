@@ -18,7 +18,10 @@ import {
 import { useRef } from "react";
 import { sendAndConfirmTransaction } from "thirdweb";
 import { bidInAuction } from "thirdweb/extensions/marketplace";
-import { useActiveWalletChain, useSwitchActiveWalletChain } from "thirdweb/react";
+import {
+  useActiveWalletChain,
+  useSwitchActiveWalletChain,
+} from "thirdweb/react";
 import type { Account } from "thirdweb/wallets";
 import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
 import { getContract } from "thirdweb";
@@ -47,7 +50,7 @@ export default function BidInAuctionButton(props: Props) {
 
   const placeBid = async () => {
     const bidAmount = bidAmountRef.current?.value;
-    
+
     if (!bidAmount || Number(bidAmount) <= 0) {
       return toast({
         title: "Please enter a valid bid amount",
@@ -56,9 +59,11 @@ export default function BidInAuctionButton(props: Props) {
         isClosable: true,
       });
     }
-    
+
     // Check if bid meets minimum requirements
-    if (Number(bidAmount) < Number(auction.minimumBidCurrencyValue.displayValue)) {
+    if (
+      Number(bidAmount) < Number(auction.minimumBidCurrencyValue.displayValue)
+    ) {
       return toast({
         title: "Bid too low",
         description: `Minimum bid is ${auction.minimumBidCurrencyValue.displayValue} ${auction.currency.symbol}`,
@@ -67,12 +72,12 @@ export default function BidInAuctionButton(props: Props) {
         isClosable: true,
       });
     }
-    
+
     // Switch chain if needed
     if (activeChain?.id !== auctionContract.chain.id) {
       await switchChain(auctionContract.chain);
     }
-    
+
     try {
       // Place bid transaction
       const transaction = bidInAuction({
@@ -80,21 +85,21 @@ export default function BidInAuctionButton(props: Props) {
         auctionId: auction.id,
         bidAmount: bidAmount,
       });
-      
+
       await sendAndConfirmTransaction({
         transaction,
         account,
       });
-      
+
       toast({
         title: "Bid placed successfully!",
         status: "success",
         duration: 5000,
         isClosable: true,
       });
-      
+
       onClose();
-      
+
       if (refetchAllAuctions) {
         refetchAllAuctions();
       }
@@ -109,17 +114,20 @@ export default function BidInAuctionButton(props: Props) {
       });
     }
   };
-  
+
   const buyoutAuction = async () => {
-    if (!auction.buyoutCurrencyValue.displayValue || auction.buyoutCurrencyValue.displayValue === "0") {
+    if (
+      !auction.buyoutCurrencyValue.displayValue ||
+      auction.buyoutCurrencyValue.displayValue === "0"
+    ) {
       return;
     }
-    
+
     // Switch chain if needed
     if (activeChain?.id !== auctionContract.chain.id) {
       await switchChain(auctionContract.chain);
     }
-    
+
     try {
       // Place buyout bid
       const transaction = bidInAuction({
@@ -127,21 +135,21 @@ export default function BidInAuctionButton(props: Props) {
         auctionId: auction.id,
         bidAmount: auction.buyoutCurrencyValue.displayValue,
       });
-      
+
       await sendAndConfirmTransaction({
         transaction,
         account,
       });
-      
+
       toast({
         title: "Buyout successful!",
         status: "success",
         duration: 5000,
         isClosable: true,
       });
-      
+
       onClose();
-      
+
       if (refetchAllAuctions) {
         refetchAllAuctions();
       }
@@ -175,21 +183,27 @@ export default function BidInAuctionButton(props: Props) {
                   ? `${auction.winningBid.bidAmount} ${auction.currency.symbol}`
                   : `None (Min: ${auction.minimumBidCurrencyValue.displayValue} ${auction.currency.symbol})`}
               </Text>
-              
+
               <Input
                 ref={bidAmountRef}
                 type="number"
                 placeholder="Enter bid amount"
-                defaultValue={auction.winningBid?.bidAmount 
-                  ? Math.ceil(Number(auction.winningBid.bidAmount) * 1.05).toString() 
-                  : auction.minimumBidCurrencyValue.displayValue}
+                defaultValue={
+                  auction.winningBid?.bidAmount
+                    ? Math.ceil(
+                        Number(auction.winningBid.bidAmount) * 1.05
+                      ).toString()
+                    : auction.minimumBidCurrencyValue.displayValue
+                }
               />
-              
-              {auction.buyoutBidAmount && auction.buyoutBidAmount !== BigInt(0) && (
-                <Text>
-                  Buyout price: {auction.buyoutCurrencyValue.displayValue} {auction.currency.symbol}
-                </Text>
-              )}
+
+              {auction.buyoutBidAmount &&
+                auction.buyoutBidAmount !== BigInt(0) && (
+                  <Text>
+                    Buyout price: {auction.buyoutCurrencyValue.displayValue}{" "}
+                    {auction.currency.symbol}
+                  </Text>
+                )}
             </Flex>
           </ModalBody>
           <ModalFooter>
@@ -200,15 +214,16 @@ export default function BidInAuctionButton(props: Props) {
               <Button colorScheme="blue" onClick={placeBid}>
                 Place Bid
               </Button>
-              {auction.buyoutBidAmount && auction.buyoutBidAmount !== BigInt(0) && (
-                <Button colorScheme="green" onClick={buyoutAuction}>
-                  Buyout Now
-                </Button>
-              )}
+              {auction.buyoutBidAmount &&
+                auction.buyoutBidAmount !== BigInt(0) && (
+                  <Button colorScheme="green" onClick={buyoutAuction}>
+                    Buyout Now
+                  </Button>
+                )}
             </Flex>
           </ModalFooter>
         </ModalContent>
       </Modal>
     </>
   );
-} 
+}

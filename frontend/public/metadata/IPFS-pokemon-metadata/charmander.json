@@ -1,43 +1,43 @@
 {
-    "name": "Charmander",
-    "description": "A bipedal, lizard-like Pokémon with a flame burning at the tip of its tail. It's a Fire type known as the Lizard Pokémon.",
-    "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/charmander.png",
-    "attributes": [
-      {
-        "trait_type": "Type",
-        "value": "Fire"
-      },
-      {
-        "trait_type": "Level",
-        "value": 5
-      },
-      {
-        "trait_type": "HP",
-        "value": 39
-      },
-      {
-        "trait_type": "Attack",
-        "value": 52
-      },
-      {
-        "trait_type": "Defense",
-        "value": 43
-      },
-      {
-        "trait_type": "Special",
-        "value": 60
-      },
-      {
-        "trait_type": "Speed",
-        "value": 65
-      },
-      {
-        "trait_type": "Generation",
-        "value": 1
-      },
-      {
-        "trait_type": "Shiny",
-        "value": false
-      }
-    ]
-  }
+  "name": "Charmander",
+  "description": "A bipedal, lizard-like Pokémon with a flame burning at the tip of its tail. It's a Fire type known as the Lizard Pokémon.",
+  "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/charmander.png",
+  "attributes": [
+    {
+      "trait_type": "Type",
+      "value": "Fire"
+    },
+    {
+      "trait_type": "Level",
+      "value": 5
+    },
+    {
+      "trait_type": "HP",
+      "value": 39
+    },
+    {
+      "trait_type": "Attack",
+      "value": 52
+    },
+    {
+      "trait_type": "Defense",
+      "value": 43
+    },
+    {
+      "trait_type": "Special",
+      "value": 60
+    },
+    {
+      "trait_type": "Speed",
+      "value": 65
+    },
+    {
+      "trait_type": "Generation",
+      "value": 1
+    },
+    {
+      "trait_type": "Shiny",
+      "value": false
+    }
+  ]
+}

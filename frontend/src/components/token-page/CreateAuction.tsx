@@ -23,7 +23,12 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import { NATIVE_TOKEN_ADDRESS, sendAndConfirmTransaction, prepareTransaction, prepareContractCall } from "thirdweb";
+import {
+  NATIVE_TOKEN_ADDRESS,
+  sendAndConfirmTransaction,
+  prepareTransaction,
+  prepareContractCall,
+} from "thirdweb";
 import {
   isApprovedForAll as isApprovedForAll1155,
   setApprovalForAll as setApprovalForAll1155,
@@ -56,18 +61,20 @@ export function CreateAuction(props: Props) {
   const timeBufferRef = useRef<HTMLInputElement>(null);
   const durationRef = useRef<HTMLInputElement>(null);
   const qtyRef = useRef<HTMLInputElement>(null);
-  
+
   // Dutch auction refs
   const startPriceRef = useRef<HTMLInputElement>(null);
   const endPriceRef = useRef<HTMLInputElement>(null);
   const dutchDurationRef = useRef<HTMLInputElement>(null);
   const decayExponentRef = useRef<HTMLInputElement>(null);
-  
+
   const { tokenId, account } = props;
   const switchChain = useSwitchActiveWalletChain();
   const activeChain = useActiveWalletChain();
   const [currency, setCurrency] = useState<Token>();
-  const [auctionType, setAuctionType] = useState<"standard" | "dutch">("standard");
+  const [auctionType, setAuctionType] = useState<"standard" | "dutch">(
+    "standard"
+  );
   const toast = useToast();
 
   const {
@@ -77,20 +84,20 @@ export function CreateAuction(props: Props) {
     type,
     supportedTokens,
   } = useMarketplaceContext();
-  
+
   // Get the contracts - standard auction is the second contract, dutch auction is the third contract
   const auctionContract = getContract({
     address: MARKETPLACE_CONTRACTS[1].address, // Standard auction (PokemonAuctionHouse)
     chain: MARKETPLACE_CONTRACTS[1].chain,
     client,
   });
-  
+
   const dutchAuctionContract = getContract({
     address: MARKETPLACE_CONTRACTS[2].address, // Dutch auction (PokemonDutchAuction)
     chain: MARKETPLACE_CONTRACTS[2].chain,
     client,
   });
-  
+
   const chain = auctionContract.chain;
 
   const nativeToken: Token = {
@@ -100,7 +107,7 @@ export function CreateAuction(props: Props) {
   };
 
   const options: Token[] = [nativeToken].concat(supportedTokens);
-  
+
   const startStandardAuction = async () => {
     // Validate inputs
     const minBid = minBidRef.current?.value;
@@ -108,7 +115,7 @@ export function CreateAuction(props: Props) {
     const bidBuffer = bidBufferRef.current?.value;
     const timeBuffer = timeBufferRef.current?.value;
     const duration = durationRef.current?.value;
-    
+
     if (!minBid || Number(minBid) <= 0) {
       return toast({
         title: "Please enter a minimum bid amount",
@@ -117,7 +124,7 @@ export function CreateAuction(props: Props) {
         isClosable: true,
       });
     }
-    
+
     if (!duration || Number(duration) <= 0) {
       return toast({
         title: "Please enter a valid duration",
@@ -126,7 +133,7 @@ export function CreateAuction(props: Props) {
         isClosable: true,
       });
     }
-    
+
     if (!bidBuffer || Number(bidBuffer) <= 0) {
       return toast({
         title: "Please enter a valid bid buffer percentage",
@@ -135,7 +142,7 @@ export function CreateAuction(props: Props) {
         isClosable: true,
       });
     }
-    
+
     if (!timeBuffer || Number(timeBuffer) <= 0) {
       return toast({
         title: "Please enter a valid time buffer in seconds",
@@ -144,7 +151,7 @@ export function CreateAuction(props: Props) {
         isClosable: true,
       });
     }
-    
+
     if (!currency) {
       return toast({
         title: "Please select a currency",
@@ -158,7 +165,7 @@ export function CreateAuction(props: Props) {
     if (activeChain?.id !== nftContract.chain.id) {
       await switchChain(nftContract.chain);
     }
-    
+
     // Handle quantity
     const _qty = BigInt(qtyRef.current?.value ?? 1);
     if (type === "ERC1155") {
@@ -174,8 +181,9 @@ export function CreateAuction(props: Props) {
     }
 
     // Check for approval
-    const checkApprove = type === "ERC1155" ? isApprovedForAll1155 : isApprovedForAll721;
-    
+    const checkApprove =
+      type === "ERC1155" ? isApprovedForAll1155 : isApprovedForAll721;
+
     const isApproved = await checkApprove({
       contract: nftContract,
       owner: account.address,
@@ -183,7 +191,8 @@ export function CreateAuction(props: Props) {
     });
 
     if (!isApproved) {
-      const setApproval = type === "ERC1155" ? setApprovalForAll1155 : setApprovalForAll721;
+      const setApproval =
+        type === "ERC1155" ? setApprovalForAll1155 : setApprovalForAll721;
 
       const approveTx = setApproval({
         contract: nftContract,
@@ -211,12 +220,12 @@ export function CreateAuction(props: Props) {
     // Calculate timestamps
     const now = Math.floor(Date.now() / 1000);
     const startTime = now + 60; // Start in 1 minute
-    const endTime = now + (Number(duration) * 3600); // Convert hours to seconds
-    
+    const endTime = now + Number(duration) * 3600; // Convert hours to seconds
+
     // Create Date objects from timestamps
     const startTimestamp = new Date(startTime * 1000);
     const endTimestamp = new Date(endTime * 1000);
-    
+
     // Create auction
     try {
       const transaction = createAuction({
@@ -237,14 +246,14 @@ export function CreateAuction(props: Props) {
         transaction,
         account,
       });
-      
+
       toast({
         title: "Standard auction created successfully!",
         status: "success",
         duration: 5000,
         isClosable: true,
       });
-      
+
       if (refetchAllAuctions) {
         refetchAllAuctions();
       }
@@ -259,14 +268,14 @@ export function CreateAuction(props: Props) {
       });
     }
   };
-  
+
   const startDutchAuction = async () => {
     // Validate inputs
     const startPrice = startPriceRef.current?.value;
     const endPrice = endPriceRef.current?.value;
     const duration = dutchDurationRef.current?.value;
     const decayExponent = decayExponentRef.current?.value;
-    
+
     if (!startPrice || Number(startPrice) <= 0) {
       return toast({
         title: "Please enter a start price",
@@ -275,7 +284,7 @@ export function CreateAuction(props: Props) {
         isClosable: true,
       });
     }
-    
+
     if (!endPrice || Number(endPrice) <= 0) {
       return toast({
         title: "Please enter an end price",
@@ -284,7 +293,7 @@ export function CreateAuction(props: Props) {
         isClosable: true,
       });
     }
-    
+
     if (Number(startPrice) <= Number(endPrice)) {
       return toast({
         title: "Start price must be greater than end price",
@@ -293,7 +302,7 @@ export function CreateAuction(props: Props) {
         isClosable: true,
       });
     }
-    
+
     if (!duration || Number(duration) <= 0) {
       return toast({
         title: "Please enter a valid duration",
@@ -302,7 +311,7 @@ export function CreateAuction(props: Props) {
         isClosable: true,
       });
     }
-    
+
     if (!decayExponent || Number(decayExponent) < 1) {
       return toast({
         title: "Decay exponent must be 1 or greater",
@@ -311,7 +320,7 @@ export function CreateAuction(props: Props) {
         isClosable: true,
       });
     }
-    
+
     if (!currency) {
       return toast({
         title: "Please select a currency",
@@ -327,8 +336,9 @@ export function CreateAuction(props: Props) {
     }
 
     // Check for approval
-    const checkApprove = type === "ERC1155" ? isApprovedForAll1155 : isApprovedForAll721;
-    
+    const checkApprove =
+      type === "ERC1155" ? isApprovedForAll1155 : isApprovedForAll721;
+
     const isApproved = await checkApprove({
       contract: nftContract,
       owner: account.address,
@@ -336,7 +346,8 @@ export function CreateAuction(props: Props) {
     });
 
     if (!isApproved) {
-      const setApproval = type === "ERC1155" ? setApprovalForAll1155 : setApprovalForAll721;
+      const setApproval =
+        type === "ERC1155" ? setApprovalForAll1155 : setApprovalForAll721;
 
       const approveTx = setApproval({
         contract: nftContract,
@@ -360,10 +371,10 @@ export function CreateAuction(props: Props) {
         });
       }
     }
-    
+
     // Convert duration to seconds for contract call
     const durationInSeconds = Number(duration) * 3600; // Convert hours to seconds
-    
+
     // Create Dutch auction using the proper transaction preparation method
     try {
       // Prepare the transaction using the contract's write interface
@@ -378,21 +389,21 @@ export function CreateAuction(props: Props) {
       //     currency.tokenAddress,           // Currency address
       //   ]
       // );
-      
+
       const transaction = prepareContractCall({
         contract: dutchAuctionContract,
-        method: "function createDutchAuction(address nftAddress, uint256 tokenId, uint256 startPrice, uint256 endPrice, uint256 duration, uint256 decayExponent, address currency)",
+        method:
+          "function createDutchAuction(address nftAddress, uint256 tokenId, uint256 startPrice, uint256 endPrice, uint256 duration, uint256 decayExponent, address currency)",
         params: [
-          nftContract.address,             // NFT contract address
-          tokenId,                         // Token ID
-          BigInt(Math.floor(Number(startPrice) * 10**18)), // Start price in wei
-          BigInt(Math.floor(Number(endPrice) * 10**18)),   // End price in wei
-          BigInt(durationInSeconds),               // Duration in seconds
-          BigInt(decayExponent),           // Decay exponent
-          currency.tokenAddress,           // Currency address
+          nftContract.address, // NFT contract address
+          tokenId, // Token ID
+          BigInt(Math.floor(Number(startPrice) * 10 ** 18)), // Start price in wei
+          BigInt(Math.floor(Number(endPrice) * 10 ** 18)), // End price in wei
+          BigInt(durationInSeconds), // Duration in seconds
+          BigInt(decayExponent), // Decay exponent
+          currency.tokenAddress, // Currency address
         ],
       });
-
 
       console.log("Transaction prepared:", transaction);
 
@@ -400,14 +411,14 @@ export function CreateAuction(props: Props) {
         transaction,
         account,
       });
-      
+
       toast({
         title: "Dutch auction created successfully!",
         status: "success",
         duration: 5000,
         isClosable: true,
       });
-      
+
       if (refetchAllAuctions) {
         refetchAllAuctions();
       }
@@ -422,7 +433,7 @@ export function CreateAuction(props: Props) {
       });
     }
   };
-  
+
   const handleCreateAuction = () => {
     if (auctionType === "standard") {
       startStandardAuction();
@@ -435,20 +446,25 @@ export function CreateAuction(props: Props) {
     <>
       <br />
       <Flex direction="column" w={{ base: "90vw", lg: "430px" }} gap="10px">
-        <Text fontSize="xl" fontWeight="bold" mb={2}>Create Auction</Text>
-        
+        <Text fontSize="xl" fontWeight="bold" mb={2}>
+          Create Auction
+        </Text>
+
         <FormControl mb={4}>
           <FormLabel>Auction Type</FormLabel>
-          <RadioGroup onChange={(value) => setAuctionType(value as "standard" | "dutch")} value={auctionType}>
+          <RadioGroup
+            onChange={(value) => setAuctionType(value as "standard" | "dutch")}
+            value={auctionType}
+          >
             <Stack direction="row">
               <Radio value="standard">Standard Auction</Radio>
               <Radio value="dutch">Dutch Auction</Radio>
             </Stack>
           </RadioGroup>
         </FormControl>
-        
+
         <Divider mb={4} />
-        
+
         {auctionType === "standard" ? (
           <>
             <FormControl>
@@ -459,13 +475,15 @@ export function CreateAuction(props: Props) {
                 placeholder="Minimum bid amount"
               />
             </FormControl>
-            
+
             <FormControl>
               <FormLabel>
                 <HStack>
                   <Text>Buyout Price</Text>
                   <Tooltip label="Optional. Bidders can immediately win the auction by bidding this amount.">
-                    <Box><FaInfoCircle /></Box>
+                    <Box>
+                      <FaInfoCircle />
+                    </Box>
                   </Tooltip>
                 </HStack>
               </FormLabel>
@@ -475,13 +493,15 @@ export function CreateAuction(props: Props) {
                 placeholder="Optional buyout price"
               />
             </FormControl>
-            
+
             <FormControl>
               <FormLabel>
                 <HStack>
                   <Text>Bid Buffer (%)</Text>
                   <Tooltip label="Minimum percentage a new bid must be higher than the current bid">
-                    <Box><FaInfoCircle /></Box>
+                    <Box>
+                      <FaInfoCircle />
+                    </Box>
                   </Tooltip>
                 </HStack>
               </FormLabel>
@@ -492,13 +512,15 @@ export function CreateAuction(props: Props) {
                 defaultValue="5"
               />
             </FormControl>
-            
+
             <FormControl>
               <FormLabel>
                 <HStack>
                   <Text>Time Buffer (seconds)</Text>
                   <Tooltip label="Time added to auction end when a bid is placed near the end">
-                    <Box><FaInfoCircle /></Box>
+                    <Box>
+                      <FaInfoCircle />
+                    </Box>
                   </Tooltip>
                 </HStack>
               </FormLabel>
@@ -509,7 +531,7 @@ export function CreateAuction(props: Props) {
                 defaultValue="300"
               />
             </FormControl>
-            
+
             <FormControl>
               <FormLabel>Auction Duration (hours)</FormLabel>
               <Input
@@ -519,7 +541,7 @@ export function CreateAuction(props: Props) {
                 defaultValue="24"
               />
             </FormControl>
-            
+
             {type === "ERC1155" && (
               <FormControl>
                 <FormLabel>Quantity</FormLabel>
@@ -539,7 +561,9 @@ export function CreateAuction(props: Props) {
                 <HStack>
                   <Text>Start Price</Text>
                   <Tooltip label="Initial price of the Dutch auction. This price will decrease over time.">
-                    <Box><FaInfoCircle /></Box>
+                    <Box>
+                      <FaInfoCircle />
+                    </Box>
                   </Tooltip>
                 </HStack>
               </FormLabel>
@@ -549,13 +573,15 @@ export function CreateAuction(props: Props) {
                 placeholder="Starting price"
               />
             </FormControl>
-            
+
             <FormControl>
               <FormLabel>
                 <HStack>
                   <Text>End Price</Text>
                   <Tooltip label="Final price of the Dutch auction. Must be lower than start price.">
-                    <Box><FaInfoCircle /></Box>
+                    <Box>
+                      <FaInfoCircle />
+                    </Box>
                   </Tooltip>
                 </HStack>
               </FormLabel>
@@ -565,13 +591,15 @@ export function CreateAuction(props: Props) {
                 placeholder="Ending price"
               />
             </FormControl>
-            
+
             <FormControl>
               <FormLabel>
                 <HStack>
                   <Text>Decay Exponent</Text>
                   <Tooltip label="Controls price drop rate. 1 = linear decay, >1 = faster initial drop">
-                    <Box><FaInfoCircle /></Box>
+                    <Box>
+                      <FaInfoCircle />
+                    </Box>
                   </Tooltip>
                 </HStack>
               </FormLabel>
@@ -583,7 +611,7 @@ export function CreateAuction(props: Props) {
                 min="1"
               />
             </FormControl>
-            
+
             <FormControl>
               <FormLabel>Auction Duration (hours)</FormLabel>
               <Input
@@ -595,7 +623,7 @@ export function CreateAuction(props: Props) {
             </FormControl>
           </>
         )}
-        
+
         <FormControl mt={4}>
           <FormLabel>Currency</FormLabel>
           <Menu>
@@ -640,7 +668,7 @@ export function CreateAuction(props: Props) {
             </MenuList>
           </Menu>
         </FormControl>
-        
+
         <Button
           colorScheme="purple"
           isDisabled={!currency}

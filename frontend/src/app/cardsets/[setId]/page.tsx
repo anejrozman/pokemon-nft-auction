@@ -3,12 +3,12 @@
 import { ethers } from "ethers";
 
 import React, { useEffect, useState } from "react";
-import { 
-  Box, 
-  Heading, 
-  Text, 
-  Image, 
-  Button, 
+import {
+  Box,
+  Heading,
+  Text,
+  Image,
+  Button,
   Flex,
   Card,
   CardBody,
@@ -17,7 +17,7 @@ import {
   HStack,
   VStack,
   Container,
-  Spacer
+  Spacer,
 } from "@chakra-ui/react";
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import { useReadContract } from "thirdweb/react";
@@ -28,53 +28,50 @@ export default function CardSetDetailsPage({
 }: {
   params: { setId: string };
 }) {
-
   const { nftContract } = useMarketplaceContext();
   const { setId } = params; // Extract setId from the URL
   const { data: cardSet, isLoading } = useReadContract(getCardSet, {
     contract: nftContract,
-    setId: BigInt(setId), 
+    setId: BigInt(setId),
   });
-    
+
   const [isMinting, setIsMinting] = useState(false);
-  
+
   const handleMint = async () => {
     try {
       if (!cardSet) {
         alert("Card set data is not available.");
         return;
       }
-  
+
       if (typeof window === "undefined" || !(window as any).ethereum) {
         alert("Ethereum provider is not available. Please install MetaMask.");
         return;
       }
-  
+
       // Dynamically fetch the signer
       const provider = new ethers.BrowserProvider((window as any).ethereum);
       const signer = await provider.getSigner();
       const walletAddress = await signer.getAddress();
       console.log("Connected Wallet Address:", walletAddress);
-  
+
       // Dynamically create the contract instance with the signer
       const pokemonContract = new ethers.Contract(
         nftContract.address,
-        [
-          "function mintFromCardSet(uint256 setId) public payable",
-        ],
+        ["function mintFromCardSet(uint256 setId) public payable"],
         signer
       );
-  
+
       setIsMinting(true);
-  
+
       // Call the mint function
       const tx = await pokemonContract.mintFromCardSet(BigInt(setId), {
         value: cardSet.price,
       });
-  
+
       await tx.wait();
       alert("Mint successful!");
-  
+
       // Reload the page to fetch updated card set data
       window.location.reload();
     } catch (error: any) {
@@ -104,7 +101,7 @@ export default function CardSetDetailsPage({
               return metadata.image.replace("ipfs://", gatewayBase);
             } catch (error) {
               console.error("Error fetching metadata:", error);
-              return ""; 
+              return "";
             }
           })
         );
@@ -122,7 +119,7 @@ export default function CardSetDetailsPage({
       </Text>
     );
   }
-  
+
   if (!cardSet || !cardSet.name || Number(cardSet.supply) === 0) {
     return (
       <Box textAlign="center" mt={8}>
@@ -130,7 +127,7 @@ export default function CardSetDetailsPage({
           Card set doesn't exist or is sold out.
         </Text>
         <Button
-          onClick={() => window.location.href = "/cardsets"} 
+          onClick={() => (window.location.href = "/cardsets")}
           bgGradient="linear(to-l, rgba(121, 40, 202, 0.7), rgba(255, 0, 128, 0.7))"
           color="white"
           size="lg"
@@ -147,11 +144,11 @@ export default function CardSetDetailsPage({
   return (
     <Container maxW="1200px" px={4} py={8}>
       {/* Card Set Info Box */}
-      <Card 
-        mx="auto" 
-        mb={10} 
-        maxW="md" 
-        borderRadius="lg" 
+      <Card
+        mx="auto"
+        mb={10}
+        maxW="md"
+        borderRadius="lg"
         boxShadow="xl"
         bg="gray.800"
         borderWidth="1px"
@@ -162,18 +159,18 @@ export default function CardSetDetailsPage({
             {cardSet.name}
           </Heading>
         </CardHeader>
-        
+
         <CardBody>
           <VStack spacing={4} align="center">
             <Text fontSize="xl" fontWeight="bold" color="white">
-              Price: {(Number(cardSet.price) / 10 ** 18)} ETH
+              Price: {Number(cardSet.price) / 10 ** 18} ETH
             </Text>
             <Text fontSize="xl" fontWeight="bold" color="white">
               Available Mints: {cardSet.supply.toString()}
             </Text>
           </VStack>
         </CardBody>
-        
+
         <CardFooter justifyContent="center" pt={0}>
           <Button
             onClick={handleMint}
@@ -197,20 +194,20 @@ export default function CardSetDetailsPage({
         <Heading size="md" mb={4} textAlign="center">
           Contents of the Set
         </Heading>
-        
+
         {/* Scrollable container */}
-        <Box 
-          overflowX="auto" 
+        <Box
+          overflowX="auto"
           css={{
-            '&::-webkit-scrollbar': {
-              height: '8px',
+            "&::-webkit-scrollbar": {
+              height: "8px",
             },
-            '&::-webkit-scrollbar-track': {
-              background: '#2D3748',
+            "&::-webkit-scrollbar-track": {
+              background: "#2D3748",
             },
-            '&::-webkit-scrollbar-thumb': {
-              background: '#805AD5',
-              borderRadius: '4px',
+            "&::-webkit-scrollbar-thumb": {
+              background: "#805AD5",
+              borderRadius: "4px",
             },
           }}
         >
@@ -219,7 +216,7 @@ export default function CardSetDetailsPage({
               const pokemonName = image
                 ? image.split("/").pop()?.split(".")[0]
                 : "Unknown";
-            
+
               return (
                 <Box
                   key={index}
@@ -235,7 +232,7 @@ export default function CardSetDetailsPage({
                   <Text fontSize="lg" fontWeight="bold" mb={2} color="white">
                     {pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}
                   </Text>
-              
+
                   {/* Display card image */}
                   {image ? (
                     <Image
@@ -252,7 +249,7 @@ export default function CardSetDetailsPage({
 
                   {/* Display probability */}
                   <Text fontSize="lg" fontWeight="bold" color="white">
-                    Probability: {(Number(cardSet.probabilities[index]) / 100)}%
+                    Probability: {Number(cardSet.probabilities[index]) / 100}%
                   </Text>
                 </Box>
               );

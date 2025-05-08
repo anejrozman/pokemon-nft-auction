@@ -1,7 +1,15 @@
 "use client";
 
 import React from "react";
-import { Box, Flex, Heading, Text, HStack, Image, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  HStack,
+  Image,
+  VStack,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import { useReadContract } from "thirdweb/react";
@@ -18,7 +26,7 @@ export default function CardSetsPage() {
     contract: nftContract,
   });
 
-  console.log('Card sets:', cardSets);
+  console.log("Card sets:", cardSets);
   console.log(nftContract);
 
   return (
@@ -34,35 +42,42 @@ export default function CardSetsPage() {
       </Heading>
 
       <Text fontSize="lg" color="gray.200" textAlign="center" mb={8}>
-        Mint new Pokémon cards from the following collections before they sell out!
+        Mint new Pokémon cards from the following collections before they sell
+        out!
       </Text>
 
       {/* Horizontal Scrollable Card Sets */}
-      <Box 
-        bg="gray.700" 
-        p={6} 
-        borderRadius="md" 
+      <Box
+        bg="gray.700"
+        p={6}
+        borderRadius="md"
         boxShadow="sm"
         overflowX="auto"
         css={{
-          '&::-webkit-scrollbar': {
-            height: '8px',
+          "&::-webkit-scrollbar": {
+            height: "8px",
           },
-          '&::-webkit-scrollbar-track': {
-            background: '#2D3748',
+          "&::-webkit-scrollbar-track": {
+            background: "#2D3748",
           },
-          '&::-webkit-scrollbar-thumb': {
-            background: '#805AD5',
-            borderRadius: '4px',
+          "&::-webkit-scrollbar-thumb": {
+            background: "#805AD5",
+            borderRadius: "4px",
           },
         }}
       >
         {isLoading ? (
-          <Text textAlign="center" fontSize="lg">Loading card sets...</Text>
+          <Text textAlign="center" fontSize="lg">
+            Loading card sets...
+          </Text>
         ) : cardSets && cardSets.length > 0 ? (
           <HStack spacing={6} pb={2}>
             {cardSets.map((set: any) => (
-              <Link key={set.id.toString()} href={`/cardsets/${set.id}`} style={{ textDecoration: 'none' }}>
+              <Link
+                key={set.id.toString()}
+                href={`/cardsets/${set.id}`}
+                style={{ textDecoration: "none" }}
+              >
                 <Box
                   borderRadius="lg"
                   boxShadow="md"
@@ -87,16 +102,18 @@ export default function CardSetsPage() {
                     _hover={{ filter: "grayscale(0%)" }}
                   >
                     <Image
-                      src={Number(set.price) > 0.03 * 10**18 ? 
-                        starterSetIcon.src : 
-                        rareSetIcon.src}
+                      src={
+                        Number(set.price) > 0.03 * 10 ** 18
+                          ? starterSetIcon.src
+                          : rareSetIcon.src
+                      }
                       alt={set.name}
                       objectFit="cover"
                       w="full"
                       h="full"
                       fallbackSrc="https://via.placeholder.com/280x320?text=Card+Set"
                     />
-                    
+
                     {/* Overlay with set details */}
                     <Box
                       position="absolute"
@@ -112,7 +129,7 @@ export default function CardSetsPage() {
                           {set.name}
                         </Text>
                         <Text fontSize="md">
-                          Price: {(Number(set.price) / 10**18).toString()} ETH
+                          Price: {(Number(set.price) / 10 ** 18).toString()} ETH
                         </Text>
                         <Text fontSize="md">
                           Available Mints: {set.supply.toString()}
@@ -125,7 +142,9 @@ export default function CardSetsPage() {
             ))}
           </HStack>
         ) : (
-          <Text textAlign="center" fontSize="lg">No card sets found</Text>
+          <Text textAlign="center" fontSize="lg">
+            No card sets found
+          </Text>
         )}
       </Box>
     </Box>

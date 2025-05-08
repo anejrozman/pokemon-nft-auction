@@ -1,43 +1,43 @@
 {
-    "name": "Bulbasaur",
-    "description": "A small, quadruped Pokémon with a plant bulb on its back. It's a dual Grass/Poison type known as the Seed Pokémon.",
-    "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/bulbasaur.png",
-    "attributes": [
-      {
-        "trait_type": "Type",
-        "value": "Grass/Poison"
-      },
-      {
-        "trait_type": "Level",
-        "value": 5
-      },
-      {
-        "trait_type": "HP",
-        "value": 45
-      },
-      {
-        "trait_type": "Attack",
-        "value": 49
-      },
-      {
-        "trait_type": "Defense",
-        "value": 49
-      },
-      {
-        "trait_type": "Special",
-        "value": 65
-      },
-      {
-        "trait_type": "Speed",
-        "value": 45
-      },
-      {
-        "trait_type": "Generation",
-        "value": 1
-      },
-      {
-        "trait_type": "Shiny",
-        "value": false
-      }
-    ]
-  }
+  "name": "Bulbasaur",
+  "description": "A small, quadruped Pokémon with a plant bulb on its back. It's a dual Grass/Poison type known as the Seed Pokémon.",
+  "image": "ipfs://bafybeic6msryntfmhbqh53ivhbuvgg5gerve4fubupgioh5d2bmxamqwce/bulbasaur.png",
+  "attributes": [
+    {
+      "trait_type": "Type",
+      "value": "Grass/Poison"
+    },
+    {
+      "trait_type": "Level",
+      "value": 5
+    },
+    {
+      "trait_type": "HP",
+      "value": 45
+    },
+    {
+      "trait_type": "Attack",
+      "value": 49
+    },
+    {
+      "trait_type": "Defense",
+      "value": 49
+    },
+    {
+      "trait_type": "Special",
+      "value": 65
+    },
+    {
+      "trait_type": "Speed",
+      "value": 45
+    },
+    {
+      "trait_type": "Generation",
+      "value": 1
+    },
+    {
+      "trait_type": "Shiny",
+      "value": false
+    }
+  ]
+}
