@@ -3,7 +3,22 @@
 import { ethers } from "ethers";
 
 import React, { useEffect, useState } from "react";
-import { Box, Heading, Text, SimpleGrid, Image, Button, Flex} from "@chakra-ui/react";
+import { 
+  Box, 
+  Heading, 
+  Text, 
+  Image, 
+  Button, 
+  Flex,
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+  HStack,
+  VStack,
+  Container,
+  Spacer
+} from "@chakra-ui/react";
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import { useReadContract } from "thirdweb/react";
 import { getCardSet } from "@/helpers/0xc0d1f4bdebc058663b10258920d2c4c08eab9854";
@@ -130,81 +145,121 @@ export default function CardSetDetailsPage({
   }
 
   return (
-    <Box p={8} maxW="1000px" mx="auto">
-      {/* Title */}
-      <Heading size="xl" mb={4} textAlign="center">
-        {cardSet.name}
-      </Heading>
+    <Container maxW="1200px" px={4} py={8}>
+      {/* Card Set Info Box */}
+      <Card 
+        mx="auto" 
+        mb={10} 
+        maxW="md" 
+        borderRadius="lg" 
+        boxShadow="xl"
+        bg="gray.800"
+        borderWidth="1px"
+        borderColor="purple.500"
+      >
+        <CardHeader pb={0}>
+          <Heading size="xl" textAlign="center" color="white">
+            {cardSet.name}
+          </Heading>
+        </CardHeader>
+        
+        <CardBody>
+          <VStack spacing={4} align="center">
+            <Text fontSize="xl" fontWeight="bold" color="white">
+              Price: {(Number(cardSet.price) / 10 ** 18)} ETH
+            </Text>
+            <Text fontSize="xl" fontWeight="bold" color="white">
+              Available Mints: {cardSet.supply.toString()}
+            </Text>
+          </VStack>
+        </CardBody>
+        
+        <CardFooter justifyContent="center" pt={0}>
+          <Button
+            onClick={handleMint}
+            isLoading={isMinting}
+            disabled={isMinting}
+            bgGradient="linear(to-l, rgba(121, 40, 202, 0.7), rgba(255, 0, 128, 0.7))"
+            color="white"
+            size="lg"
+            width="full"
+            _hover={{
+              bgGradient: "linear(to-r, #FF0080, #7928CA)",
+            }}
+          >
+            {isMinting ? "Minting..." : "Mint from Card Set"}
+          </Button>
+        </CardFooter>
+      </Card>
 
-      {/* Card Set Details */}
-      <Flex justifyContent="space-between" alignItems="center" mb={4}>
-        <Box>
-          <Text fontSize="lg" mb={2}>
-            <strong>Price:</strong> {(Number(cardSet.price) / 10 ** 18)} ETH
-          </Text>
-          <Text fontSize="lg" mb={2}>
-            <strong>Available Mints:</strong> {cardSet.supply.toString()}
-          </Text>
-        </Box>
-        <Button
-          onClick={handleMint}
-          isLoading={isMinting}
-          disabled={isMinting}
-          bgGradient="linear(to-l, rgba(121, 40, 202, 0.7), rgba(255, 0, 128, 0.7))"
-          color="white"
-          size="lg"
-          _hover={{
-            bgGradient: "linear(to-r, #FF0080, #7928CA)",
+      {/* Contents of the Set - Horizontal Scrollable List */}
+      <Box mb={4}>
+        <Heading size="md" mb={4} textAlign="center">
+          Contents of the Set
+        </Heading>
+        
+        {/* Scrollable container */}
+        <Box 
+          overflowX="auto" 
+          css={{
+            '&::-webkit-scrollbar': {
+              height: '8px',
+            },
+            '&::-webkit-scrollbar-track': {
+              background: '#2D3748',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#805AD5',
+              borderRadius: '4px',
+            },
           }}
         >
-          {isMinting ? "Minting..." : "Mint from Card Set"}
-        </Button>
-      </Flex>
-
-      {/* Cards and Probabilities */}
-      <Heading size="md" mt={8} mb={4} textAlign="center">
-        Contents of the set
-      </Heading>
-      <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6}>
-        {cardImages.map((image: string, index: number) => {
-          const pokemonName = image
-            ? image.split("/").pop()?.split(".")[0]
-            : "Unknown";
-        
-          return (
-            <Box
-              key={index}
-              p={4}
-              borderRadius="md"
-              boxShadow="sm"
-              bg="gray.700"
-              textAlign="center"
-            >
-              {/* Display Pokémon name */}
-              <Text fontSize="lg" fontWeight="bold" mb={2}>
-                {pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}
-              </Text>
-          
-              {/* Display card image */}
-              {image ? (
-                <Image
-                  src={image}
-                  alt={`Card ${index + 1}`}
+          <HStack spacing={6} pb={4} pl={2} pr={2}>
+            {cardImages.map((image: string, index: number) => {
+              const pokemonName = image
+                ? image.split("/").pop()?.split(".")[0]
+                : "Unknown";
+            
+              return (
+                <Box
+                  key={index}
+                  p={4}
                   borderRadius="md"
-                  mb={4}
-                />
-              ) : (
-                <Text>Image not available</Text>
-              )}
+                  boxShadow="md"
+                  bg="gray.700"
+                  textAlign="center"
+                  minW="220px"
+                  flex="0 0 auto"
+                >
+                  {/* Display Pokémon name */}
+                  <Text fontSize="lg" fontWeight="bold" mb={2} color="white">
+                    {pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}
+                  </Text>
+              
+                  {/* Display card image */}
+                  {image ? (
+                    <Image
+                      src={image}
+                      alt={`Card ${index + 1}`}
+                      borderRadius="md"
+                      mb={4}
+                      maxH="250px"
+                      mx="auto"
+                    />
+                  ) : (
+                    <Text>Image not available</Text>
+                  )}
 
-              {/* Display probability */}
-              <Text fontSize="lg" fontWeight="bold">
-                Probability: {(Number(cardSet.probabilities[index]) / 100)}%
-              </Text>
-            </Box>
-          );
-        })}
-      </SimpleGrid>
-    </Box>
+                  {/* Display probability */}
+                  <Text fontSize="lg" fontWeight="bold" color="white">
+                    Probability: {(Number(cardSet.probabilities[index]) / 100)}%
+                  </Text>
+                </Box>
+              );
+            })}
+          </HStack>
+        </Box>
+      </Box>
+    </Container>
   );
 }

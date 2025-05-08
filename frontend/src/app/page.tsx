@@ -30,30 +30,12 @@ export default function Home() {
   
   return (
     <Container maxW="container.xl" p={0}>
-      {/* Hero Section with Title */}
-      <Box 
-        w="full" 
-        py={10} 
-        textAlign="center"
-        bgGradient={bgGradient}
-        color="white"
-        borderRadius="lg"
-        mb={8}
-      >
-        <Heading size="2xl" fontWeight="bold">
-          PokéMarket
-        </Heading>
-        <Text fontSize="xl" mt={3} maxW="container.md" mx="auto">
-          Collect, Trade, and Battle with Pokémon NFTs
-        </Text>
-      </Box>
-
       {/* Main Navigation Cards - Card Sets & Auctions */}
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8} mb={16}>
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8} mt={8} mb={16}>
         {/* Card Sets Button */}
         <Link href="/cardsets" _hover={{ textDecoration: "none" }}>
           <Box
-            h={{ base: "300px", lg: "400px" }}
+            h={{ base: "350px", lg: "500px" }}
             position="relative"
             borderRadius="lg"
             overflow="hidden"
@@ -124,7 +106,7 @@ export default function Home() {
         {/* Auctions Button */}
         <Link href="/auctions" _hover={{ textDecoration: "none" }}>
           <Box
-            h={{ base: "300px", lg: "400px" }}
+            h={{ base: "350px", lg: "500px" }}
             position="relative"
             borderRadius="lg"
             overflow="hidden"
