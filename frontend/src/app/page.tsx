@@ -183,7 +183,7 @@ export default function Home() {
             bgGradient={bgGradient}
             bgClip="text"
           >
-            Trending Collections
+            Pokemon Collections
           </Heading>
           <Button 
             variant="outline" 
