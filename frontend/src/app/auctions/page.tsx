@@ -404,18 +404,17 @@ export default function CollectionListings() {
 
   // Render a single listing card
   const ListingCard = ({ listing }: { listing: DirectListing | EnglishAuction }) => {
-    const isAuction = 'minimumBidCurrencyValue' in listing && 'buyoutCurrencyValue' in listing;
-    const listingId = listing.id.toString();
+    const isAuction = listing.type === "english-auction"
+    console.log("Listing:", listing);
+
+    const listingId = isAuction ? listing.id.toString() : undefined;
   
-    const { data: winningBid } = useReadContract(
-      isAuction ? getWinningBid : undefined,
-      isAuction
-        ? {
-            contract: auctionHouse,
-            auctionId: listing.id,
-          }
-        : undefined
-    );
+    const { data: winningBid } = isAuction
+      ? useReadContract(getWinningBid, {
+          contract: auctionHouse,
+          auctionId: listing.id,
+        })
+      : { data: undefined };
   
     return (
       <Card key={listingId} overflow="hidden" borderRadius="lg" borderWidth="1px" p={4}>
