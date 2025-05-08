@@ -23,7 +23,7 @@ export const NFT_CONTRACTS: NftContract[] = [
     address: "0x5FbDB2315678afecb367f032d93F642f64180aa3", // Replace with your PokemonNFT contract address
     chain: hardhatLocal,
     title: "Pokemon NFT Collection",
-    description: "Collect, trade, and battle with Pokemon NFTs!",
+    description: "Collect, trade, and make each other jealous with Pokemon NFTs!",
     thumbnailUrl: "/images/pokemon-collection.jpg", // Add an image to your public folder
     type: "ERC721",
   },

@@ -74,7 +74,6 @@ export default function BuyFromListingButton(props: Props) {
 						quantity: listing.quantity,
 						recipient: account.address,
 					});
-					console.log(transaction);
 					const receipt = await sendTransaction({
 						transaction,
 						account,
