@@ -57,7 +57,7 @@ export function Navbar() {
             color="gray.500"
             fontStyle="italic"
           >
-            Collect, Trade, and Battle with Pokémon NFTs
+            Collect, Trade, and make each other jealous with Pokémon NFTs
           </Text>
         </VStack>
         <Flex direction="row" alignItems="center" gap={4} display={{ lg: "flex", base: "none" }}>
