@@ -23,7 +23,7 @@ Follow these steps to set up and run the project locally.
 
 *   Node.js and npm (or yarn) installed.
 *   A code editor (like VS Code).
-*   A browser wallet that supports custom networks (Rabby Wallet or MetaMask recommended).
+*   A browser wallet that supports custom networks (Rabby Wallet recommended).
 
 ### 2. Backend Setup & Deployment
 
@@ -130,7 +130,7 @@ Open your browser to `http://localhost:3000` (or the port specified in the termi
 
 To interact with the marketplace (list, bid, buy), you need to connect a wallet configured for your local Hardhat node.
 
-1.  **Import Account:** Use a wallet like Rabby Wallet or MetaMask. Import one of the test accounts using the private key provided when you started `npx hardhat node`.
+1.  **Import Account:** Use a wallet like Rabby Wallet. Import one of the test accounts using the private key provided when you started `npx hardhat node`.
 2.  **Add Custom Network:** Add a new network configuration in your wallet settings:
     *   **Network Name:** Hardhat (or any name you prefer)
     *   **RPC URL:** `http://127.0.0.1:8545`
