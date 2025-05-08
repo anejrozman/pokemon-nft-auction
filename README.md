@@ -79,7 +79,7 @@ Follow these steps to set up and run the project locally.
         chain: hardhatLocal,
         title: "Pokemon NFT Collection",
         description: "Collect and trade, and make each other jealous with Pokemon NFTs!",
-        thumbnailUrl: "/images/pokemon-collection.jpg", // Add an image to your public folder
+        thumbnailUrl: "/images/pokemon-collection.png", // Add an image to your public folder
         type: "ERC721",
       },
     ];
