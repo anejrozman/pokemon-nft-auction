@@ -38,19 +38,31 @@ async function main() {
   console.log(`PokemonAuctionHouse deployed to: ${auctionHouseAddress}`);
   // --- End Deploy PokemonAuctionHouse ---
 
+  // --- Deploy PokemonAuctionHouse contract ---
+  const PokemonDutchAuction = await ethers.getContractFactory("PokemonDutchAuction");
+  // Using the same fee for simplicity, can be different
+  const dutchAuctionFeeBps = 250; // 2.5% fee
+  const pokemonDutchAuction = await PokemonDutchAuction.deploy(dutchAuctionFeeBps);
+  await pokemonDutchAuction.waitForDeployment();
+  const dutchAuctionAddress = await pokemonDutchAuction.getAddress();
+  console.log(`PokemonDutchAuction deployed to: ${dutchAuctionAddress}`);
+  // --- End Deploy PokemonAuctionHouse ---
+
   console.log("\nDeployment complete!");
 
   // --- Export addresses for frontend use ---
   const addresses = {
     nftAddress: pokemonNFTAddress,
     marketplaceAddress: marketplaceAddress, // For direct listings
-    auctionHouseAddress: auctionHouseAddress // For auctions
+    auctionHouseAddress: auctionHouseAddress, // For auctions
+    dutchAuctionAddress: dutchAuctionAddress // For dutch auctions
   };
 
   console.log("\nContract addresses for frontend:");
   console.log(`export const NFT_CONTRACT_ADDRESS = "${addresses.nftAddress}"`);
   console.log(`export const MARKETPLACE_ADDRESS = "${addresses.marketplaceAddress}"`);
   console.log(`export const AUCTION_HOUSE_ADDRESS = "${addresses.auctionHouseAddress}"`);
+  console.log(`export const DUTCH_AUCTION_ADDRESS = "${addresses.dutchAuctionAddress}"`);
 
 
   fs.writeFileSync(

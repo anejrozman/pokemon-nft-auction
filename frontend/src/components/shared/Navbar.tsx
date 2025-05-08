@@ -14,7 +14,9 @@ import {
   MenuItem,
   MenuList,
   Image,
+  Text,
   useColorMode,
+  VStack,
 } from "@chakra-ui/react";
 import { blo } from "blo";
 import { FaRegMoon } from "react-icons/fa";
@@ -36,7 +38,7 @@ export function Navbar() {
   return (
     <Box py="30px" px={{ base: "20px", lg: "50px" }}>
       <Flex direction="row" justifyContent="space-between">
-        <Box my="auto">
+        <VStack align="flex-start" spacing={0}>
           <Heading
             as={Link}
             href="/"
@@ -48,38 +50,60 @@ export function Navbar() {
               bgGradient: "linear(to-l, #FF0080, #7928CA)", // Hover gradient
             }}
           >
-            {/* Title */}
             POKÉMARKET
           </Heading>
-        </Box>
-        <Flex direction="row" alignItems="center" gap={6} display={{ lg: "flex", base: "none" }}>
-            {/* Card Sets link */}
-            <Link
+          <Text 
+            fontSize="sm" 
+            color="gray.500"
+            fontStyle="italic"
+          >
+            Collect, Trade, and Battle with Pokémon NFTs
+          </Text>
+        </VStack>
+        <Flex direction="row" alignItems="center" gap={4} display={{ lg: "flex", base: "none" }}>
+            {/* Mint button */}
+            <Button
+              as={Link}
               href="/cardsets"
               fontWeight="bold"
-              bgGradient="linear(to-l, #7928CA, #FF0080)" // Default gradient
-              bgClip="text"
+              bgGradient="linear(to-l, #7928CA, #FF0080)"
+              color="white"
               _hover={{
-                textDecoration: "underline",
-                bgGradient: "linear(to-l, #FF0080, #7928CA)", // Hover gradient
+                bgGradient: "linear(to-l, #FF0080, #7928CA)",
+                transform: "translateY(-2px)",
               }}
+              _active={{
+                transform: "translateY(0)",
+              }}
+              transition="all 0.2s"
+              size="md"
+              borderRadius="md"
             >
-              Card Sets
-            </Link>
+              Mint
+            </Button>
             
-            {/* Auction Page link */}
-            <Link
-              href="/cardsets"
+            {/* Auctions button */}
+            <Button
+              as={Link}
+              href="/auctions"
               fontWeight="bold"
-              bgGradient="linear(to-l, #7928CA, #FF0080)" // Default gradient
-              bgClip="text"
+              bgGradient="linear(to-l, #7928CA, #FF0080)"
+              color="white"
               _hover={{
-                textDecoration: "underline",
-                bgGradient: "linear(to-l, #FF0080, #7928CA)", // Hover gradient
+                bgGradient: "linear(to-l, #FF0080, #7928CA)",
+                transform: "translateY(-2px)",
               }}
+              _active={{
+                transform: "translateY(0)",
+              }}
+              transition="all 0.2s"
+              size="md"
+              borderRadius="md"
             >
-              Auction Page
-            </Link>
+              Auctions
+            </Button>
+
+            
           {account && wallet ? (
             <ProfileButton address={account.address} wallet={wallet} />
           ) : (
